@@ -1,0 +1,217 @@
+.growers-head {
+  padding-top: 48px;
+  padding-bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.growers-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 24px 48px;
+  align-items: end;
+}
+.growers-title {
+  font-size: clamp(48px, 7vw, 100px);
+}
+@media (max-width: 900px) {
+  .growers-intro {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.growers-intro p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-body);
+}
+
+.growers-list {
+  padding-top: 56px;
+  padding-bottom: 88px;
+}
+.growers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
+  gap: 24px;
+}
+.gcard {
+  border: 1px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+  background: var(--paper);
+}
+.gcard-img {
+  display: block;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--ink);
+}
+.gcard-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.gcard-facts {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  padding: 10px 14px;
+  color: var(--paper);
+  display: flex;
+  gap: 16px;
+  background: rgba(27, 29, 20, 0.3);
+}
+.gcard-region {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  padding: 6px 10px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 11px;
+}
+.gcard-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-grow: 1;
+}
+.gcard-name {
+  font-size: 30px;
+}
+.gcard-quote {
+  font-size: 16px;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--ink-body);
+}
+.gcard-grapes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.gcard-grapes span {
+  padding: 6px 10px;
+  background: var(--sage);
+  font-size: 13px;
+}
+.gcard-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+  margin-top: auto;
+  border-top: 1px solid rgba(27, 29, 20, 0.2);
+}
+.gcta {
+  font-weight: 600;
+  color: var(--wine);
+  font-size: 14px;
+}
+.gcard:hover {
+  text-decoration: none;
+}
+.gcard:hover .gcta {
+  text-decoration: underline;
+}
+
+.growers-rules {
+  background-color: var(--olive-900);
+  color: var(--paper);
+}
+.growers-rules-head {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: 24px 48px;
+  align-items: end;
+}
+.growers-rules-head p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--sage);
+}
+.growers-h2 {
+  font-size: clamp(36px, 4.4vw, 64px);
+}
+.growers-rule-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  border-top: 1px solid rgba(239, 236, 227, 0.3);
+  border-left: 1px solid rgba(239, 236, 227, 0.3);
+}
+.growers-rule-list li {
+  padding: 28px;
+  border-right: 1px solid rgba(239, 236, 227, 0.3);
+  border-bottom: 1px solid rgba(239, 236, 227, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.growers-rule-list li:last-child {
+  background: var(--wine);
+}
+.growers-rule-no {
+  font-size: 40px;
+  color: var(--olive-300);
+}
+.growers-rule-list li:last-child .growers-rule-no {
+  color: var(--wine-200);
+}
+.growers-rule-text {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--sage);
+}
+.growers-rule-list li:last-child .growers-rule-text {
+  color: var(--wine-100);
+}
+
+.growers-suggest {
+  position: relative;
+  overflow: hidden;
+}
+.growers-suggest-b {
+  right: -60px;
+  top: -60px;
+  width: 240px;
+  height: 240px;
+  background: var(--olive-700);
+}
+.growers-suggest-inner {
+  position: relative;
+  padding-top: 72px;
+  padding-bottom: 72px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: 32px;
+  align-items: center;
+}
+.growers-h2-sm {
+  font-size: clamp(32px, 3.6vw, 52px);
+}
+.growers-suggest-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.growers-email {
+  font-size: 24px;
+  color: var(--paper);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.growers-email:hover {
+  color: var(--paper);
+  text-decoration: underline;
+}

@@ -1,75 +1,33 @@
-# React + TypeScript + Vite
+# Lees & Leaf
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Storefront for a natural wine & olive oil shop, built from the Lees & Leaf design canvas.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```sh
+yarn
+yarn dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Routes
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Path           | Page                                            |
+| -------------- | ----------------------------------------------- |
+| `/`            | Home                                            |
+| `/shop`        | Catalog (`?type=Red`, `?type=oil`, `?q=search`) |
+| `/wine/:id`    | Product (wines and oils)                        |
+| `/growers/:id` | Grower profile                                  |
+| `/club`        | Club / subscription                             |
+| `/quiz`        | Taste quiz → mixed-six recommendation           |
+| `/cart`        | Cart (saved in localStorage)                    |
+| `/checkout`    | Four-step checkout and confirmation             |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Structure
 
-```
+- `src/index.css` — design tokens (colours, type, patterns) and shared classes
+- `src/data/` — products, growers, quiz and shop details. All of it is fictional concept content; emails use the reserved `.example` domain
+- `src/components/` — header, footers, bottle illustration, cards
+- `src/pages/` — one component + stylesheet per page
+- `src/cart/` — cart state (`useCart`), pricing rules: −10% on 6+ wines, promo `HARVEST10`, free EU delivery from €120, Club plans ship free
+
+Payment is a placeholder: no orders are sent anywhere yet. Hook the payment provider and order API into `placeOrder` in `src/pages/Checkout.tsx`.
+
+Pictures are illustrations drawn in code (`src/components/Scene.tsx`), seeded by each caption so they stay the same between visits. To use real photography, swap a `<Scene>` for an `<img>` in the same container.

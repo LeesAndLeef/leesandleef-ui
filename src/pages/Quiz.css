@@ -1,0 +1,125 @@
+.quiz-head {
+  padding-top: 40px;
+  padding-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.quiz-body {
+  flex-grow: 1;
+}
+.quiz-card-wrap {
+  padding-top: 56px;
+  padding-bottom: 72px;
+  max-width: 880px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.quiz-progress {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 3px;
+}
+.quiz-progress span {
+  height: 8px;
+  background: rgba(27, 29, 20, 0.12);
+}
+.quiz-progress span.done {
+  background: var(--olive-700);
+}
+.quiz-progress span.on {
+  background: var(--wine);
+}
+
+.quiz-card {
+  border: 1px solid var(--ink);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.quiz-q {
+  font-size: clamp(28px, 3.4vw, 48px);
+  margin-bottom: 28px;
+}
+
+.quiz-answers {
+  display: flex;
+  flex-direction: column;
+}
+.quiz-answer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--ink);
+  margin-top: -1px;
+  font-size: 17px;
+  cursor: pointer;
+}
+.quiz-answer:hover {
+  background: var(--bone);
+}
+.quiz-answer.is-picked {
+  border: 2px solid var(--wine);
+  padding: 17px;
+  position: relative;
+  background: var(--paper);
+}
+.quiz-answer input {
+  accent-color: var(--wine);
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.quiz-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 720px) {
+  .quiz-card {
+    padding: 24px 16px;
+  }
+}
+
+.quiz-result {
+  position: relative;
+  overflow: hidden;
+}
+.quiz-result-b {
+  right: -60px;
+  top: -60px;
+  width: 340px;
+  height: 340px;
+  background: var(--olive-700);
+}
+.quiz-result-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(480px, 100%), 1fr));
+  gap: 40px;
+  align-items: end;
+}
+.quiz-result-card {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.quiz-foot {
+  padding-top: 28px;
+  padding-bottom: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+}
