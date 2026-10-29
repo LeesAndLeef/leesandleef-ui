@@ -1,0 +1,19 @@
+.root {
+  padding: 20px;
+  background: var(--bone);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.root > :global(.hatch-w) {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+.root > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+}

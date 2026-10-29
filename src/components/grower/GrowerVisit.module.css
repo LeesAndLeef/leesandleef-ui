@@ -1,0 +1,33 @@
+.root {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(480px, 100%), 1fr));
+  gap: 48px;
+}
+.rows {
+  margin: 0;
+  border-top: 1px solid var(--ink);
+  font-size: 15px;
+}
+.rows > div {
+  display: grid;
+  grid-template-columns: minmax(0, 160px) minmax(0, 1fr);
+  border-bottom: 1px solid var(--rule);
+}
+.rows dt,
+.rows dd {
+  margin: 0;
+  padding: 14px 0;
+}
+.form {
+  border: 1px solid var(--ink);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--bone);
+}
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: 16px;
+}

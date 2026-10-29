@@ -1,0 +1,33 @@
+.quizPromo {
+  padding: 24px;
+  color: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.quizPromoB {
+  right: -30px;
+  top: -30px;
+  width: 120px;
+  height: 120px;
+  background: var(--wine);
+}
+.quizPromoInner {
+  padding: 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.quizPromoText {
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.35;
+}
+.quizPromoLink {
+  color: var(--paper);
+  font-weight: 600;
+  font-size: 14px;
+}
+.quizPromoLink:hover {
+  color: var(--bone);
+}

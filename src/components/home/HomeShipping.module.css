@@ -1,0 +1,28 @@
+.ship {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  gap: 32px;
+}
+.shipSteps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+}
+.shipSteps li {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.shipSteps :global(.disp) {
+  font-size: 48px;
+}
+.shipSteps h3 {
+  font-size: 18px;
+}
+.shipSteps p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-body);
+}

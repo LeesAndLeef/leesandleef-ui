@@ -1,0 +1,57 @@
+.block {
+  padding-top: 88px;
+  padding-bottom: 88px;
+}
+.h2Lg {
+  font-size: clamp(36px, 4.4vw, 64px);
+}
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+}
+.intro {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-body);
+}
+.sizes {
+  display: flex;
+  border: 1px solid var(--ink);
+}
+.sizes button {
+  height: 44px;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 500 14px var(--font-mono);
+  cursor: pointer;
+}
+.sizes button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 24px;
+}
+.split {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(560px, 100%), 1fr));
+}

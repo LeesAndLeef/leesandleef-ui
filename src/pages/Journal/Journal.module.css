@@ -1,0 +1,11 @@
+.readBar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: 4px;
+  background: var(--ink-a10);
+}
+.readBar > div {
+  height: 4px;
+  background: var(--wine);
+}

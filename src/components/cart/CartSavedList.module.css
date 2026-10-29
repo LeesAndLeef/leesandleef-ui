@@ -1,0 +1,20 @@
+.savedList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ink);
+}
+.savedList li {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.thumb {
+  width: 64px;
+  height: 88px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+}

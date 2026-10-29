@@ -1,0 +1,9 @@
+.stepForm {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.stepForm > :global(.btn) {
+  align-self: flex-start;
+}

@@ -1,0 +1,10 @@
+.root {
+  margin: 40px 0;
+  border: 1px solid var(--ink);
+}
+.root figcaption {
+  padding: 12px 14px;
+  border-top: 1px solid var(--ink);
+  color: var(--muted);
+  font-size: 11px;
+}

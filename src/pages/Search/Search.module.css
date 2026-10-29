@@ -1,0 +1,100 @@
+.head {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.title {
+  font-size: clamp(44px, 6vw, 96px);
+  overflow-wrap: anywhere;
+}
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 720px;
+}
+.form :global(.input) {
+  flex: 1 1 280px;
+  height: 52px;
+  font-size: 16px;
+}
+.form :global(.btn) {
+  height: 52px;
+}
+
+.body {
+  padding-top: 56px;
+  padding-bottom: 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.groupHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ink);
+}
+.groupHead h2 {
+  font-size: clamp(28px, 3vw, 40px);
+}
+.groupHead a {
+  font-weight: 600;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+  gap: 24px;
+}
+.gridOil {
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+}
+
+.growers {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: 16px;
+}
+.grower {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  border: 1px solid var(--ink);
+  padding: 12px;
+  color: var(--ink);
+  background: var(--paper);
+}
+.grower img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--ink);
+}
+
+.empty {
+  padding: 48px;
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.empty h2 {
+  font-size: clamp(32px, 4vw, 56px);
+}
+.empty :global(.chip) {
+  background: var(--paper);
+  color: var(--ink);
+}

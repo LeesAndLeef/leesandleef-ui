@@ -1,0 +1,59 @@
+.releaseGrid {
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+}
+
+.releaseCard {
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+}
+.releaseCardImg {
+  position: relative;
+  height: 380px;
+  display: grid;
+  place-items: center;
+  transition: background-color 0.15s;
+}
+.releaseCard:hover .releaseCardImg {
+  background-color: var(--wine-800);
+}
+.releaseCardBadge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 10px;
+  color: var(--paper);
+}
+.releaseCardBody {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+.releaseCardMeta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+}
+.releaseCard h3 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.releaseCardNote {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-body);
+  flex-grow: 1;
+}
+.releaseCardFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid var(--ink-a20);
+}
+.releaseCardFoot :global(.disp) {
+  font-size: 24px;
+}

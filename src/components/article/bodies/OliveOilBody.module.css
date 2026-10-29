@@ -1,0 +1,65 @@
+.fig {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+}
+.figArt {
+  padding: 32px;
+  display: grid;
+  place-items: center;
+  border-right: 1px solid var(--ink);
+}
+.card {
+  width: 260px;
+  max-width: 100%;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.line {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 0;
+  border-top: 1px solid var(--ink);
+  font-size: 12px;
+}
+.line :global(.mono) {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: var(--wine);
+  color: var(--paper);
+  font-size: 10px;
+}
+.notes {
+  margin: 0;
+  padding: 24px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.notes li {
+  display: flex;
+  gap: 12px;
+}
+.notes :global(.mono) {
+  color: var(--wine);
+  width: 20px;
+  flex-shrink: 0;
+}
+.fig figcaption {
+  grid-column: 1 / -1;
+}
+@media (max-width: 720px) {
+  .figArt {
+    border-right: 0;
+  }
+}

@@ -1,0 +1,33 @@
+.stepForm {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.stepForm > :global(.btn) {
+  align-self: flex-start;
+}
+.reviewRows {
+  margin: 0;
+  border-top: 1px solid var(--ink);
+  font-size: 15px;
+}
+.reviewRows > div {
+  display: grid;
+  grid-template-columns: minmax(0, 160px) minmax(0, 1fr);
+  border-bottom: 1px solid var(--rule);
+}
+.reviewRows dt,
+.reviewRows dd {
+  margin: 0;
+  padding: 14px 0;
+}
+.placeBtn {
+  min-height: 64px;
+  max-width: 480px;
+  justify-content: space-between;
+  font-size: 16px;
+}
+.placeBtn :global(.disp) {
+  font-size: 24px;
+}

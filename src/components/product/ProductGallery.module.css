@@ -1,0 +1,67 @@
+.root {
+  border-right: 1px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+}
+.stage {
+  position: relative;
+  height: 720px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.stage > svg {
+  position: relative;
+}
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+}
+.thumbs > button {
+  position: relative;
+  height: 120px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--bone);
+  border: 0;
+  border-right: 1px solid var(--ink);
+  cursor: pointer;
+}
+.thumbs > button:hover :global(.scene) {
+  opacity: 0.85;
+}
+.thumbs > button:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: -3px;
+}
+.thumbs > button:last-child {
+  border-right: 0;
+}
+.thumbs > .isCurrent {
+  background: var(--olive-700);
+}
+.thumbs > .isCurrent::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 3px var(--wine);
+}
+@media (max-width: 720px) {
+  .root {
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+  .stage {
+    height: 520px;
+  }
+  .stage > svg {
+    width: 120px;
+    height: 400px;
+  }
+  .thumbs > button {
+    height: 88px;
+  }
+}

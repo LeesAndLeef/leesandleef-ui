@@ -1,0 +1,37 @@
+.howSteps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  border: 1px solid var(--paper-a30);
+}
+.howSteps li {
+  padding: 32px;
+  border-right: 1px solid var(--paper-a30);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.howSteps li:last-child {
+  border-right: 0;
+  background: var(--wine);
+}
+.howSteps :global(.disp) {
+  font-size: 64px;
+  color: var(--olive-300);
+}
+.howSteps li:last-child :global(.disp) {
+  color: var(--wine-200);
+}
+.howSteps h3 {
+  font-size: 19px;
+}
+.howSteps p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--sage);
+}
+.howSteps li:last-child p {
+  color: var(--wine-100);
+}

@@ -1,0 +1,90 @@
+.head {
+  padding-top: 40px;
+  padding-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.bodyWrap {
+  flex-grow: 1;
+}
+.body {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+.filters {
+  flex: 1 1 280px;
+  max-width: 100%;
+  border-right: 1px solid var(--ink);
+  padding: 32px 32px 48px var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.filtersHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.filterGroup legend {
+  margin-bottom: 12px;
+}
+.filterCount {
+  margin-left: auto;
+}
+.results {
+  flex: 999 1 560px;
+  min-width: 0;
+  padding: 32px var(--gutter) 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.resultsBar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--ink);
+}
+.resultsChips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.activeChip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 6px 0 12px;
+  background: var(--sage);
+  font-size: 13px;
+}
+.activeChip button {
+  width: 24px;
+  height: 24px;
+  border: 0;
+  background: transparent;
+  font-size: 14px;
+}
+.activeChip button:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+@media (max-width: 720px) {
+  .filters {
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+}

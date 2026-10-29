@@ -1,0 +1,98 @@
+.freqToggle {
+  display: flex;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+}
+.freqToggle button {
+  min-height: 48px;
+  padding: 0 20px;
+  border: 0;
+  background: transparent;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.freqToggle button :global(.mono) {
+  font-size: 10px;
+  opacity: 0.8;
+}
+.freqToggle button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+.plan {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+}
+.plan.isFeatured {
+  background: var(--wine);
+  color: var(--paper);
+  border-color: var(--wine);
+  transform: translateY(-12px);
+}
+.planHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 12px;
+}
+.planHead h3 {
+  font-size: 40px;
+}
+.planDots {
+  display: grid;
+  grid-template-columns: repeat(4, 10px);
+  gap: 3px;
+}
+.planDots span {
+  width: 10px;
+  height: 10px;
+  background: var(--ink-a15);
+}
+.planDots span.on {
+  background: var(--wine);
+}
+.isFeatured .planDots span {
+  background: var(--paper-a25);
+}
+.isFeatured .planDots span.on {
+  background: var(--paper);
+}
+.planDesc {
+  font-size: 15px;
+  line-height: 1.55;
+  opacity: 0.9;
+}
+.planPrice {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 20px 0;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+}
+.planPrice :global(.disp) {
+  font-size: 56px;
+}
+.planPerks {
+  flex-grow: 1;
+}
+
+@media (max-width: 720px) {
+  .plan.isFeatured {
+    transform: none;
+  }
+}

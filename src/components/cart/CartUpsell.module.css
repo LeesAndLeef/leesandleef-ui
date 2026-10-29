@@ -1,0 +1,16 @@
+.upsellGrid {
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+}
+.upsellItem {
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.upsellImg {
+  width: 64px;
+  height: 88px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+}

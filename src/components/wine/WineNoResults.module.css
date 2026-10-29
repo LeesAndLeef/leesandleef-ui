@@ -1,0 +1,16 @@
+.noResults {
+  padding: 56px 40px;
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.noResults h2 {
+  font-size: 40px;
+}
+.noResults p {
+  color: var(--sage);
+  max-width: 480px;
+  line-height: 1.55;
+}

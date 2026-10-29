@@ -1,0 +1,27 @@
+.fieldError {
+  font-size: 14px;
+  color: var(--wine);
+  font-weight: 600;
+}
+.ageCheck {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 15px;
+  line-height: 1.5;
+  cursor: pointer;
+  padding: 16px;
+  border: 1px solid var(--ink);
+  background: var(--bone);
+}
+.ageCheck.hasError {
+  border: 2px solid var(--wine);
+  padding: 15px;
+}
+.ageCheck input {
+  accent-color: var(--wine);
+  width: 18px;
+  height: 18px;
+  margin: 3px 0 0;
+  flex-shrink: 0;
+}

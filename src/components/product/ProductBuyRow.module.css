@@ -1,0 +1,28 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: stretch;
+}
+.row .qty {
+  align-self: stretch;
+}
+.button {
+  flex: 1 1 260px;
+  min-height: 62px;
+  justify-content: space-between;
+  font-size: 16px;
+}
+.button :global(.disp) {
+  font-size: 24px;
+}
+.added {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.added a {
+  color: var(--paper);
+  font-weight: 600;
+}

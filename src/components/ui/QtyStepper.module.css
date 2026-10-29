@@ -1,0 +1,48 @@
+.root {
+  display: flex;
+  border: 1px solid var(--ink);
+  align-self: flex-start;
+}
+.root button {
+  border: 0;
+  background: transparent;
+  font-size: 20px;
+}
+.root button:disabled {
+  color: var(--ink-a35);
+  cursor: default;
+}
+.root span {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  border-left: 1px solid var(--ink);
+  border-right: 1px solid var(--ink);
+}
+.md button {
+  width: 48px;
+  height: 52px;
+}
+.md span {
+  width: 52px;
+  font-size: 17px;
+}
+.lg button {
+  width: 52px;
+  height: 60px;
+  font-size: 22px;
+}
+.lg span {
+  width: 56px;
+  font-size: 18px;
+}
+.sm button {
+  width: 44px;
+  height: 44px;
+  font-size: 18px;
+}
+.sm span {
+  width: 44px;
+  font-size: 15px;
+}

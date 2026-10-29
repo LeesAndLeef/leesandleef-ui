@@ -1,0 +1,97 @@
+.hero {
+  background-color: var(--olive-900);
+  color: var(--paper);
+}
+.heroGrid {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(560px, 100%), 1fr));
+}
+.heroCopy {
+  padding: 64px var(--gutter) 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  border-right: 1px solid var(--paper-a20);
+}
+.heroTitle {
+  font-size: clamp(48px, 6.4vw, 100px);
+  text-wrap: balance;
+}
+.heroLede {
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--sage);
+  max-width: 560px;
+}
+.promises {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
+  border: 1px solid var(--paper-a30);
+}
+.promises li {
+  padding: 16px;
+  border-right: 1px solid var(--paper-a30);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.promises li:last-child {
+  border-right: 0;
+}
+.promises :global(.mono) {
+  font-size: 11px;
+}
+.promiseText {
+  font-size: 13px;
+  color: var(--sage);
+}
+.heroFig {
+  margin: 0;
+  position: relative;
+  min-height: 640px;
+  overflow: hidden;
+}
+.heroFig img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.heroPanel {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  padding: 22px;
+  color: var(--paper);
+  background: var(--ink-a35);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+  gap: 16px;
+}
+.heroPanel > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 15px;
+}
+.heroPanel :global(.mono) {
+  color: var(--sage);
+  font-size: 11px;
+}
+@media (max-width: 720px) {
+  .heroCopy {
+    border-right: 0;
+  }
+  .heroFig {
+    min-height: 420px;
+  }
+}

@@ -1,0 +1,76 @@
+.block {
+  padding-top: 88px;
+  padding-bottom: 88px;
+}
+.h2 {
+  font-size: clamp(32px, 3.8vw, 56px);
+}
+.pairings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  border: 1px solid var(--ink);
+}
+.pairings > div {
+  padding: 32px;
+  border-right: 1px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--paper);
+}
+.pairings > div:last-child {
+  border-right: 0;
+}
+.pairings p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-body);
+}
+.pairings ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  border-top: 1px solid var(--ink-a20);
+}
+.pairings li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--ink-a20);
+}
+.pairingHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pairingDots {
+  display: flex;
+  gap: 3px;
+}
+.pairingDots span {
+  width: 12px;
+  height: 12px;
+  background: var(--ink-a15);
+}
+.pairingDots .isOn {
+  background: var(--olive-500);
+}
+.pairings > .isDark {
+  background: var(--olive-900);
+  color: var(--paper);
+}
+.pairings > .isDark p {
+  color: var(--sage);
+}
+.pairings > .isDark ul,
+.pairings > .isDark li {
+  border-color: var(--paper-a25);
+}
+.pairings > .isDark .isOn {
+  background: var(--olive-300);
+}
+@media (max-width: 720px) {
+  .pairings > div {
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+}

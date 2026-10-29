@@ -1,0 +1,70 @@
+.root {
+  background: var(--ink);
+  color: var(--bone);
+}
+.inner {
+  padding-top: 80px;
+  padding-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+.top {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: 48px;
+}
+
+.newsletter {
+  gap: 16px;
+}
+.newsletter h2 {
+  font-size: 40px;
+  color: var(--paper);
+}
+.newsletter p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--olive-300);
+}
+.newsletterRow {
+  display: flex;
+  flex-wrap: wrap;
+}
+.newsletterRow input {
+  flex: 1 1 240px;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid var(--olive-500);
+  background: transparent;
+  color: var(--paper);
+  font-size: 15px;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
+  gap: 32px;
+  font-size: 14px;
+}
+.cols > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wordmark {
+  font-size: clamp(64px, 14vw, 220px);
+  color: var(--olive-700);
+  line-height: 0.8;
+  border-top: 1px solid var(--olive-700);
+  padding-top: 32px;
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  justify-content: space-between;
+  color: var(--olive-300);
+}

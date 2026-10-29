@@ -1,82 +1,21 @@
-import radicHero from '../assets/growers/obitelj-radic/hero.svg'
-import kosHero from '../assets/growers/podrum-kos/hero.svg'
-import stariBrijegHero from '../assets/growers/stari-brijeg/hero.svg'
-import triBureHero from '../assets/growers/tri-bure/hero.svg'
-import vinaBrajkoCasks from '../assets/growers/vina-brajko/casks.svg'
-import brajkoHero from '../assets/growers/vina-brajko/hero.svg'
-import vinaBrajkoPunchDown from '../assets/growers/vina-brajko/punch-down.svg'
-import lucicHero from '../assets/growers/vina-lucic/hero.svg'
-import amphoraeImg from '../assets/journal/amphorae.svg'
-import oliveNetsImg from '../assets/journal/olive-nets.svg'
-import terraRossaImg from '../assets/journal/terra-rossa.svg'
-import radicPortrait from '../assets/portraits/obitelj-radic.svg'
-import kosPortrait from '../assets/portraits/podrum-kos.svg'
-import stariBrijegPortrait from '../assets/portraits/stari-brijeg.svg'
-import triBurePortrait from '../assets/portraits/tri-bure.svg'
-import brajkoPortrait from '../assets/portraits/vina-brajko.svg'
-import lucicPortrait from '../assets/portraits/vina-lucic.svg'
-
-export interface GrowerMonth {
-  name: string
-  short: string
-  phase: string
-  intensity: number
-  text: string
-  vine: string
-  cellar: string
-  hands: string
-  food: string
-}
-
-export type PlotTone = 'wine' | 'olive' | 'dark' | 'dashed'
-
-export interface Plot {
-  name: string
-  grape: string
-  soil: string
-  size: string
-  planted: string
-  map: { label?: string; x: number; y: number; w: number; h: number; tone: PlotTone }
-}
-
-export interface GrowerProfile {
-  heroPhoto: string
-  heroImg: string
-  facts: [string, string][]
-  storyTitle: string
-  story: string[]
-  pullQuote: string
-  pullQuoteBy: string
-  photos: { img: string; alt: string; caption: string }[]
-  checklist: { text: string; done: boolean }[]
-  yearLabel: string
-  year: GrowerMonth[]
-  defaultMonth: number
-  plotsTitle: string
-  plotsIntro?: string
-  plots: Plot[]
-  landmark: { label: string; x: number; y: number; w: number; h: number }
-  mapLegend: [string, string]
-  winesTitle: string
-  visit?: { title: string; host: string; intro: string; formTitle: string; rows: [string, string][] }
-}
-
-export interface Grower {
-  id: string
-  name: string
-  shortName: string
-  place: string
-  region: string
-  who: string
-  people: string
-  ha: string
-  since: string
-  grapes: string[]
-  tone: string
-  quote: string
-  portrait?: string
-  profile?: GrowerProfile
-}
+import amphoraeCellar from '../assets/cellar/amphorae.svg'
+import barrelsCellar from '../assets/cellar/barrels.svg'
+import punchDownCellar from '../assets/cellar/punch-down.svg'
+import coastalCliffTownLandscape from '../assets/landscapes/coastal-cliff-town.svg'
+import farmhouseVineyardPlainLandscape from '../assets/landscapes/farmhouse-vineyard-plain.svg'
+import hilltopTownVineyardLandscape from '../assets/landscapes/hilltop-town-vineyard.svg'
+import hilltopVillageVineyardLandscape from '../assets/landscapes/hilltop-village-vineyard.svg'
+import oliveTreesNetsLandscape from '../assets/landscapes/olive-trees-nets.svg'
+import stoneTerracesSeaLandscape from '../assets/landscapes/stone-terraces-sea.svg'
+import vinesRedSoilLandscape from '../assets/landscapes/vines-red-soil.svg'
+import vineyardSlopeWaterLandscape from '../assets/landscapes/vineyard-slope-water.svg'
+import couplePortrait from '../assets/portraits/couple.svg'
+import coupleGlassesPortrait from '../assets/portraits/couple-glasses.svg'
+import manHatDarkPortrait from '../assets/portraits/man-hat-dark.svg'
+import manHatLightPortrait from '../assets/portraits/man-hat-light.svg'
+import womanBunPortrait from '../assets/portraits/woman-bun.svg'
+import womanLongHairPortrait from '../assets/portraits/woman-long-hair.svg'
+import type { Grower } from '../types'
 
 export const growers: Grower[] = [
   {
@@ -90,12 +29,12 @@ export const growers: Grower[] = [
     ha: '3.2 ha',
     since: 'Since 1962',
     grapes: ['Teran', 'Malvazija', 'Muškat'],
-    tone: '#6E1C2B',
-    portrait: brajkoPortrait,
+    tone: 'var(--wine)',
+    portrait: womanBunPortrait,
     quote: 'Red soil makes red wine honest. I just try not to get in the way.',
     profile: {
       heroPhoto: 'Motovun hilltop town above the Mirna valley, with fog and vineyard terraces',
-      heroImg: brajkoHero,
+      heroImg: hilltopTownVineyardLandscape,
       facts: [
         ['Village', 'Motovun, Istria'],
         ['Vineyards', '3.2 ha in 4 plots'],
@@ -113,12 +52,12 @@ export const growers: Grower[] = [
       pullQuoteBy: 'Ana Brajko',
       photos: [
         {
-          img: vinaBrajkoCasks,
+          img: barrelsCellar,
           alt: 'Illustration: old Slavonian oak casks in the stone cellar',
           caption: 'Grandfather’s casks, still in use',
         },
         {
-          img: vinaBrajkoPunchDown,
+          img: punchDownCellar,
           alt: 'Illustration: Ana punching down the grape cap in an open vat',
           caption: 'Punch-down, twice a day',
         },
@@ -330,12 +269,12 @@ export const growers: Grower[] = [
     ha: '4.8 ha',
     since: 'Since 2011',
     grapes: ['Malvazija', 'Muškat', 'Teran'],
-    tone: '#A9AD7A',
-    portrait: radicPortrait,
+    tone: 'var(--olive-300)',
+    portrait: couplePortrait,
     quote: 'We bought a press before we bought a tractor. Still think it was right.',
     profile: {
       heroPhoto: 'Momjan village and chapel on a ridge above vineyard terraces',
-      heroImg: radicHero,
+      heroImg: hilltopVillageVineyardLandscape,
       facts: [
         ['Village', 'Momjan, Istria'],
         ['Vineyards', '4.8 ha in 3 plots'],
@@ -352,9 +291,9 @@ export const growers: Grower[] = [
       pullQuote: 'We bought a press before we bought a tractor. Still think it was right.',
       pullQuoteBy: 'Petra Radić',
       photos: [
-        { img: radicPortrait, alt: 'Illustrated portrait of Petra and Luka Radić', caption: 'Petra and Luka' },
+        { img: couplePortrait, alt: 'Illustrated portrait of Petra and Luka Radić', caption: 'Petra and Luka' },
         {
-          img: amphoraeImg,
+          img: amphoraeCellar,
           alt: 'Illustration: clay amphorae half-buried in the cellar floor',
           caption: 'Two amphorae under the old stable',
         },
@@ -560,12 +499,12 @@ export const growers: Grower[] = [
     ha: '1.6 ha',
     since: 'Since 2019',
     grapes: ['Graševina', 'Škrlet'],
-    tone: '#EFECE3',
-    portrait: triBurePortrait,
+    tone: 'var(--paper)',
+    portrait: manHatLightPortrait,
     quote: 'Bubbles forgive nothing. That’s why we love making them.',
     profile: {
       heroPhoto: 'rolling Slavonian hills with vineyard rows, an oak forest and a small cellar house at dusk',
-      heroImg: triBureHero,
+      heroImg: farmhouseVineyardPlainLandscape,
       facts: [
         ['Village', 'Kutjevo, Slavonia'],
         ['Vineyards', '1.6 ha in 2 plots'],
@@ -583,12 +522,12 @@ export const growers: Grower[] = [
       pullQuoteBy: 'Marko Babić',
       photos: [
         {
-          img: triBurePortrait,
+          img: manHatLightPortrait,
           alt: 'Illustrated portrait of Marko Babić in a wide-brim hat',
           caption: 'Marko, harvest 2024',
         },
         {
-          img: vinaBrajkoCasks,
+          img: barrelsCellar,
           alt: 'Illustration: oak barrels in a small cellar',
           caption: 'The original three barrels',
         },
@@ -785,12 +724,12 @@ export const growers: Grower[] = [
     ha: '2.4 ha',
     since: 'Since 1981',
     grapes: ['Plavac Mali'],
-    tone: '#2A0E16',
-    portrait: kosPortrait,
+    tone: 'var(--glass-garnet)',
+    portrait: manHatDarkPortrait,
     quote: 'On a slope like ours the sea does half the work.',
     profile: {
       heroPhoto: 'a steep vineyard slope dropping straight into the sea on the Pelješac peninsula',
-      heroImg: kosHero,
+      heroImg: vineyardSlopeWaterLandscape,
       facts: [
         ['Village', 'Potomje, Pelješac'],
         ['Vineyards', '2.4 ha in 3 plots'],
@@ -807,9 +746,9 @@ export const growers: Grower[] = [
       pullQuote: 'On a slope like ours the sea does half the work. It throws the sun back up at the vines.',
       pullQuoteBy: 'Ivo Kos',
       photos: [
-        { img: kosPortrait, alt: 'Illustrated portrait of Ivo Kos in a hat', caption: 'Ivo, harvest 2024' },
+        { img: manHatDarkPortrait, alt: 'Illustrated portrait of Ivo Kos in a hat', caption: 'Ivo, harvest 2024' },
         {
-          img: terraRossaImg,
+          img: vinesRedSoilLandscape,
           alt: 'Illustration: vine rows over layers of rocky soil',
           caption: 'Dolomite scree under the vines',
         },
@@ -1015,12 +954,12 @@ export const growers: Grower[] = [
     ha: '2.9 ha',
     since: 'Since 1952',
     grapes: ['Babić', 'Pošip'],
-    tone: '#A9AD7A',
-    portrait: stariBrijegPortrait,
+    tone: 'var(--olive-300)',
+    portrait: coupleGlassesPortrait,
     quote: 'Every stone in these walls was carried by hand. We just keep them standing.',
     profile: {
       heroPhoto: 'a mosaic of tiny stone-walled vineyards on a rocky slope by the sea',
-      heroImg: stariBrijegHero,
+      heroImg: stoneTerracesSeaLandscape,
       facts: [
         ['Villages', 'Primošten & Čara, Korčula'],
         ['Vineyards', '2.9 ha in 3 plots'],
@@ -1038,12 +977,12 @@ export const growers: Grower[] = [
       pullQuoteBy: 'Ante Kovač',
       photos: [
         {
-          img: stariBrijegPortrait,
+          img: coupleGlassesPortrait,
           alt: 'Illustrated portrait of brothers Ante and Jure Kovač',
           caption: 'Ante and Jure',
         },
         {
-          img: oliveNetsImg,
+          img: oliveTreesNetsLandscape,
           alt: 'Illustration: olive trees with nets between stone walls',
           caption: 'Olives between the walls',
         },
@@ -1249,12 +1188,12 @@ export const growers: Grower[] = [
     ha: '2.2 ha',
     since: 'Since 1979',
     grapes: ['Žlahtina', 'Crljenak'],
-    tone: '#C9C48A',
-    portrait: lucicPortrait,
+    tone: 'var(--glass-straw)',
+    portrait: womanLongHairPortrait,
     quote: 'The bura is our best vineyard worker.',
     profile: {
       heroPhoto: 'Vrbnik’s cliff-top town above the sea on the island of Krk, with bura wind lines',
-      heroImg: lucicHero,
+      heroImg: coastalCliffTownLandscape,
       facts: [
         ['Village', 'Vrbnik, Krk'],
         ['Vineyards', '2.2 ha in 3 plots'],
@@ -1271,9 +1210,9 @@ export const growers: Grower[] = [
       pullQuote: 'The bura is our best vineyard worker. It dries the leaves in an hour and asks for nothing.',
       pullQuoteBy: 'Mirela Lučić',
       photos: [
-        { img: lucicPortrait, alt: 'Illustrated portrait of Mirela Lučić', caption: 'Mirela, harvest 2024' },
+        { img: womanLongHairPortrait, alt: 'Illustrated portrait of Mirela Lučić', caption: 'Mirela, harvest 2024' },
         {
-          img: terraRossaImg,
+          img: vinesRedSoilLandscape,
           alt: 'Illustration: vine rows over layers of red soil',
           caption: 'Red soil of the Vrbnik field',
         },
@@ -1469,9 +1408,3 @@ export const growers: Grower[] = [
     },
   },
 ]
-
-export const growerRegions = ['Istria', 'Dalmatia', 'Kvarner', 'Slavonia']
-
-export function getGrower(id: string | undefined): Grower | undefined {
-  return growers.find((g) => g.id === id)
-}

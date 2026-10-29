@@ -1,0 +1,50 @@
+.root {
+  border-top: 1px solid var(--ink);
+  padding: 28px 0;
+}
+.root.isLast {
+  border-bottom: 1px solid var(--ink);
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.head h2 {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 22px;
+  font-weight: 600;
+}
+.badge {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--ink);
+  color: var(--muted);
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.badge.isOpen {
+  background: var(--wine);
+  border-color: var(--wine);
+  color: var(--paper);
+}
+.badge.isDone {
+  background: var(--olive-700);
+  border-color: var(--olive-700);
+  color: var(--paper);
+}
+.summary {
+  margin: 14px 0 0 72px;
+  font-size: 15px;
+  color: var(--ink-body);
+}
+@media (max-width: 720px) {
+  .summary {
+    margin-left: 0;
+  }
+}

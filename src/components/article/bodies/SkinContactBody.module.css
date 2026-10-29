@@ -1,0 +1,42 @@
+.fig {
+  border-right: 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(110px, 100%), 1fr));
+}
+.grid > div {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--ink);
+}
+.cell {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cell :global(.disp) {
+  font-size: 20px;
+}
+.cell span:last-child {
+  font-size: 13px;
+  color: var(--muted);
+}
+.tannin {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+  border-right: 1px solid var(--ink);
+}
+.tannin span {
+  padding: 10px 12px;
+  font-size: 10px;
+  border-right: 1px solid var(--ink);
+}
+.tannin span:last-child {
+  border-right: 0;
+}
+.fig figcaption {
+  border-right: 1px solid var(--ink);
+}

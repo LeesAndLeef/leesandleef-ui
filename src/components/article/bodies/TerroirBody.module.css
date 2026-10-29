@@ -1,0 +1,30 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--ink);
+}
+.col:last-child {
+  border-right: 0;
+}
+.name {
+  padding: 14px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.layer {
+  display: flex;
+  align-items: flex-end;
+  padding: 8px;
+}
+.layer :global(.mono) {
+  font-size: 10px;
+}
+.text {
+  padding: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+}

@@ -1,0 +1,50 @@
+.set {
+  position: relative;
+  overflow: hidden;
+  padding: 72px var(--gutter);
+  border-right: 1px solid var(--ink);
+}
+.setB1 {
+  right: -50px;
+  top: -50px;
+  width: 220px;
+  height: 220px;
+  background: var(--olive-700);
+}
+.setB2 {
+  left: 30%;
+  bottom: -60px;
+  width: 140px;
+  height: 140px;
+  background: var(--ink);
+}
+.setPanel {
+  position: relative;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 560px;
+}
+.setTitle {
+  font-size: clamp(30px, 3.2vw, 46px);
+}
+.setTins {
+  display: flex;
+  gap: 8px;
+  align-items: end;
+}
+.setFoot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule-paper);
+}
+@media (max-width: 720px) {
+  .set {
+    border-right: 0;
+  }
+}
