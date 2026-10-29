@@ -1,0 +1,25 @@
+.root {
+  margin: 40px 0;
+  padding: 36px;
+  color: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.b {
+  right: -40px;
+  bottom: -40px;
+  width: 160px;
+  height: 160px;
+  background: var(--olive-700);
+}
+.root blockquote {
+  margin: 0;
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1.08;
+  position: relative;
+}
+.root figcaption {
+  margin-top: 18px;
+  color: var(--wine-200);
+  position: relative;
+}

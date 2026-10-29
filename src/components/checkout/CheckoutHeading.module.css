@@ -1,0 +1,44 @@
+.head {
+  padding-top: 32px;
+  padding-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.progress {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+  border: 1px solid var(--ink);
+  background: var(--paper);
+}
+.progress li {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-right: 1px solid var(--ink);
+  color: var(--muted);
+}
+.progress li:last-child {
+  border-right: 0;
+}
+.progress .progressBar {
+  height: 4px;
+  background: var(--ink-a12);
+}
+.progress li.isPast {
+  color: var(--ink);
+}
+.progress li.isPast .progressBar {
+  background: var(--olive-700);
+}
+.progress li.isCurrent {
+  background: var(--ink);
+  color: var(--paper);
+}
+.progress li.isCurrent .progressBar {
+  background: var(--wine);
+}

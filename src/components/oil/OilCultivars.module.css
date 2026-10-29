@@ -1,0 +1,46 @@
+.block {
+  padding-top: 88px;
+  padding-bottom: 88px;
+}
+.h2 {
+  font-size: clamp(32px, 3.8vw, 56px);
+}
+.table {
+  overflow-x: auto;
+  border: 1px solid var(--ink);
+}
+.table table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 11px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--rule);
+}
+.table tr:last-child td {
+  border-bottom: 0;
+}
+.style {
+  padding: 4px 8px;
+  font-size: 10px;
+}
+.style.robust {
+  background: var(--olive-900);
+  color: var(--paper);
+}
+.style.medium {
+  background: var(--olive-300);
+}
+.style.delicate {
+  border: 1px solid var(--ink);
+}

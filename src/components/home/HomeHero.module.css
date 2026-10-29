@@ -1,0 +1,128 @@
+.hero {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(560px, 100%), 1fr));
+}
+
+.heroCopy {
+  padding: 72px var(--gutter) 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+  border-right: 1px solid var(--ink);
+}
+
+.heroKicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  color: var(--olive-700);
+}
+
+.heroTitle {
+  font-size: clamp(48px, 6.4vw, 96px);
+  text-wrap: balance;
+}
+
+.heroLede {
+  font-size: 19px;
+  line-height: 1.55;
+  max-width: 540px;
+  color: var(--ink-body);
+}
+
+.principles {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+  border: 1px solid var(--ink);
+  background: var(--paper);
+}
+.principles li {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-right: 1px solid var(--ink);
+  margin-right: -1px;
+}
+.principlesTitle {
+  font-weight: 600;
+}
+.principlesText {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.heroArt {
+  position: relative;
+  min-height: 720px;
+  overflow: hidden;
+}
+.heroB1 {
+  top: 64px;
+  right: 64px;
+  width: 46%;
+  aspect-ratio: 1;
+  background: var(--wine);
+}
+.heroB2 {
+  bottom: 120px;
+  left: 48px;
+  width: 28%;
+  aspect-ratio: 1;
+  background: var(--olive-300);
+}
+.heroBottle {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.heroBottle svg {
+  height: min(94%, 660px);
+  width: auto;
+  max-width: 46%;
+}
+
+.pouring {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  bottom: 32px;
+  padding: 24px;
+  color: var(--paper);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  gap: 20px;
+  align-items: end;
+}
+.pouringBuy {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 720px) {
+  .heroArt {
+    min-height: 620px;
+  }
+  .heroBottle svg {
+    height: min(88%, 560px);
+    max-width: 52%;
+  }
+  .pouring {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+  .pouringBuy {
+    justify-content: flex-start;
+  }
+}

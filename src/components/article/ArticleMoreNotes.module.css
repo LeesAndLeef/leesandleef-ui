@@ -1,0 +1,63 @@
+.block {
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+.h2 {
+  font-size: clamp(30px, 3.4vw, 48px);
+}
+.more {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: 24px;
+}
+.moreCard {
+  border: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+  color: var(--ink);
+}
+.moreImg {
+  display: block;
+  min-height: 200px;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid var(--ink);
+}
+.moreImg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.moreBody {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.moreTitle {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.3;
+}
+.moreLede {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-body);
+}
+.moreCta {
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: auto;
+}
+@media (max-width: 720px) {
+  .moreCard {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .moreImg {
+    min-height: 180px;
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+}

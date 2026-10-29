@@ -1,0 +1,30 @@
+.compareTable {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.compareTable th,
+.compareTable td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--rule);
+}
+.compareTable thead th {
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 500;
+  border-bottom: 0;
+}
+.compareTable thead th.isFeatured {
+  background: var(--wine);
+}
+.compareTable tbody th {
+  font-weight: 400;
+}
+.compareTable td.isFeatured {
+  background: var(--bone);
+}
+.compareTable tr:last-child > * {
+  border-bottom: 0;
+}

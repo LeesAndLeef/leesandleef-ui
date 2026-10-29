@@ -1,0 +1,30 @@
+.resultsTools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.resultsTools select {
+  height: 44px;
+  background: transparent;
+  font-size: 14px;
+  padding: 0 12px;
+}
+.viewToggle {
+  display: flex;
+}
+.viewToggle button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+}
+.viewToggle button + button {
+  border-left: 0;
+}
+.viewToggle button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}

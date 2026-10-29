@@ -1,0 +1,53 @@
+.h2 {
+  font-size: clamp(30px, 3.4vw, 48px);
+}
+.news {
+  position: relative;
+  overflow: hidden;
+}
+.newsB {
+  right: -60px;
+  top: -60px;
+  width: 240px;
+  height: 240px;
+  background: var(--olive-700);
+}
+.newsInner {
+  position: relative;
+  padding-top: 72px;
+  padding-bottom: 72px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: 32px;
+  align-items: center;
+}
+.newsForm {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+}
+.newsRow {
+  display: flex;
+  flex-wrap: wrap;
+}
+.newsRow input {
+  flex: 1 1 220px;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid var(--paper-a60);
+  background: var(--paper-a92);
+  color: var(--ink);
+  font: 15px var(--font-sans);
+  border-radius: 0;
+}
+.newsRow button {
+  height: 52px;
+  padding: 0 24px;
+  border: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font: 600 15px var(--font-sans);
+  cursor: pointer;
+}

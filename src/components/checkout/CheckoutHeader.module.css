@@ -1,0 +1,12 @@
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.secure {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--olive-700);
+}

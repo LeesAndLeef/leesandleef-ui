@@ -1,0 +1,15 @@
+.root {
+  border-bottom: 1px solid var(--ink);
+  background: var(--paper);
+}
+
+.row {
+  min-height: 76px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}

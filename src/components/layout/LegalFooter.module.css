@@ -1,0 +1,12 @@
+.root {
+  background: var(--ink);
+  color: var(--olive-300);
+}
+.root :global(.container) {
+  padding-top: 28px;
+  padding-bottom: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+}

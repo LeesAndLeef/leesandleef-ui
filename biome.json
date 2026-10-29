@@ -39,7 +39,12 @@
   "assist": {
     "actions": {
       "source": {
-        "organizeImports": "on"
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [["**", "!**/*.module.css"], "**/*.module.css"]
+          }
+        }
       }
     }
   }

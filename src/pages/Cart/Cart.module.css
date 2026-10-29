@@ -1,0 +1,41 @@
+.head {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+}
+
+.checkoutBtn {
+  min-height: 64px;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+.promises {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ink);
+  font-size: 14px;
+}
+.promises li {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  gap: 12px;
+}
+
+.payMethods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.payMethods span {
+  padding: 6px 8px;
+  border: 1px solid var(--ink);
+}

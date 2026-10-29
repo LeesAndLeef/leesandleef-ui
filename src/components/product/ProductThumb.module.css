@@ -1,0 +1,17 @@
+.clubThumb {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--paper);
+}
+.md {
+  width: 48px;
+  height: 72px;
+}
+.sm {
+  width: 30px;
+  height: 44px;
+  gap: 2px;
+  padding: 2px;
+}

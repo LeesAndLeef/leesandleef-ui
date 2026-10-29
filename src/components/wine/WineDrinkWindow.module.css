@@ -1,0 +1,33 @@
+.root {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  padding: 16px;
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 220px;
+}
+.bar {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 2px;
+}
+.bar span {
+  height: 10px;
+  background: var(--paper-a25);
+}
+.bar span[data-level="1"] {
+  background: var(--paper-a50);
+}
+.bar span[data-level="2"] {
+  background: var(--paper);
+}
+@media (max-width: 720px) {
+  .root {
+    right: 12px;
+    bottom: 12px;
+    width: 180px;
+  }
+}

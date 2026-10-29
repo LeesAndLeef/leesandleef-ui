@@ -1,0 +1,72 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.b1 {
+  right: -60px;
+  top: -60px;
+  width: 260px;
+  height: 260px;
+  background: var(--wine);
+}
+.b2 {
+  right: 160px;
+  bottom: -40px;
+  width: 120px;
+  height: 120px;
+  background: var(--olive-300);
+}
+.facts {
+  position: relative;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+  max-width: 720px;
+}
+.facts > div {
+  padding: 18px;
+  border-right: 1px solid var(--rule-paper);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.facts > div:last-child {
+  border-right: 0;
+}
+.facts dt {
+  color: var(--sage);
+}
+.facts dd {
+  margin: 0;
+}
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+}
+.timeline li {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.timeline li :global(.mono) {
+  color: var(--wine);
+}
+.timeline li:first-child {
+  background: var(--ink);
+  color: var(--paper);
+}
+.timeline li:first-child :global(.mono) {
+  color: var(--olive-300);
+}
+@media (max-width: 720px) {
+  .hero {
+    padding: 32px 20px;
+  }
+}

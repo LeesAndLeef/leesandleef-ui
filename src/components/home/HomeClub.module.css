@@ -1,0 +1,51 @@
+.club {
+  position: relative;
+  overflow: hidden;
+}
+.clubB1 {
+  left: -60px;
+  top: 80px;
+  width: 320px;
+  height: 320px;
+  background: var(--olive-700);
+}
+.clubB2 {
+  right: 12%;
+  bottom: -80px;
+  width: 260px;
+  height: 260px;
+  background: var(--ink);
+}
+.clubInner {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(480px, 100%), 1fr));
+  gap: 40px;
+  align-items: center;
+}
+.clubCard {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.clubTiers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--paper-a30);
+}
+.clubTiers > div {
+  background: var(--wine-800-a60);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.clubTiers > div.isFeatured {
+  background: var(--paper);
+  color: var(--ink);
+}
+.clubTiers :global(.disp) {
+  font-size: 26px;
+}

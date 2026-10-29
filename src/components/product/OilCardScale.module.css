@@ -1,0 +1,26 @@
+.root {
+  background: var(--paper);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.root :global(.mono) {
+  font-size: 10px;
+  color: var(--muted);
+}
+.dots {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+}
+.dots span {
+  height: 8px;
+  background: var(--ink-a12);
+}
+.dots .wine {
+  background: var(--wine);
+}
+.dots .olive {
+  background: var(--olive-700);
+}

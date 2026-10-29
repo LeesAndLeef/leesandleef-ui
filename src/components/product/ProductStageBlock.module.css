@@ -1,0 +1,14 @@
+.wine {
+  left: 12%;
+  top: 14%;
+  width: 52%;
+  aspect-ratio: 1;
+  background: var(--wine);
+}
+.olive {
+  right: 8%;
+  bottom: 10%;
+  width: 22%;
+  aspect-ratio: 1;
+  background: var(--olive-300);
+}

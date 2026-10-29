@@ -1,0 +1,39 @@
+.root figcaption {
+  padding: 12px 14px;
+  border-top: 1px solid var(--ink);
+  color: var(--muted);
+  font-size: 11px;
+}
+.root {
+  margin: 36px 0;
+}
+.root :global(.table-wrap) {
+  overflow-x: auto;
+  border: 1px solid var(--ink);
+}
+.root table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 15px;
+  background: var(--paper);
+}
+.root th {
+  padding: 12px 14px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 11px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.root td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.root td:first-child {
+  font-weight: 600;
+}
+.root figcaption {
+  border-top: 0;
+  padding: 10px 0 0;
+}

@@ -1,0 +1,34 @@
+.shipProgress {
+  border: 1px solid var(--ink);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.shipProgressHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 15px;
+}
+.shipProgressBar {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 3px;
+}
+.shipProgressBar span {
+  height: 12px;
+  background: var(--ink-a12);
+}
+.shipProgressBar span.on {
+  background: var(--wine);
+}
+.shipProgressBar span.done {
+  background: var(--olive-700);
+}
+.shipProgressScale {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}

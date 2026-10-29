@@ -1,0 +1,68 @@
+.box {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(560px, 100%), 1fr));
+}
+.boxArt {
+  min-height: 640px;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid var(--ink);
+}
+.boxGrid {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px;
+  max-width: 80%;
+  aspect-ratio: 1;
+  border: 2px solid var(--paper);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+}
+.boxCap {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  padding: 16px;
+  color: var(--paper);
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.boxCopy {
+  padding: 72px var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.boxList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ink);
+}
+.boxList li {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.boxList :global(.disp) {
+  font-size: 32px;
+}
+
+@media (max-width: 720px) {
+  .boxArt {
+    min-height: 440px;
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+}

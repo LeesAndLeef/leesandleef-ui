@@ -1,0 +1,28 @@
+.summaryCard {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  color: var(--paper);
+}
+.summaryCardB {
+  right: -50px;
+  bottom: -50px;
+  width: 180px;
+  height: 180px;
+  background: var(--olive-700);
+}
+.summaryInner {
+  position: relative;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.summaryTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 18px 0 4px;
+}
+.summaryTotal :global(.disp) {
+  font-size: 44px;
+}

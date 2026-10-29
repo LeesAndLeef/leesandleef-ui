@@ -4,8 +4,7 @@ export const site = {
   street: 'Ulica Podrumara 7',
   city: '52000 Pazin, Croatia',
   hours: 'Thu-Sat, 12:00-20:00',
-  clubEmail: 'leesandleaf@gmail.com',
-  supportEmail: 'leesandleaf@gmail.com',
+  email: 'leesandleaf@gmail.com',
   shipCountries: [
     'Croatia',
     'Slovenia',

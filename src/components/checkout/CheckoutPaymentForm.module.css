@@ -1,0 +1,59 @@
+.payTabs {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--ink);
+  align-self: flex-start;
+}
+.payTabs button {
+  min-height: 48px;
+  padding: 0 20px;
+  border: 0;
+  background: transparent;
+  font-weight: 500;
+  font-size: 14px;
+}
+.payTabs button[aria-checked="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.cardPanel {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  max-width: 640px;
+}
+.cardPanelB {
+  left: -40px;
+  bottom: -40px;
+  width: 160px;
+  height: 160px;
+  background: var(--olive-700);
+}
+.cardFields {
+  position: relative;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  color: var(--paper);
+}
+.cardFields :global(.input) {
+  background: var(--paper-a92);
+  color: var(--ink);
+  height: 52px;
+}
+.payNote {
+  border: 1px solid var(--ink);
+  padding: 24px;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+@media (max-width: 720px) {
+  .cardFields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,48 @@
+.faqSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
+  gap: 48px;
+}
+.faq {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--ink);
+}
+.faq > div {
+  border-bottom: 1px solid var(--ink);
+}
+.faq button {
+  width: 100%;
+  min-height: 64px;
+  padding: 18px 0;
+  border: 0;
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 17px;
+}
+.faqIcon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 18px;
+}
+.faq button[aria-expanded="true"] .faqIcon {
+  background: var(--wine);
+  color: var(--paper);
+}
+.faq p {
+  margin: 0 0 22px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-body);
+  max-width: 640px;
+}

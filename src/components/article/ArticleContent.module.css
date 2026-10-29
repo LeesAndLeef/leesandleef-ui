@@ -1,0 +1,113 @@
+.body {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+.aside {
+  flex: 1 1 280px;
+  padding: 56px var(--gutter);
+  border-right: 1px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.toc {
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  border-top: 1px solid var(--ink);
+}
+.toc a {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  gap: 12px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.toc a:hover {
+  color: var(--wine);
+}
+.toc :global(.mono) {
+  width: 24px;
+}
+.short {
+  border: 1px solid var(--ink);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--bone);
+}
+.short ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.short li {
+  display: flex;
+  gap: 10px;
+}
+.prose {
+  flex: 999 1 560px;
+  min-width: 0;
+  padding: 56px var(--gutter) 80px;
+}
+.prose > div {
+  max-width: 760px;
+}
+.prose p {
+  margin: 0 0 22px;
+  font-family: "IBM Plex Serif", Georgia, serif;
+  font-size: 19px;
+  line-height: 1.75;
+  color: var(--ink-body);
+}
+.prose h2 {
+  margin: 56px 0 20px;
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 24px;
+}
+.prose h2:first-child {
+  margin-top: 0;
+}
+.prose > div > ul {
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 17px;
+  line-height: 1.6;
+}
+.prose > div > ul li {
+  display: flex;
+  gap: 12px;
+}
+.prose > div > ul li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: 9px;
+  background: var(--wine);
+}
+@media (max-width: 720px) {
+  .aside {
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+}

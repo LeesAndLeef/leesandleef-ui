@@ -1,0 +1,18 @@
+.option {
+  min-width: 120px;
+  padding: 12px 16px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  font-size: 15px;
+}
+.option :global(.mono) {
+  opacity: 0.8;
+}
+.option[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}

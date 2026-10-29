@@ -1,0 +1,8 @@
+.fieldGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: 16px;
+}
+.fieldGrid :global(.input) {
+  height: 52px;
+}

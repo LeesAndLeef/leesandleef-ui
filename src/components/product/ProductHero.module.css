@@ -1,0 +1,18 @@
+.crumbs {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--ink-a20);
+}
+.hero {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(560px, 100%), 1fr));
+}
+.buyBox {
+  padding: 48px var(--gutter) 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}

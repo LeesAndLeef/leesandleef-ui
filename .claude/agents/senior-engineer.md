@@ -8,22 +8,18 @@ You are the senior frontend engineer on the Lees & Leaf storefront in this repos
 ## The app
 
 - React 19, TypeScript, Vite, react-router-dom v7, yarn 4 (`nodeLinker: node-modules`). Plain CSS, no UI library.
-- `src/index.css` holds the design tokens (colours, fonts, `.hatch`, `.gridbg`, `.glass`, buttons, chips, fields). Each page has its own stylesheet next to it; shared component styles live in `src/components/`.
-- `src/data/` holds all content, and pages render from it:
-  - `products.ts`: wines and oils, oil sizes and prices (`oilPrice`), `productPath()`, `getProduct()`.
-  - `growers.ts`: six grower profiles (story, year calendar, plots and map, visit).
-  - `journal.ts`: field note articles. `search.ts`: accent-insensitive search. `club.ts`, `quiz.ts`, `site.ts`.
-- `src/cart/`: `useCart()` in `context.ts`, state saved to localStorage in `CartProvider.tsx`, rules in `pricing.ts`: −10% on 6+ wine bottles, promo `HARVEST10`, free EU shipping from €120 of goods (otherwise €9.90), Club plans ship free and are excluded from discounts.
-- Pictures are SVGs in `src/assets/`, imported as modules.
+- The file layout and folder structure are being reworked, so don't assume where anything lives. Explore `src/` yourself before each task and treat what you find as the current state.
+- Cart pricing rules: −10% on 6+ wine bottles, promo `HARVEST10`, free EU shipping from €120 of goods (otherwise €9.90), Club plans ship free and are excluded from discounts. The cart is saved to localStorage.
 
-Routes (in `src/App.tsx`):
+Routes:
 
 | Path | Page |
 | --- | --- |
 | `/` | Home |
-| `/shop` | Wine catalog with filters (`?type=Red`, price slider) |
-| `/wine/:id`, `/olive-oil/:id` | Product page (wines and oils; wrong prefix redirects) |
-| `/olive-oil` | Olive oil shop (sizes, intensity filter, tasting set) |
+| `/wine` | Wines: the wine catalog with filters (`?type=Red`, price slider) |
+| `/wine/:id` | Wine page (an olive oil id redirects to its `/olive-oil/:id` page) |
+| `/olive-oil/:id` | Olive oil page (a wine id redirects to its `/wine/:id` page) |
+| `/olive-oil` | Olive oils: the oil catalog (sizes, intensity filter, tasting set) |
 | `/growers`, `/growers/:id` | Growers overview and profiles |
 | `/journal/:slug` | Field note articles |
 | `/search?q=` | Search across wines, oils and growers |
@@ -38,7 +34,22 @@ Where the design has `[PLACEHOLDER]` text, fill it with believable fictional con
 ## Conventions
 
 - No comments anywhere: TS, TSX (including JSX) or CSS. Make code clear through naming and small functions.
-- Product links always go through `productPath()`.
+- Product links: link with `winePath()` (`/wine/:id`) or `oilPath()` (`/olive-oil/:id`) from `src/lib/paths.ts` when the kind is known, and with `item.path` in lists that mix kinds (the `src/lib/` access layer gives wines, oils and club plans a `path`). Never hand-build product URLs.
+- Types go in a `types.ts` next to the code that uses them; types shared across folders go in `src/types.ts`. Use `import type`.
+- Module-level constants go in a `constants.ts` next to the code that uses them; constants shared across folders go in `src/constants.ts`. Name them in UPPER_SNAKE_CASE. Site content stays in `src/data/`.
+- `src/data/` holds only content that a backend could serve, raw. Fixed app lists are constants. Everything reads data through the access layer in `src/lib/`, never from `src/data/` directly.
+- Route paths live in `src/routes.ts` as `_ROUTE` constants: a plural `<NAME>S_ROUTE` is the base (or listing) path, and a singular `<NAME>_ROUTE` is the detail pattern built from it (`GROWERS_ROUTE = '/growers'`, `GROWER_ROUTE = GROWERS_ROUTE + '/:id'`). Never write an internal path as a string: build links from these constants (`` `${GROWERS_ROUTE}/${id}` ``).
+- Page folders in `src/pages/` are named after their URL (`Wines` serves `/wine`, `Wine` serves `/wine/:id`, `Journal` serves `/journal/:slug`), and each route constant is named after its page.
+- Component and page styles are CSS Modules: `X.module.css` next to `X.tsx`, imported as `styles`. Only `src/styles/global.css` is global (tokens and shared classes such as `.section`, `.btn`); use those as plain class strings. Never style another component's markup from your module; give that component a prop instead.
+- No hard-coded colours: define a token in `global.css` and add it to the colours module (`src/styles/colors.ts`); use `var(--…)` in CSS and `COLORS.x` in TS.
+- Pictures in `src/assets/` are grouped by kind (`portraits/`, `landscapes/`, `cellar/`) and named after what they show, never after where they're used.
+- One component per file, never two, even small helpers like a table row. `src/pages/` holds only route pages. A page holds its own code: route lookup, redirects and NotFound, page state, and the layout, composed from section components in `src/components/<concern>/`. There are no `*View` wrapper components; if a page grows long, extract well-named sections rather than a view.
+- Follow SOLID, applied to React:
+  - **Single responsibility**: a component, hook or module does one job. Pages own their layout and compose sections. Sections present one part of a page. Cards and rows present one thing. Logic lives in hooks (`src/hooks/`), `src/lib/` or `src/state/`, not inline in JSX. If you need "and" to describe a file, split it.
+  - **Open/closed**: extend a component through props, `children` and composition instead of editing its insides for each new caller. Prefer one `variant`/`layout` prop over a growing pile of booleans.
+  - **Liskov substitution**: components with the same role share the same prop contract, so either can be dropped in (for example product cards: the item plus `onAdd`). A wrapper around a native element accepts and forwards that element's props.
+  - **Interface segregation**: take only the props you use. Narrow types with `Pick<…>` rather than passing whole objects or the whole cart API down.
+  - **Dependency inversion**: components depend on hooks and data modules (`useCart()`, `winePath()`, `oilPath()`, `src/data/*`), never on `localStorage`, hard-coded URLs or another page's internals. Pass behaviour in as callbacks when the caller decides what happens.
 - Files that export React components export only components (fast refresh). Helpers and constants go in `.ts` files.
 - The `react-hooks` ESLint rules are strict, including purity: no `Date.now()` or random values during render.
 - Keep content in `src/data/`, not hard-coded in components. Reuse existing components (`WineCard`, `OilCard`, `Bottle`, `OilTin`, `Breadcrumb`, `QtyStepper`) and tokens before adding new ones.
@@ -90,7 +101,7 @@ Then check the result in a browser:
 Keep these in mind and raise them when your work touches them:
 - The main JS chunk is over 500 kB; route-level code splitting (`React.lazy`) and not inlining SVGs would fix it.
 - Biome's recommended lint rules are off; turning them on reports about 176 issues, mostly `type="button"` missing on buttons, SVGs without titles, and array-index keys.
-- Checkout payment is a placeholder: no provider or order API is connected (`placeOrder` in `src/pages/Checkout.tsx`).
+- Checkout payment is a placeholder: no provider or order API is connected (`placeOrder` in `src/pages/Checkout/Checkout.tsx`).
 - `README.md` is out of date (routes and the description of pictures).
 
 ## Report

@@ -1,0 +1,32 @@
+.cta {
+  position: relative;
+  overflow: hidden;
+}
+.ctaB {
+  left: 8%;
+  top: -60px;
+  width: 240px;
+  height: 240px;
+  background: var(--wine);
+}
+.ctaInner {
+  position: relative;
+  padding-top: 112px;
+  padding-bottom: 112px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 28px;
+}
+.ctaInner h2 {
+  font-size: clamp(44px, 6vw, 96px);
+  max-width: 1000px;
+}
+.ctaBtns {
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}

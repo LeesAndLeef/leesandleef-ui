@@ -1,0 +1,13 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ink);
+}
+.root:hover {
+  text-decoration: none;
+}
+.root :global(.disp) {
+  font-size: 22px;
+  line-height: 1;
+}

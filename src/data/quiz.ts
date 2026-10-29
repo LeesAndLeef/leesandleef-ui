@@ -1,15 +1,4 @@
-import type { ShopWineType } from './products'
-
-export interface QuizAnswer {
-  label: string
-  styles: Partial<Record<ShopWineType, number>>
-  bold?: number
-}
-
-export interface QuizQuestion {
-  q: string
-  answers: QuizAnswer[]
-}
+import type { QuizQuestion, WineFilterType } from '../types'
 
 export const quiz: QuizQuestion[] = [
   {
@@ -84,7 +73,7 @@ export const quiz: QuizQuestion[] = [
   },
 ]
 
-export const profiles: Record<ShopWineType, { title: string; text: string }> = {
+export const quizProfiles: Record<WineFilterType, { title: string; text: string }> = {
   Red: {
     title: 'Red earth',
     text: 'You like grip, savoury fruit and something to chew on. Iron-rich Teran and coastal Plavac will feel like home.',

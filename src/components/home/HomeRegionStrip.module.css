@@ -1,0 +1,14 @@
+.regionStrip {
+  background: var(--ink);
+  color: var(--olive-300);
+  padding: 22px var(--gutter);
+  font-size: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 40px;
+}
+.regionStrip > span {
+  display: flex;
+  gap: 40px;
+}

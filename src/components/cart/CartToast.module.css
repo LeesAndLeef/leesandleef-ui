@@ -1,0 +1,39 @@
+.root {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 10;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 16px 18px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+}
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.root a {
+  color: var(--paper);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.root a:hover {
+  color: var(--bone);
+}
+.root :global(.icon-btn) {
+  border-color: var(--olive-500);
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+}
+.root :global(.icon-btn):hover {
+  background: var(--paper);
+  color: var(--ink);
+}

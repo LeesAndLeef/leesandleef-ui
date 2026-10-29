@@ -1,0 +1,13 @@
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.title {
+  font-size: clamp(40px, 4.6vw, 72px);
+}
+.grower {
+  font-size: 17px;
+  font-weight: 500;
+  align-self: flex-start;
+}
