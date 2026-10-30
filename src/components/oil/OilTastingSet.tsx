@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import { getOil } from '../../lib/oil'
 import { useCart } from '../../state/cart/useCart'
 import { COLORS } from '../../styles/colors'
@@ -33,10 +33,10 @@ export function OilTastingSet() {
         <div className={styles.setFoot}>
           <span style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
             <span className="disp" style={{ fontSize: 40 }}>
-              {euro(set.price)}
+              {formatCurrency(set.price)}
             </span>
             <span className="mono" style={{ fontSize: 11, color: COLORS.wine200, textDecoration: 'line-through' }}>
-              {euro(set.set!.was)}
+              {formatCurrency(set.set!.was)}
             </span>
           </span>
           <button

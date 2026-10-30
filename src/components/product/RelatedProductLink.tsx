@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import type { Product } from '../../types'
 import { Bottle } from '../illustrations/Bottle'
 import { OilTin } from '../illustrations/OilTin'
@@ -25,7 +25,7 @@ export function RelatedProductLink({
         <span className="mono mono-sm label-muted">{why}</span>
         <span style={{ fontWeight: 600, lineHeight: 1.3 }}>{product.name}</span>
         <span className="disp" style={{ fontSize: 20 }}>
-          {euro(product.price)}
+          {formatCurrency(product.price)}
         </span>
       </span>
     </Link>

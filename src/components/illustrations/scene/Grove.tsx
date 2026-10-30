@@ -1,6 +1,6 @@
+import { ridge } from '../../../lib/scene/ridge'
 import { COLORS } from '../../../styles/colors'
 import { GROVE_TREES } from './constants'
-import { ridge } from './ridge'
 import { Sky } from './Sky'
 import { Tree } from './Tree'
 import type { SceneContext } from './types'

@@ -1,4 +1,5 @@
-export type Random = () => number
+import type { Random } from '../../../lib/scene/types'
+import type { LabelCopy } from '../../../types'
 
 export interface SceneContext {
   r: Random
@@ -6,4 +7,5 @@ export interface SceneContext {
   id: (name: string) => string
   tone: string
   text?: string
+  labelCopy?: LabelCopy
 }

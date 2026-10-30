@@ -1,8 +1,12 @@
-import { WINE_TYPES } from '../constants'
+import { DEFAULT_WINE_VOLUME, WINE_TYPES } from '../constants'
 import { wines as rawWines } from '../data/wines'
 import { WINES_ROUTE } from '../routes'
-import type { GalleryShot, Grower, Wine, WineFilterType, WineType } from '../types'
+import { COLORS } from '../styles/colors'
+import type { GalleryShot, LabelCopy, Wine, WineFilterType, WineType } from '../types'
+import { VINTAGE_YEAR, WINE_BACK_LABEL_LINES, WINE_BACK_LABEL_NOTE, WINE_POUR_TONES } from './constants'
 import { winePath } from './paths'
+import { productRegion } from './productPlace'
+import { contrastingTone } from './tone'
 
 export const wines: Wine[] = rawWines.map((wine) => ({ ...wine, path: winePath(wine) }))
 
@@ -18,44 +22,52 @@ export const wineTypePath = (type: WineType) =>
   WINE_TYPES.includes(type as WineFilterType) ? `${WINES_ROUTE}?type=${encodeURIComponent(type)}` : WINES_ROUTE
 
 export const vintagePrice = (wine: Pick<Wine, 'price' | 'detail'>, vintage?: string) =>
-  wine.detail?.vintages?.find((v) => v.year === vintage)?.price ?? wine.price
+  wine.detail.vintages?.find((v) => v.year === vintage)?.price ?? wine.price
 
-export function wineTags(wine: Wine): string[] {
-  return (
-    wine.detail?.tags ??
-    [
-      wine.vegan ? 'Vegan' : 'Fined (not vegan)',
-      'Wild ferment',
-      wine.amphora ? 'Amphora-aged' : null,
-      wine.so2Added ? `${wine.so2} mg/L total SO₂` : `Zero added SO₂ · ${wine.so2} mg/L natural`,
-      wine.magnum ? 'Magnum available' : null,
-    ].filter((t): t is string => t !== null)
-  )
-}
+export const winePourTone = (wine: Pick<Wine, 'type' | 'glass'>) => WINE_POUR_TONES[wine.type] ?? wine.glass
 
-type CellarScene = Pick<GalleryShot, 'kind' | 'caption'>
+const wineLabelName = (title: string) => title.split(VINTAGE_YEAR)[0]
 
-function cellarScene(wine: Pick<Wine, 'amphora' | 'type'>, where: string, growerShortName = ''): CellarScene {
-  if (wine.amphora) return { kind: 'amphora', caption: `Buried amphorae · ${where}` }
-  if (wine.type === 'Sparkling') return { kind: 'rack', caption: 'Riddling by hand before disgorging' }
-  return { kind: 'casks', caption: `In the ${growerShortName} cellar` }
-}
+const wineFrontLabel = (wine: Pick<Wine, 'type' | 'cap' | 'growerName' | 'region'>, title: string): LabelCopy => ({
+  lines: [wine.growerName ?? '', productRegion(wine.region)],
+  size: title.match(VINTAGE_YEAR)?.[0].trim() ?? '',
+  note: wine.type,
+  accent: contrastingTone(wine.cap, COLORS.wine, COLORS.paper),
+})
 
-export function wineShots(
-  wine: Pick<Wine, 'amphora' | 'type' | 'grape'>,
+const wineBackLabel = (wine: Pick<Wine, 'volume'>): LabelCopy => ({
+  lines: WINE_BACK_LABEL_LINES,
+  size: wine.volume ?? DEFAULT_WINE_VOLUME,
+  note: WINE_BACK_LABEL_NOTE,
+})
+
+export const wineShots = (
+  wine: Pick<Wine, 'type' | 'glass' | 'cap' | 'growerName' | 'region' | 'volume'>,
   title: string,
-  grower: Pick<Grower, 'shortName' | 'profile'> | undefined,
-  where: string,
-): GalleryShot[] {
-  return [
-    { id: 'label', name: 'Back label', kind: 'backlabel', cue: title, caption: 'Back label' },
-    {
-      id: 'field',
-      name: 'Vineyard',
-      kind: 'landscape',
-      cue: grower?.profile?.heroPhoto ?? where,
-      caption: `${wine.grape} vines · ${where}`,
-    },
-    { id: 'cellar', name: 'Cellar', cue: `${title} cellar`, ...cellarScene(wine, where, grower?.shortName) },
-  ]
-}
+): GalleryShot[] => [
+  {
+    id: 'front',
+    name: 'Front label',
+    kind: 'frontlabel',
+    cue: `${wineNameWithoutYear(title)} front`,
+    text: wineLabelName(title),
+    caption: 'Front label',
+    labelCopy: wineFrontLabel(wine, title),
+  },
+  {
+    id: 'label',
+    name: 'Back label',
+    kind: 'backlabel',
+    cue: wineNameWithoutYear(title),
+    caption: 'Back label',
+    labelCopy: wineBackLabel(wine),
+  },
+  {
+    id: 'pour',
+    name: 'In the glass',
+    kind: 'pour',
+    cue: `${wineNameWithoutYear(title)} ${wine.type} glass`,
+    tone: winePourTone(wine),
+    caption: `A glass of ${title}`,
+  },
+]

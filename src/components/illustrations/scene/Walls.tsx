@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
+import { ridge } from '../../../lib/scene/ridge'
 import { COLORS } from '../../../styles/colors'
-import { ridge } from './ridge'
 import { Sky } from './Sky'
 import type { SceneContext } from './types'
 

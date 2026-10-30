@@ -1,0 +1,110 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+.heroImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% 50%;
+  display: block;
+}
+.heroB1 {
+  right: 6%;
+  top: 60px;
+  width: 380px;
+  height: 380px;
+  background: var(--wine);
+}
+.heroB2 {
+  right: calc(6% + 300px);
+  top: 360px;
+  width: 160px;
+  height: 160px;
+  background: var(--olive-300);
+}
+.heroInner {
+  position: relative;
+  padding-top: 120px;
+  padding-bottom: 48px;
+  min-height: 680px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 32px;
+}
+.name {
+  font-size: clamp(64px, 11vw, 176px);
+}
+.facts {
+  margin: 0;
+  background: var(--ink-a55);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+  max-width: 1000px;
+}
+.facts > div {
+  padding: 20px;
+  border-right: 1px solid var(--rule-paper);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.facts > div:last-child {
+  border-right: 0;
+}
+.facts dd {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 500;
+}
+@media (max-width: 720px) {
+  .heroB1 {
+    width: 220px;
+    height: 220px;
+  }
+  .heroB2 {
+    display: none;
+  }
+}
+.wines {
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+}
+.wine {
+  display: flex;
+  gap: 20px;
+  padding: 24px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.wineImg {
+  width: 120px;
+  height: 200px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+}
+.nextGrower {
+  display: block;
+  color: var(--paper);
+  border-bottom: 1px solid var(--ink);
+}
+.nextGrower:hover {
+  color: var(--paper);
+  text-decoration: none;
+  background-color: var(--wine-800);
+}
+.nextGrower :global(.container) {
+  padding-top: 56px;
+  padding-bottom: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+.nextGrower :global(.disp) {
+  font-size: clamp(36px, 5vw, 72px);
+}

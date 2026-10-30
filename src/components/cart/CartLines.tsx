@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import type { PricedLine } from '../../types'
 import { ProductThumb } from '../product/ProductThumb'
 import { QtyStepper } from '../ui/QtyStepper'
@@ -37,7 +37,7 @@ export function CartLines({
                 </Link>
                 <span className="label-muted" style={{ fontSize: 14 }}>
                   {'growerName' in l.item && l.item.growerName ? `${l.item.growerName} · ` : ''}
-                  {euro(l.unit)} each
+                  {formatCurrency(l.unit)} each
                 </span>
                 {'left' in l.item && l.item.left !== undefined && l.item.left < 30 && (
                   <span className="mono badge" style={{ alignSelf: 'flex-start', fontSize: 10 }}>
@@ -61,7 +61,7 @@ export function CartLines({
             ) : (
               <span className="mono label-muted">1 box</span>
             )}
-            <span className={`disp ${styles.lineTotal}`}>{euro(l.total)}</span>
+            <span className={`disp ${styles.lineTotal}`}>{formatCurrency(l.total)}</span>
           </li>
         ))}
       </ul>

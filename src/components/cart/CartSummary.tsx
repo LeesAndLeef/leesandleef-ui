@@ -1,4 +1,4 @@
-import { eur } from '../../state/cart/pricing'
+import { formatCurrency } from '../../lib/currency'
 import type { Totals } from '../../state/cart/types'
 import { SummaryRow } from '../ui/SummaryRow'
 import styles from './CartSummary.module.css'
@@ -20,22 +20,26 @@ export function CartSummary({
         <SummaryRow
           variant="cart"
           label={`Subtotal (${totals.count} item${totals.count === 1 ? '' : 's'})`}
-          value={eur(totals.subtotal)}
+          value={formatCurrency(totals.subtotal, { cents: true })}
         />
         <SummaryRow
           variant="cart"
           label="Mix 6 · −10% wine"
-          value={totals.mixDiscount ? '−' + eur(totals.mixDiscount) : '—'}
+          value={totals.mixDiscount ? '−' + formatCurrency(totals.mixDiscount, { cents: true }) : '—'}
         />
         <SummaryRow
           variant="cart"
           label={`Promo ${promo ?? ''}`}
-          value={totals.promoDiscount ? '−' + eur(totals.promoDiscount) : '—'}
+          value={totals.promoDiscount ? '−' + formatCurrency(totals.promoDiscount, { cents: true }) : '—'}
         />
-        <SummaryRow variant="cart" label="Delivery (EU)" value={totals.shipping ? eur(totals.shipping) : 'Free'} />
+        <SummaryRow
+          variant="cart"
+          label="Delivery (EU)"
+          value={totals.shipping ? formatCurrency(totals.shipping, { cents: true }) : 'Free'}
+        />
         <div className={styles.summaryTotal}>
           <span style={{ fontWeight: 600 }}>Total</span>
-          <span className="disp">{eur(totals.total)}</span>
+          <span className="disp">{formatCurrency(totals.total, { cents: true })}</span>
         </div>
         <span className="mono label-rose" style={{ fontSize: 10 }}>
           VAT included · Excise paid in destination

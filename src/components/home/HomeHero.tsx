@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import { winePath } from '../../lib/paths'
 import { GROWERS_ROUTE, WINES_ROUTE } from '../../routes'
 import { COLORS } from '../../styles/colors'
@@ -64,7 +64,7 @@ export function HomeHero() {
             </div>
             <div className={styles.pouringBuy}>
               <span className="disp" style={{ fontSize: 32 }}>
-                {euro(hero.price)}
+                {formatCurrency(hero.price)}
               </span>
               <Link to={winePath(hero)} className="btn btn-paper btn-sm">
                 View bottle →

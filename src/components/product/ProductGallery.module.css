@@ -57,7 +57,7 @@
   .stage {
     height: 520px;
   }
-  .stage > svg {
+  .stage > svg:not(:global(.scene)) {
     width: 120px;
     height: 400px;
   }

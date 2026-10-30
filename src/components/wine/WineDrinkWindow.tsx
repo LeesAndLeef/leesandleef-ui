@@ -2,7 +2,7 @@ import { COLORS } from '../../styles/colors'
 import type { WineDetail } from '../../types'
 import styles from './WineDrinkWindow.module.css'
 
-export function WineDrinkWindow({ label, cells }: NonNullable<WineDetail['drinkWindow']>) {
+export function WineDrinkWindow({ label, cells }: WineDetail['drinkWindow']) {
   return (
     <div className={`glass ${styles.root}`}>
       <span className="mono mono-sm" style={{ color: COLORS.sage }}>

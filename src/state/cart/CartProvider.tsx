@@ -1,35 +1,14 @@
 import { type ReactNode, useEffect, useMemo, useState } from 'react'
-import type { CartLine, PricedLine } from '../../types'
-import { EMPTY_CART, PROMO_CODES, STORAGE_KEY } from './constants'
-import { computeTotals, findItem, lineKey, priceLine } from './pricing'
-import type { CartApi, CartNotice, CartState } from './types'
+import { EMPTY_CART, PROMO_CODES } from '../../constants'
+import { findItem, lineKey } from '../../lib/cart'
+import { loadCart, saveCart } from '../../lib/cartStorage'
+import { computeTotals, priceLine, priceLines } from '../../lib/pricing'
+import type { CartState } from '../../types'
+import type { CartApi, CartNotice } from './types'
 import { CartContext } from './useCart'
 
-function load(): CartState {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return EMPTY_CART
-    const parsed = JSON.parse(raw) as Partial<CartState>
-    const valid = (ls: CartLine[] = []) => ls.filter((l) => findItem(l.id) && l.qty > 0)
-    return { ...EMPTY_CART, ...parsed, lines: valid(parsed.lines), saved: valid(parsed.saved) }
-  } catch {
-    return EMPTY_CART
-  }
-}
-
-const priceAll = (ls: CartLine[]) => ls.map(priceLine).filter((l): l is PricedLine => l !== null)
-
-function saveCart(state: CartState) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
-    return true
-  } catch {
-    return false
-  }
-}
-
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<CartState>(load)
+  const [state, setState] = useState<CartState>(loadCart)
   const [notice, setNotice] = useState<CartNotice | null>(null)
 
   useEffect(() => {
@@ -37,8 +16,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [state])
 
   const api = useMemo<CartApi>(() => {
-    const priced = priceAll(state.lines)
-    const savedPriced = priceAll(state.saved)
+    const priced = priceLines(state.lines)
+    const savedPriced = priceLines(state.saved)
     const update = (fn: (s: CartState) => CartState) => setState(fn)
 
     return {

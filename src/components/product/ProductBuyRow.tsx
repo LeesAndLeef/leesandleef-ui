@@ -1,11 +1,19 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import { CART_ROUTE } from '../../routes'
 import { QtyStepper } from '../ui/QtyStepper'
 import styles from './ProductBuyRow.module.css'
 
-export function ProductBuyRow({ unitPrice, onAdd }: { unitPrice: number; onAdd: (qty: number) => void }) {
+export function ProductBuyRow({
+  unitPrice,
+  addedNote,
+  onAdd,
+}: {
+  unitPrice: number
+  addedNote: string
+  onAdd: (qty: number) => void
+}) {
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
 
@@ -20,13 +28,13 @@ export function ProductBuyRow({ unitPrice, onAdd }: { unitPrice: number; onAdd: 
         <QtyStepper value={qty} onChange={setQty} size="lg" className={styles.qty} />
         <button className={`btn btn-primary ${styles.button}`} onClick={addToCart}>
           <span>Add to cart</span>
-          <span className="disp">{euro(unitPrice * qty)}</span>
+          <span className="disp">{formatCurrency(unitPrice * qty)}</span>
         </button>
       </div>
 
       {added && (
         <div className={`status ${styles.added}`} role="status">
-          <span>Added to cart. Six bottles or more ship free.</span>
+          <span>{addedNote}</span>
           <Link to={CART_ROUTE}>View cart →</Link>
         </div>
       )}

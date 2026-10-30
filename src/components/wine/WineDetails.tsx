@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import type { WineDetail } from '../../types'
 import { Scene } from '../illustrations/Scene'
+import { ProductDetailRows } from '../product/ProductDetailRows'
+import { ProductTabs } from '../product/ProductTabs'
+import { ProductTastingNotes } from '../product/ProductTastingNotes'
 import { DETAIL_TABS } from './constants'
 import type { Tab } from './types'
-import { WineDetailRows } from './WineDetailRows'
 import styles from './WineDetails.module.css'
 
 export function WineDetails({ detail }: { detail: WineDetail }) {
@@ -11,32 +13,12 @@ export function WineDetails({ detail }: { detail: WineDetail }) {
   return (
     <section className="section">
       <div className={`container ${styles.root}`}>
-        <div role="tablist" aria-label="Wine details" className={styles.tabs}>
-          {DETAIL_TABS.map((t) => (
-            <button
-              key={t.id}
-              role="tab"
-              id={`tab-${t.id}`}
-              aria-selected={tab === t.id}
-              aria-controls={`panel-${t.id}`}
-              onClick={() => setTab(t.id)}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
+        <ProductTabs label="Wine details" tabs={DETAIL_TABS} value={tab} onChange={setTab} />
 
         <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`} className="stack" style={{ gap: 40 }}>
           {tab === 'tasting' && (
             <>
-              <div className={`cells ${styles.tasting}`}>
-                {(['nose', 'palate', 'finish'] as const).map((k) => (
-                  <div key={k}>
-                    <span className="disp accent">{k}</span>
-                    <p>{detail.tasting[k]}</p>
-                  </div>
-                ))}
-              </div>
+              <ProductTastingNotes notes={detail.tasting} variant="wine" />
               <div className={styles.tastingMore}>
                 <div className="stack" style={{ gap: 16 }}>
                   <span className="mono label-muted">Structure</span>
@@ -85,20 +67,16 @@ export function WineDetails({ detail }: { detail: WineDetail }) {
 
           {tab === 'vineyard' && (
             <div className={styles.tastingMore}>
-              <WineDetailRows rows={detail.vineyard} />
+              <ProductDetailRows rows={detail.vineyard} />
               <div className={`hatch ${styles.vineyardMap}`}>
-                <Scene
-                  kind="map"
-                  cue={detail.vineyardMap ?? 'vineyard'}
-                  label={`Map: ${detail.vineyardMap ?? 'vineyard plot'}`}
-                />
+                <Scene kind="map" cue={detail.vineyardMap} label={`Map: ${detail.vineyardMap}`} />
               </div>
             </div>
           )}
 
           {tab === 'cellar' && (
             <div style={{ maxWidth: 900 }}>
-              <WineDetailRows rows={detail.cellar} />
+              <ProductDetailRows rows={detail.cellar} />
             </div>
           )}
         </div>

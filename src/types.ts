@@ -17,21 +17,33 @@ export interface StructureBar {
   word: string
 }
 
+export interface GrowerQuote {
+  text: string
+  who: string
+  role: string
+  facts: string
+}
+
+export interface RelatedProduct {
+  id: string
+  why: string
+}
+
 export interface WineDetail {
   story: string
   tags: string[]
   vintages?: Vintage[]
   defaultVintage?: string
-  drinkWindow?: { label: string; cells: number[] }
+  drinkWindow: { label: string; cells: number[] }
   tasting: { nose: string; palate: string; finish: string }
   structure: StructureBar[]
   serve: { temp: string; decant: string; glass: string }
   pairings: { dish: string; kind: string }[]
   vineyard: [string, string][]
-  vineyardMap?: string
+  vineyardMap: string
   cellar: [string, string][]
-  quote?: { text: string; who: string; role: string; portrait: string; facts: string }
-  related: { id: string; why: string }[]
+  quote: GrowerQuote & { portrait: string }
+  related: RelatedProduct[]
 }
 
 interface BaseProduct {
@@ -66,10 +78,34 @@ export interface RawWine extends BaseProduct {
   vegan: boolean
   amphora: boolean
   magnum: boolean
-  detail?: WineDetail
+  detail: WineDetail
 }
 
 export type OilLevel = 'Delicate' | 'Medium' | 'Robust'
+
+export type OilTrait = 'fruit' | 'bitter' | 'pepper'
+
+export interface Photo {
+  img: string
+  alt: string
+  caption: string
+}
+
+export interface OilDetail {
+  style: string
+  story: string
+  tags: string[]
+  stageFact: { label: string; value: string; text: string }
+  traits: Record<OilTrait, string>
+  lot: string
+  tasting: { nose: string; palate: string; finish: string }
+  uses: { dish: string; kind: string }[]
+  peroxide: string
+  grove: [string, string][]
+  grovePhoto: Photo
+  quote?: GrowerQuote
+  related: RelatedProduct[]
+}
 
 export type Wine = RawWine & Linked
 
@@ -88,20 +124,31 @@ export interface RawOil extends BaseProduct {
   harvest: string
   limited?: boolean
   set?: { was: number; contents: string }
+  detail: OilDetail
 }
 
 export type Oil = RawOil & Linked
 
 export type Product = Wine | Oil
 
-export type GalleryShotId = 'label' | 'field' | 'cellar'
+export type GalleryShotId = 'front' | 'label' | 'pour' | 'plate'
+
+export interface LabelCopy {
+  lines: [string, string]
+  size: string
+  note: string
+  accent?: string
+}
 
 export interface GalleryShot {
   id: GalleryShotId
   name: string
+  caption: string
   kind: SceneKind
   cue: string
-  caption: string
+  tone?: string
+  text?: string
+  labelCopy?: LabelCopy
 }
 
 export interface ProductPerk {
@@ -142,6 +189,13 @@ export interface PricedLine extends CartLine {
   isClub: boolean
   maxQty: number
   glass: string
+}
+
+export interface CartState {
+  lines: CartLine[]
+  saved: CartLine[]
+  promo: string | null
+  giftNote: string | null
 }
 
 export interface Order {
@@ -265,3 +319,6 @@ export type SceneKind =
   | 'portrait'
   | 'map'
   | 'backlabel'
+  | 'frontlabel'
+  | 'pour'
+  | 'plate'

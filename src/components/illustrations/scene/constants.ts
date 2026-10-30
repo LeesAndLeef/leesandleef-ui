@@ -29,3 +29,9 @@ export const DARK_TONES: ReadonlySet<string> = new Set([
   COLORS.glassRed,
   COLORS.glassGarnet,
 ])
+
+export const GLASS_BOWL = 'M158 66 C152 128 168 170 200 178 C232 170 248 128 242 66 Z'
+
+export const POUR_BACKDROPS = [COLORS.olive300, COLORS.wine200, COLORS.sage, COLORS.stone]
+
+export const LABEL_TEXT_WIDTH = 128

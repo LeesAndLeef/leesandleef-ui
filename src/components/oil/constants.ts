@@ -1,8 +1,10 @@
-import type { OilLevel, OilSize } from '../../types'
+import { COLORS } from '../../styles/colors'
+import type { ArticleSlug, OilLevel, OilSize, OilTrait } from '../../types'
+import type { OilTab } from './types'
 
 export const STAGE_TIN_SIZES: Record<OilSize, { width: number; height: number }> = {
-  '250': { width: 200, height: 333 },
-  '500': { width: 250, height: 417 },
+  '250': { width: 216, height: 360 },
+  '500': { width: 276, height: 460 },
   '3000': { width: 300, height: 500 },
 }
 
@@ -59,3 +61,32 @@ export const STORAGE = [
 ]
 
 export const SET_ID = 'oil-tasting-set'
+
+export const OIL_TRAITS: { key: OilTrait; label: string; tone: 'olive' | 'wine' }[] = [
+  { key: 'fruit', label: 'Fruit', tone: 'olive' },
+  { key: 'bitter', label: 'Bitter', tone: 'wine' },
+  { key: 'pepper', label: 'Pepper', tone: 'wine' },
+]
+
+export const OIL_TRAIT_MAX = 5
+
+export const OIL_DETAIL_TABS: { id: OilTab; label: string }[] = [
+  { id: 'tasting', label: 'Tasting & use' },
+  { id: 'lab', label: 'Lab report' },
+  { id: 'grove', label: 'The grove' },
+]
+
+export const OIL_TASTING_STEPS = [
+  'Pour a spoonful into a small glass. Cup it in your hand to warm it.',
+  'Smell it. Green and fresh is good; crayons or old nuts are not.',
+  'Sip it and draw a little air through your teeth.',
+  'Swallow. If you cough, it’s working.',
+]
+
+export const OIL_ARTICLE_SLUG: ArticleSlug = 'olive-oil'
+
+export const STAGE_FIELD_TONE = COLORS.olive500
+
+export const STAGE_ACCENT_TONE = COLORS.wine
+
+export const STAGE_FALLBACK_TONE = COLORS.olive300

@@ -1,0 +1,12 @@
+.field {
+  left: 10%;
+  top: 12%;
+  width: 50%;
+  aspect-ratio: 1;
+}
+.accent {
+  right: 8%;
+  bottom: 12%;
+  width: 24%;
+  aspect-ratio: 1;
+}

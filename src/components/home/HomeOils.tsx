@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import oilPressCellar from '../../assets/cellar/oil-press.svg'
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import { oilPrice } from '../../lib/oil'
 import { oilPath } from '../../lib/paths'
 import { useCart } from '../../state/cart/useCart'
@@ -40,7 +40,7 @@ export function HomeOils() {
                     {o.name}
                   </Link>
                 </h3>
-                <span className="disp">{euro(o.price)}</span>
+                <span className="disp">{formatCurrency(o.price)}</span>
               </div>
               <p>{o.note}</p>
               <dl className={styles.oilFacts}>
@@ -61,7 +61,7 @@ export function HomeOils() {
                   Add 500 ml
                 </button>
                 <button className="btn btn-ghost-light btn-sm" onClick={() => add(o.id, 1, '3000')}>
-                  3 L tin · {euro(oilPrice(o, '3000'))}
+                  3 L tin · {formatCurrency(oilPrice(o, '3000'))}
                 </button>
               </div>
             </div>

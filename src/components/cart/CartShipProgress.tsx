@@ -1,5 +1,5 @@
 import { FREE_SHIPPING_FROM, MIX_SIX } from '../../constants'
-import { eur } from '../../state/cart/pricing'
+import { formatCurrency } from '../../lib/currency'
 import type { Totals } from '../../state/cart/types'
 import styles from './CartShipProgress.module.css'
 
@@ -14,9 +14,9 @@ export function CartShipProgress({ totals }: { totals: Pick<Totals, 'goodsAfter'
         <span style={{ fontWeight: 600 }}>
           {freeUnlocked
             ? 'Free delivery unlocked.'
-            : `${eur(FREE_SHIPPING_FROM - totals.goodsAfter)} away from free delivery`}
+            : `${formatCurrency(FREE_SHIPPING_FROM - totals.goodsAfter, { cents: true })} away from free delivery`}
         </span>
-        <span className="mono label-muted">Free EU delivery from €{FREE_SHIPPING_FROM}</span>
+        <span className="mono label-muted">Free EU delivery from {formatCurrency(FREE_SHIPPING_FROM)}</span>
       </div>
       <div className={styles.shipProgressBar} aria-hidden="true">
         {Array.from({ length: 12 }, (_, i) => (
@@ -30,7 +30,7 @@ export function CartShipProgress({ totals }: { totals: Pick<Totals, 'goodsAfter'
             ? '6+ bottles · mix discount on'
             : `${bottlesToGo} more bottle${bottlesToGo === 1 ? '' : 's'} for −10%`}
         </span>
-        <span>€{FREE_SHIPPING_FROM}</span>
+        <span>{formatCurrency(FREE_SHIPPING_FROM)}</span>
       </div>
     </div>
   )

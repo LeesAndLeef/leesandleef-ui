@@ -1,5 +1,6 @@
 import { FREQ_LABEL } from '../../constants'
 import { clubPlans } from '../../lib/clubPlans'
+import { formatCurrency } from '../../lib/currency'
 import type { Freq } from '../../types'
 import styles from './ClubPlans.module.css'
 
@@ -45,7 +46,7 @@ export function ClubPlans({
               </div>
               <p className={styles.planDesc}>{p.desc}</p>
               <div className={styles.planPrice}>
-                <span className="disp">€{p.price[freq]}</span>
+                <span className="disp">{formatCurrency(p.price[freq])}</span>
                 <span className="mono mono-sm">{FREQ_LABEL[freq]}</span>
               </div>
               <ul className={`square-list ${styles.planPerks}`}>

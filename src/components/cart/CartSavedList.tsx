@@ -1,4 +1,4 @@
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import type { PricedLine } from '../../types'
 import { ProductThumb } from '../product/ProductThumb'
 import styles from './CartSavedList.module.css'
@@ -18,7 +18,7 @@ export function CartSavedList({ lines, onMoveToCart }: { lines: PricedLine[]; on
             <span className="stack" style={{ gap: 4, flexGrow: 1, minWidth: 0 }}>
               <span style={{ fontWeight: 600, fontSize: 14 }}>{l.name}</span>
               <span className="disp" style={{ fontSize: 18 }}>
-                {euro(l.unit)}
+                {formatCurrency(l.unit)}
               </span>
             </span>
             <button className="btn btn-outline btn-sm" onClick={() => onMoveToCart(l.key)}>
