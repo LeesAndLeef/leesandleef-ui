@@ -1,6 +1,6 @@
+import { rng } from '../../../lib/scene/random'
 import { COLORS } from '../../../styles/colors'
 import { TREE_FILLS } from './constants'
-import { rng } from './random'
 
 export function Tree({ x, y, s, seed }: { x: number; y: number; s: number; seed: string }) {
   const r = rng(seed)

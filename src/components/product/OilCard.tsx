@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import { oilPrice, oilSize } from '../../lib/oil'
 import { oilPath } from '../../lib/paths'
 import type { Oil, OilSize } from '../../types'
@@ -39,7 +39,7 @@ export function OilCard({ oil, size, added, onAdd }: { oil: Oil; size: OilSize; 
         <div className={styles.foot}>
           <span className="stack" style={{ gap: 2 }}>
             <span className="disp" style={{ fontSize: 26 }}>
-              {euro(oilPrice(oil, size))}
+              {formatCurrency(oilPrice(oil, size))}
             </span>
             <span className="mono label-muted" style={{ fontSize: 10 }}>
               {oil.set ? oil.set.contents : oilSize(size).name}

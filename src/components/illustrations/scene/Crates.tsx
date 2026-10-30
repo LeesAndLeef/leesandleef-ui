@@ -1,6 +1,6 @@
+import { ridge } from '../../../lib/scene/ridge'
 import { COLORS } from '../../../styles/colors'
 import { Crate } from './Crate'
-import { ridge } from './ridge'
 import { Sky } from './Sky'
 import type { SceneContext } from './types'
 

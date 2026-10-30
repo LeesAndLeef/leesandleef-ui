@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import { winePath } from '../../lib/paths'
 import type { Wine, WineLayout } from '../../types'
 import { Bottle } from '../illustrations/Bottle'
@@ -28,7 +28,7 @@ export function WineCard({ wine, layout = 'grid', onAdd }: { wine: Wine; layout?
         </p>
         <p className={styles.note}>{wine.note}</p>
         <div className={styles.foot}>
-          <span className="disp">{euro(wine.price)}</span>
+          <span className="disp">{formatCurrency(wine.price)}</span>
           <button className="icon-btn" aria-label={`Add ${wine.name} to cart`} onClick={onAdd}>
             +
           </button>

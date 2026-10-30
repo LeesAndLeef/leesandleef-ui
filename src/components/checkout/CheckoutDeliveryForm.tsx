@@ -1,4 +1,4 @@
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import { submitHandler } from '../../lib/submitHandler'
 import { CheckoutFieldGrid } from './CheckoutFieldGrid'
 import { CheckoutForm } from './CheckoutForm'
@@ -37,7 +37,7 @@ export function CheckoutDeliveryForm({
               </span>
             </span>
             <span className="disp" style={{ fontSize: 20 }}>
-              {s.price ? euro(s.price) : 'Free'}
+              {s.price ? formatCurrency(s.price) : 'Free'}
             </span>
           </label>
         ))}

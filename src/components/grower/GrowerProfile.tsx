@@ -1,11 +1,8 @@
 import { useState } from 'react'
 import { COLORS } from '../../styles/colors'
 import type { GrowerProfile as Profile } from '../../types'
+import { ItalicizedText } from '../ui/ItalicizedText'
 import styles from './GrowerProfile.module.css'
-
-function withItalics(text: string) {
-  return text.split(/<em>(.*?)<\/em>/).map((part, i) => (i % 2 ? <em key={i}>{part}</em> : part))
-}
 
 export function GrowerProfile({
   profile,
@@ -60,7 +57,9 @@ export function GrowerProfile({
             </div>
             <div className={styles.prose}>
               {profile.story.map((p) => (
-                <p key={p.slice(0, 24)}>{withItalics(p)}</p>
+                <p key={p.slice(0, 24)}>
+                  <ItalicizedText text={p} />
+                </p>
               ))}
             </div>
             <figure className={`hatch-w on-dark ${styles.pullQuote}`}>

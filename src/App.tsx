@@ -1,20 +1,9 @@
+import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { FallbackPage } from './components/layout/FallbackPage'
 import { ScrollManager } from './components/layout/ScrollManager'
 import { SiteLayout } from './components/layout/SiteLayout'
-import Cart from './pages/Cart/Cart'
-import Checkout from './pages/Checkout/Checkout'
-import Club from './pages/Club/Club'
-import Grower from './pages/Grower/Grower'
-import Growers from './pages/Growers/Growers'
-import Home from './pages/Home/Home'
-import Journal from './pages/Journal/Journal'
-import NotFound from './pages/NotFound/NotFound'
-import OliveOil from './pages/OliveOil/OliveOil'
-import OliveOils from './pages/OliveOils/OliveOils'
-import Quiz from './pages/Quiz/Quiz'
-import Search from './pages/Search/Search'
-import Wine from './pages/Wine/Wine'
-import Wines from './pages/Wines/Wines'
+import HomePage from './pages/Home/HomePage'
 import {
   CART_ROUTE,
   CHECKOUT_ROUTE,
@@ -31,27 +20,48 @@ import {
   WINES_ROUTE,
 } from './routes'
 
+const CartPage = lazy(() => import('./pages/Cart/CartPage'))
+const CheckoutPage = lazy(() => import('./pages/Checkout/CheckoutPage'))
+const ClubPage = lazy(() => import('./pages/Club/ClubPage'))
+const GrowerPage = lazy(() => import('./pages/Grower/GrowerPage'))
+const GrowersPage = lazy(() => import('./pages/Growers/GrowersPage'))
+const JournalPage = lazy(() => import('./pages/Journal/JournalPage'))
+const NotFoundPage = lazy(() => import('./pages/NotFound/NotFoundPage'))
+const OliveOilPage = lazy(() => import('./pages/OliveOil/OliveOilPage'))
+const OliveOilsPage = lazy(() => import('./pages/OliveOils/OliveOilsPage'))
+const QuizPage = lazy(() => import('./pages/Quiz/QuizPage'))
+const SearchPage = lazy(() => import('./pages/Search/SearchPage'))
+const WinePage = lazy(() => import('./pages/Wine/WinePage'))
+const WinesPage = lazy(() => import('./pages/Wines/WinesPage'))
+
 export default function App() {
   return (
     <>
       <ScrollManager />
       <Routes>
         <Route element={<SiteLayout />}>
-          <Route index element={<Home />} />
-          <Route path={WINES_ROUTE} element={<Wines />} />
-          <Route path={WINE_ROUTE} element={<Wine />} />
-          <Route path={GROWERS_ROUTE} element={<Growers />} />
-          <Route path={GROWER_ROUTE} element={<Grower />} />
-          <Route path={JOURNAL_ROUTE} element={<Journal />} />
-          <Route path={OLIVE_OILS_ROUTE} element={<OliveOils />} />
-          <Route path={OLIVE_OIL_ROUTE} element={<OliveOil />} />
-          <Route path={SEARCH_ROUTE} element={<Search />} />
-          <Route path={CLUB_ROUTE} element={<Club />} />
-          <Route path={QUIZ_ROUTE} element={<Quiz />} />
-          <Route path={CART_ROUTE} element={<Cart />} />
-          <Route path={NOT_FOUND_ROUTE} element={<NotFound />} />
+          <Route index element={<HomePage />} />
+          <Route path={WINES_ROUTE} element={<WinesPage />} />
+          <Route path={WINE_ROUTE} element={<WinePage />} />
+          <Route path={GROWERS_ROUTE} element={<GrowersPage />} />
+          <Route path={GROWER_ROUTE} element={<GrowerPage />} />
+          <Route path={JOURNAL_ROUTE} element={<JournalPage />} />
+          <Route path={OLIVE_OILS_ROUTE} element={<OliveOilsPage />} />
+          <Route path={OLIVE_OIL_ROUTE} element={<OliveOilPage />} />
+          <Route path={SEARCH_ROUTE} element={<SearchPage />} />
+          <Route path={CLUB_ROUTE} element={<ClubPage />} />
+          <Route path={QUIZ_ROUTE} element={<QuizPage />} />
+          <Route path={CART_ROUTE} element={<CartPage />} />
+          <Route path={NOT_FOUND_ROUTE} element={<NotFoundPage />} />
         </Route>
-        <Route path={CHECKOUT_ROUTE} element={<Checkout />} />
+        <Route
+          path={CHECKOUT_ROUTE}
+          element={
+            <Suspense fallback={<FallbackPage />}>
+              <CheckoutPage />
+            </Suspense>
+          }
+        />
       </Routes>
     </>
   )

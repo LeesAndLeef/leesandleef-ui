@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import { winePath } from '../../lib/paths'
 import { WINES_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
@@ -49,7 +49,7 @@ export function HomeRelease() {
                 </p>
                 <p className={styles.releaseCardNote}>{w.homeNote ?? w.note}</p>
                 <div className={styles.releaseCardFoot}>
-                  <span className="disp">{euro(w.price)}</span>
+                  <span className="disp">{formatCurrency(w.price)}</span>
                   <button className="btn btn-ink btn-sm" onClick={() => add(w.id)}>
                     Add to cart
                   </button>

@@ -1,0 +1,41 @@
+.root {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(480px, 100%), 1fr));
+  gap: 40px;
+}
+.table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.table thead tr {
+  background: var(--ink);
+  color: var(--paper);
+  text-align: left;
+}
+.table thead th {
+  padding: 14px 16px;
+  font-weight: 500;
+}
+.table tbody th,
+.table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+}
+.table tbody th {
+  font-weight: 600;
+}
+.table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+.note {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-body);
+}
+.link {
+  align-self: flex-start;
+  font-weight: 600;
+}

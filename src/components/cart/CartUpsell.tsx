@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import { getProductById } from '../../lib/products'
 import { Bottle } from '../illustrations/Bottle'
 import { UPSELL_IDS } from './constants'
@@ -29,7 +29,7 @@ export function CartUpsell({ inCartIds, onAdd }: { inCartIds: string[]; onAdd: (
             <div className="stack" style={{ gap: 4, flexGrow: 1, minWidth: 0 }}>
               <span style={{ fontWeight: 600, fontSize: 14, lineHeight: 1.3 }}>{u.name}</span>
               <span className="disp" style={{ fontSize: 18 }}>
-                {euro(u.price)}
+                {formatCurrency(u.price)}
               </span>
             </div>
             <button className="icon-btn" aria-label={`Add ${u.name}`} onClick={() => onAdd(u.id)}>

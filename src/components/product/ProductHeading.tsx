@@ -7,10 +7,12 @@ export function ProductHeading({
   meta,
   title,
   grower,
+  producer,
 }: {
   meta: string[]
   title: string
   grower?: Pick<Grower, 'id' | 'name' | 'place'>
+  producer?: string
 }) {
   return (
     <div className="stack" style={{ gap: 14 }}>
@@ -20,10 +22,12 @@ export function ProductHeading({
         ))}
       </div>
       <h1 className={`disp ${styles.title}`}>{title}</h1>
-      {grower && (
+      {grower ? (
         <Link to={`${GROWERS_ROUTE}/${grower.id}`} className={styles.grower}>
           by {grower.name}, {grower.place.split(',')[0]} →
         </Link>
+      ) : (
+        producer && <span className={styles.producer}>by {producer}</span>
       )}
     </div>
   )

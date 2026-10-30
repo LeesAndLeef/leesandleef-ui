@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { isNavActive } from '../../lib/nav'
 import { CART_ROUTE, SEARCH_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
 import { NAV_LINKS } from './constants'
@@ -49,8 +50,8 @@ export function Header() {
           <Link
             key={l.label}
             to={l.to}
-            className={l.match(pathname) ? styles.active : undefined}
-            aria-current={l.match(pathname) ? 'page' : undefined}
+            className={isNavActive(l.activeOn, pathname) ? styles.active : undefined}
+            aria-current={isNavActive(l.activeOn, pathname) ? 'page' : undefined}
           >
             {l.label}
           </Link>

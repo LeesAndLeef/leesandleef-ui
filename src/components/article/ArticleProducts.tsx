@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import { getProductById } from '../../lib/products'
 import { OLIVE_OILS_ROUTE, WINES_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
@@ -43,7 +43,7 @@ export function ArticleProducts({ article: a }: { article: Pick<Article, 'slug' 
                     {p.name}
                   </Link>
                   <span className="disp" style={{ fontSize: 22 }}>
-                    {euro(p.price)}
+                    {formatCurrency(p.price)}
                   </span>
                 </span>
                 <button className="icon-btn" aria-label={`Add ${p.name} to cart`} onClick={() => add(p.id)}>

@@ -7,14 +7,16 @@ import {
   QUIZ_ROUTE,
   WINES_ROUTE,
 } from '../../routes'
-export const NAV_LINKS = [
-  { to: WINES_ROUTE, label: 'Wine', match: (p: string) => p === WINES_ROUTE || p.startsWith(`${WINES_ROUTE}/`) },
+import type { NavLink } from './types'
+
+export const NAV_LINKS: NavLink[] = [
+  { to: WINES_ROUTE, label: 'Wine', activeOn: { paths: [WINES_ROUTE], prefixes: [`${WINES_ROUTE}/`] } },
   {
     to: OLIVE_OILS_ROUTE,
     label: 'Olive oil',
-    match: (p: string) => p === OLIVE_OILS_ROUTE || p.startsWith(`${OLIVE_OILS_ROUTE}/`),
+    activeOn: { paths: [OLIVE_OILS_ROUTE], prefixes: [`${OLIVE_OILS_ROUTE}/`] },
   },
-  { to: GROWERS_ROUTE, label: 'Growers', match: (p: string) => p.startsWith(GROWERS_ROUTE) },
-  { to: CLUB_ROUTE, label: 'The Club', match: (p: string) => p === CLUB_ROUTE || p === QUIZ_ROUTE },
-  { to: `${HOME_ROUTE}#journal`, label: 'Journal', match: (p: string) => p.startsWith(JOURNALS_ROUTE) },
+  { to: GROWERS_ROUTE, label: 'Growers', activeOn: { prefixes: [GROWERS_ROUTE] } },
+  { to: CLUB_ROUTE, label: 'The Club', activeOn: { paths: [CLUB_ROUTE, QUIZ_ROUTE] } },
+  { to: `${HOME_ROUTE}#journal`, label: 'Journal', activeOn: { prefixes: [JOURNALS_ROUTE] } },
 ]

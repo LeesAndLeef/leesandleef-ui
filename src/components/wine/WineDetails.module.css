@@ -5,43 +5,6 @@
   flex-direction: column;
   gap: 40px;
 }
-.tabs {
-  display: flex;
-  flex-wrap: wrap;
-  border-bottom: 1px solid var(--ink);
-}
-.tabs button {
-  height: 56px;
-  padding: 0 28px;
-  border: 0;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -1px;
-  background: transparent;
-  color: var(--muted);
-  font-weight: 500;
-  font-size: 16px;
-}
-.tabs button[aria-selected="true"] {
-  border-bottom-color: var(--wine);
-  color: var(--ink);
-  font-weight: 600;
-}
-.tasting {
-  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-}
-.tasting > div {
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.tasting :global(.disp) {
-  font-size: 44px;
-}
-.tasting p {
-  font-size: 16px;
-  line-height: 1.6;
-}
 .tastingMore {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
@@ -82,6 +45,22 @@
 }
 .serve :global(.disp) {
   font-size: 26px;
+}
+@media (max-width: 720px) {
+  .serve {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .serve > div {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+  .serve :global(.disp) {
+    font-size: 22px;
+    text-align: right;
+  }
 }
 .pairings {
   margin: 0;

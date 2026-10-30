@@ -79,4 +79,6 @@ export const COLORS = {
   glassAmber: 'var(--glass-amber)',
   glassRose: 'var(--glass-rose)',
   glassStraw: 'var(--glass-straw)',
+  oilGreen: 'var(--oil-green)',
+  oilGold: 'var(--oil-gold)',
 }

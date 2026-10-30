@@ -1,6 +1,6 @@
 import { type ReactNode, useState } from 'react'
 import type { GalleryShot } from '../../types'
-import { Scene } from '../illustrations/Scene'
+import { ProductGalleryPicture } from './ProductGalleryPicture'
 import type { GalleryView } from './types'
 import styles from './ProductGallery.module.css'
 
@@ -29,7 +29,7 @@ export function ProductGallery({
       <div className={`${pattern} ${styles.stage}`}>
         {shot ? (
           <>
-            <Scene kind={shot.kind} cue={shot.cue} tone={tone} text={title} label={shot.caption} />
+            <ProductGalleryPicture shot={shot} tone={tone} title={title} />
             <span className="mono scene-cap">{shot.caption}</span>
           </>
         ) : (
@@ -55,7 +55,7 @@ export function ProductGallery({
             aria-label={s.name}
             onClick={() => setView(s.id)}
           >
-            <Scene kind={s.kind} cue={s.cue} tone={tone} text={title} />
+            <ProductGalleryPicture shot={s} tone={tone} title={title} decorative />
           </button>
         ))}
       </div>

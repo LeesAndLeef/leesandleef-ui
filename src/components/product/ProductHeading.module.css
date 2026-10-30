@@ -11,3 +11,8 @@
   font-weight: 500;
   align-self: flex-start;
 }
+.producer {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink-body);
+}

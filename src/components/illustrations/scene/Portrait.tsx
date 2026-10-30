@@ -1,6 +1,6 @@
+import { ridge } from '../../../lib/scene/ridge'
 import { COLORS } from '../../../styles/colors'
 import { DARK_TONES } from './constants'
-import { ridge } from './ridge'
 import type { SceneContext } from './types'
 
 export function Portrait({ r, tone, id }: SceneContext) {

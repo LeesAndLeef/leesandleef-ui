@@ -1,0 +1,44 @@
+.root {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--ink-a25);
+  border: 1px solid var(--ink-a25);
+}
+.trait {
+  background: var(--paper);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.value {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bar {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 3px;
+}
+.bar span {
+  height: 10px;
+  background: var(--ink-a12);
+}
+.bar .olive {
+  background: var(--olive-700);
+}
+.bar .wine {
+  background: var(--wine);
+}
+.word {
+  font-size: 13px;
+}
+@media (max-width: 720px) {
+  .trait {
+    padding: 12px 10px;
+  }
+}

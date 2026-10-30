@@ -4,11 +4,14 @@ import { Amphora } from './scene/Amphora'
 import { BackLabel } from './scene/BackLabel'
 import { Casks } from './scene/Casks'
 import { Crates } from './scene/Crates'
+import { FrontLabel } from './scene/FrontLabel'
 import { Grove } from './scene/Grove'
 import { Landscape } from './scene/Landscape'
 import { Leaves } from './scene/Leaves'
 import { MapScene } from './scene/MapScene'
+import { Plate } from './scene/Plate'
 import { Portrait } from './scene/Portrait'
+import { Pour } from './scene/Pour'
 import { Press } from './scene/Press'
 import { Rack } from './scene/Rack'
 import { Soil } from './scene/Soil'
@@ -31,20 +34,9 @@ export const SCENES_BY_KIND: Record<SceneKind, (ctx: SceneContext) => ReactNode>
   portrait: Portrait,
   map: MapScene,
   backlabel: BackLabel,
+  frontlabel: FrontLabel,
+  pour: Pour,
+  plate: Plate,
 }
 
 export const BOTTLE = 'M24 0h12v52l14 18v130H10V70l14-18z'
-
-export const SCENE_RULES: [RegExp, SceneKind][] = [
-  [/amphora/, 'amphora'],
-  [/punching|fermenter|vat/, 'vat'],
-  [/press/, 'press'],
-  [/disgorg|pét-nat|riddl/, 'rack'],
-  [/cask|barrel|cellar/, 'casks'],
-  [/crate|basket/, 'crates'],
-  [/wall|terrace/, 'walls'],
-  [/leaves|leaf|bura/, 'leaves'],
-  [/olive|net|grove/, 'grove'],
-  [/soil|terra rossa in hand/, 'soil'],
-  [/portrait/, 'portrait'],
-]

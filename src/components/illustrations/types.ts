@@ -1,10 +1,11 @@
-import type { SceneKind } from '../../types'
+import type { LabelCopy, SceneKind } from '../../types'
 
 export interface SceneProps {
   kind?: SceneKind
   cue: string
   tone?: string
   text?: string
+  labelCopy?: LabelCopy
   label?: string
   className?: string
 }

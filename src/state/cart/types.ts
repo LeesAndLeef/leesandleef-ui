@@ -1,14 +1,7 @@
-import type { CartLine, PricedLine } from '../../types'
-import type { computeTotals } from './pricing'
+import type { computeTotals } from '../../lib/pricing'
+import type { CartState, PricedLine } from '../../types'
 
 export type Totals = ReturnType<typeof computeTotals>
-
-export interface CartState {
-  lines: CartLine[]
-  saved: CartLine[]
-  promo: string | null
-  giftNote: string | null
-}
 
 export interface CartNotice {
   text: string

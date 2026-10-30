@@ -1,5 +1,5 @@
+import { rng } from '../../../lib/scene/random'
 import { COLORS } from '../../../styles/colors'
-import { rng } from './random'
 
 export function Crate({
   x,

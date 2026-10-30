@@ -1,4 +1,4 @@
-import { eur } from '../../state/cart/pricing'
+import { formatCurrency } from '../../lib/currency'
 import styles from './CheckoutReview.module.css'
 
 export function CheckoutReview({
@@ -44,7 +44,7 @@ export function CheckoutReview({
       </p>
       <button className={`btn btn-primary ${styles.placeBtn}`} onClick={onPlaceOrder}>
         <span>Place order</span>
-        <span className="disp">{eur(total)}</span>
+        <span className="disp">{formatCurrency(total, { cents: true })}</span>
       </button>
     </div>
   )

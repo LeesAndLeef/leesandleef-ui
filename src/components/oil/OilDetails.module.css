@@ -1,0 +1,18 @@
+.root {
+  padding-top: 72px;
+  padding-bottom: 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: 40px;
+}
+@media (max-width: 720px) {
+  .root {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+}

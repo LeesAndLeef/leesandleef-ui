@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
-import { euro } from '../../lib/euro'
+import { formatCurrency } from '../../lib/currency'
 import { site } from '../../lib/site'
 import { CART_ROUTE } from '../../routes'
-import { eur } from '../../state/cart/pricing'
 import type { Totals } from '../../state/cart/types'
 import { COLORS } from '../../styles/colors'
 import type { PricedLine } from '../../types'
@@ -52,30 +51,38 @@ export function CheckoutSummary({
               </span>
             </span>
             <span className="num" style={{ fontSize: 14 }}>
-              {euro(l.total)}
+              {formatCurrency(l.total)}
             </span>
           </li>
         ))}
       </ul>
       {!placed && (
         <div className="stack" style={{ fontSize: 15 }}>
-          <SummaryRow variant="checkout" label="Subtotal" value={eur(totals.subtotal)} />
+          <SummaryRow variant="checkout" label="Subtotal" value={formatCurrency(totals.subtotal, { cents: true })} />
           {totals.mixDiscount > 0 && (
-            <SummaryRow variant="checkout" label="Mix 6 · −10% wine" value={'−' + eur(totals.mixDiscount)} />
+            <SummaryRow
+              variant="checkout"
+              label="Mix 6 · −10% wine"
+              value={'−' + formatCurrency(totals.mixDiscount, { cents: true })}
+            />
           )}
           {totals.promoDiscount > 0 && (
-            <SummaryRow variant="checkout" label={`Promo ${promo}`} value={'−' + eur(totals.promoDiscount)} />
+            <SummaryRow
+              variant="checkout"
+              label={`Promo ${promo}`}
+              value={'−' + formatCurrency(totals.promoDiscount, { cents: true })}
+            />
           )}
           <SummaryRow
             variant="checkout"
             label={`Delivery · ${delivery.name}`}
-            value={delivery.price ? eur(delivery.price) : 'Free'}
+            value={delivery.price ? formatCurrency(delivery.price, { cents: true }) : 'Free'}
           />
         </div>
       )}
       <div className={styles.total}>
         <span style={{ fontWeight: 600 }}>Total</span>
-        <span className="disp">{eur(total)}</span>
+        <span className="disp">{formatCurrency(total, { cents: true })}</span>
       </div>
       <span className="mono label-muted" style={{ fontSize: 10, marginTop: -14 }}>
         VAT included

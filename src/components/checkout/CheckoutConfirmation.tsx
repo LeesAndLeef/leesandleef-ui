@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
+import { formatCurrency } from '../../lib/currency'
 import { CLUB_ROUTE, HOME_ROUTE } from '../../routes'
-import { eur } from '../../state/cart/pricing'
 import { COLORS } from '../../styles/colors'
 import type { Order } from '../../types'
 import styles from './CheckoutConfirmation.module.css'
@@ -32,7 +32,7 @@ export function CheckoutConfirmation({ order }: { order: Order }) {
           <div>
             <dt className="mono mono-sm">Total</dt>
             <dd className="disp" style={{ fontSize: 24 }}>
-              {eur(order.total)}
+              {formatCurrency(order.total, { cents: true })}
             </dd>
           </div>
         </dl>

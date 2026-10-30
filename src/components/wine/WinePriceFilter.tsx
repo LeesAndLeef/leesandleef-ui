@@ -1,3 +1,4 @@
+import { formatCurrency } from '../../lib/currency'
 import styles from './WinePriceFilter.module.css'
 
 export function WinePriceFilter({
@@ -71,7 +72,7 @@ export function WinePriceFilter({
           value={low}
           aria-label="Minimum price"
           style={{ zIndex: lowOnTop ? 2 : 1 }}
-          aria-valuetext={`€${low}`}
+          aria-valuetext={formatCurrency(low)}
           onChange={(e) => setLow(Number(e.target.value))}
         />
         <input
@@ -82,7 +83,7 @@ export function WinePriceFilter({
           value={high}
           aria-label="Maximum price"
           style={{ zIndex: lowOnTop ? 1 : 2 }}
-          aria-valuetext={`€${high}`}
+          aria-valuetext={formatCurrency(high)}
           onChange={(e) => setHigh(Number(e.target.value))}
         />
       </div>
