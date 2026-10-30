@@ -3,6 +3,9 @@
   justify-content: space-between;
   gap: 12px;
 }
+.value {
+  white-space: nowrap;
+}
 .cart {
   padding: 10px 0;
   border-bottom: 1px solid var(--paper-a30);

@@ -19,7 +19,8 @@
 }
 
 .summary {
-  flex: 1 1 380px;
+  flex: 1 1 560px;
+  min-width: min(560px, 100%);
   max-width: 100%;
   padding: 40px var(--gutter) 64px;
   display: flex;

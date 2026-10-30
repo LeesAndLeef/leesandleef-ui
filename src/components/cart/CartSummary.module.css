@@ -19,10 +19,20 @@
 }
 .summaryTotal {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
+  gap: 4px 12px;
   padding: 18px 0 4px;
 }
 .summaryTotal :global(.disp) {
-  font-size: 44px;
+  min-width: 0;
+  font-size: 32px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+  .summaryTotal :global(.disp) {
+    font-size: 24px;
+  }
 }

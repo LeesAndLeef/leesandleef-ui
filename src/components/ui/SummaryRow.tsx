@@ -4,7 +4,7 @@ export function SummaryRow({ label, value, variant }: { label: string; value: st
   return (
     <div className={`${styles.root} ${styles[variant]}`}>
       <span>{label}</span>
-      <span className="num">{value}</span>
+      <span className={`num ${styles.value}`}>{value}</span>
     </div>
   )
 }

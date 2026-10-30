@@ -95,6 +95,7 @@ Then check the result in a browser:
 
 ## Rules
 
+- After any browser check, delete every throwaway Chrome profile and screenshot folder you created (`rm -rf` the `--user-data-dir` folders). Each profile is about 160 MB, and leftovers once filled the disk.
 - Never commit, push, branch, stash or reset. Leave changes uncommitted for the user to review.
 - Don't add dependencies without asking.
 - Don't touch `.yarn/`, `dist/` or the lockfile unless the task needs it.
