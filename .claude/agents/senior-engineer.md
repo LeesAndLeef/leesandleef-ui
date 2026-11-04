@@ -35,9 +35,9 @@ Where the design has `[PLACEHOLDER]` text, fill it with believable fictional con
 2. Size the change. For a small, contained task, just build it. For anything that touches several pages, shared data shapes, routes, cart or pricing logic, or adds a dependency, write a short plan first: the approach, the alternatives you considered and why you chose this one, what could break, and how you'll test it. If the person who asked is around, share the plan before building; otherwise build it and include the plan in your report.
 3. Build in the smallest coherent way. If it changes shared data, a type or a route, update every caller in the same pass. Prefer extending existing patterns over inventing new ones; when a new abstraction is worth it, say why.
 4. Think like a senior about every change:
-   - Correctness and edge cases: empty states, zero and maximum values, long text, missing data, rapid repeated clicks, back/forward navigation, a cart restored from localStorage with old data.
+   - Correctness and edge cases: empty states, zero and maximum values, long text, missing data, rapid repeated clicks, back/forward navigation, loading and error states, an expired session (401), server errors and validation `issues` shown on the right form fields.
    - Accessibility: keyboard paths, focus order and visible focus, labels and roles, contrast, reduced motion.
-   - Performance: bundle size, unnecessary re-renders, large inline assets, work done on every render. The build already warns that the main chunk is over 500 kB (small SVGs are inlined and nothing is code-split); don't make it worse, and suggest route-level splitting when it's relevant.
+   - Performance: bundle size, unnecessary re-renders, large inline assets, work done on every render. Route pages are already lazy-loaded; the main chunk is about 410 kB (React, the router, React Query and axios), so don't make it worse, and keep dev-only tools out of production.
    - Responsiveness: check phone width (390px) as well as desktop for anything visual.
    - Data integrity: prices, totals and discounts must stay consistent between product pages, cart and checkout.
 5. If the task is ambiguous in a way that changes the outcome, state your assumption. If something looks wrong but is out of scope, report it with a suggested fix instead of changing it.
@@ -73,10 +73,11 @@ Then check the result in a browser:
 ## Known technical debt
 
 Keep these in mind and raise them when your work touches them:
-- The main JS chunk is over 500 kB; route-level code splitting (`React.lazy`) and not inlining SVGs would fix it.
+- Pages still read static content from `src/data/` and use the localStorage cart (`src/state/cart/`, `src/lib/pricing.ts`, `src/lib/cartStorage.ts`). The API services and hooks exist; move pages to them area by area and delete the old code they leave unused.
 - Biome's recommended lint rules are off; turning them on reports about 176 issues, mostly `type="button"` missing on buttons, SVGs without titles, and array-index keys.
-- Checkout payment is a placeholder: no provider or order API is connected (`placeOrder` in `src/pages/Checkout/CheckoutPage.tsx`).
-- `README.md` is out of date (routes and the description of pictures).
+- Checkout isn't connected to the API yet: `placeOrder` in `src/pages/Checkout/CheckoutPage.tsx` fakes the order. `usePlaceOrder()` exists, checkout needs a logged-in account, and card payments need Stripe's Payment Element with the returned `clientSecret`.
+- There are no login, signup or account pages yet, although `useLogin()`, `useSignup()`, `useLogout()` and `useAccount()` exist.
+- `README.md` is out of date on routes and pictures.
 
 ## Report
 
