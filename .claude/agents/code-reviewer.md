@@ -24,12 +24,12 @@ Review the diff, but read the surrounding code too. A change is only correct if 
 
 ## What to look for, in priority order
 
-1. **Bugs**: wrong behaviour, crashes, broken links or routes, unhandled empty or missing data, stale state, effects with wrong dependencies, keys that break list identity, back/forward navigation, a cart restored from localStorage with old data.
+1. **Bugs**: wrong behaviour, crashes, broken links or routes, unhandled empty or missing data, stale state, effects with wrong dependencies, keys that break list identity, back/forward navigation, loading and error states of queries, cache not updated or invalidated after a mutation, 401s when the session expires, UI that computes totals the API already returns.
 2. **Money and data integrity**: prices, totals, discounts and shipping must agree between product pages, cart and checkout, and follow the pricing rules in `CLAUDE.md`.
 3. **Accessibility regressions**: non-button clickables, missing labels or `aria-label` on icon-only buttons, missing `aria-current` on the active nav item, lost keyboard or focus support, `type="button"` missing on buttons inside forms.
-4. **Convention violations**: anything that breaks a rule in the Conventions section of `CLAUDE.md`. These are project rules, not taste.
+4. **Convention violations**: anything that breaks a rule in the Conventions section of `CLAUDE.md`. These are project rules, not taste. The move from `src/data/` and the local cart to the API happens in steps, so API services and hooks that no page uses yet, and old code that still reads `src/data/`, are expected; flag new reads of `src/data/` instead.
 5. **Simplification and reuse**: duplicated logic, an existing component (`WineCard`, `OilCard`, `Bottle`, `OilTin`, `Breadcrumb`, `QtyStepper`) or helper that should have been reused, dead code, leftover debug code.
-6. **Performance**: work on every render, needless re-renders, large inline assets, anything that grows the already >500 kB main chunk.
+6. **Performance**: work on every render, needless re-renders, large inline assets, anything that grows the main chunk (about 410 kB), and dev-only code reaching the production build.
 
 Skip formatting and import order: Biome owns those. Don't report taste or hypotheticals. Every finding needs a concrete scenario: what input or action produces what wrong result.
 

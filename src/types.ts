@@ -322,3 +322,202 @@ export type SceneKind =
   | 'frontlabel'
   | 'pour'
   | 'plate'
+
+export type RawCartItem = Omit<RawWine, 'detail'> | Omit<RawOil, 'detail'> | RawClubPlan
+
+export type CartItem = Omit<Wine, 'detail'> | Omit<Oil, 'detail'> | ClubPlan
+
+export interface CartPricedLine extends CartLine {
+  kind: CartItem['kind']
+  item: CartItem
+  name: string
+  meta: string
+  unit: number
+  total: number
+  isWine: boolean
+  isClub: boolean
+  maxQty: number
+  glass: string
+}
+
+export interface CartTotals {
+  count: number
+  wineBottles: number
+  subtotal: number
+  mixDiscount: number
+  promoDiscount: number
+  goodsAfter: number
+  shipping: number
+  total: number
+}
+
+export interface Cart {
+  lines: CartPricedLine[]
+  saved: CartPricedLine[]
+  promo: string | null
+  giftNote: string | null
+  totals: CartTotals
+}
+
+export type ShipMethod = 'std' | 'sat' | 'pick'
+
+export interface ShipOption {
+  id: ShipMethod
+  name: string
+  desc: string
+  price: number
+}
+
+export interface AddCartLineInput {
+  id: string
+  qty?: number
+  option?: string
+}
+
+export interface SetCartQtyInput {
+  key: string
+  qty: number
+}
+
+export interface Address {
+  street: string
+  postcode: string
+  city: string
+  country: string
+  door?: string
+}
+
+export interface Account {
+  id: string
+  email: string
+  firstName: string
+  lastName: string
+  phone: string | null
+  address: Address | null
+}
+
+export interface LoginInput {
+  email: string
+  password: string
+}
+
+export interface SignupInput extends LoginInput {
+  firstName: string
+  lastName: string
+  phone?: string
+}
+
+export interface AccountUpdate {
+  firstName?: string
+  lastName?: string
+  phone?: string | null
+  address?: Address | null
+}
+
+export type PayMethod = 'card' | 'wallet' | 'bank'
+
+export type OrderStatus = 'pending_payment' | 'awaiting_transfer' | 'paid' | 'shipped' | 'cancelled'
+
+export interface PlaceOrderInput {
+  details: { first: string; last: string; phone?: string; age: true; news?: boolean }
+  ship: ShipMethod
+  address?: Address
+  pay: PayMethod
+}
+
+export type OrderLine = Omit<CartPricedLine, 'maxQty' | 'item' | 'glass'> &
+  Partial<Pick<CartPricedLine, 'item' | 'glass'>>
+
+export interface CustomerOrder {
+  id: string
+  number: string
+  status: OrderStatus
+  firstName: string
+  email: string
+  shipName: string
+  payName: string
+  shipTo: string
+  giftNote: string | null
+  promo: string | null
+  lines: OrderLine[]
+  totals: Pick<CartTotals, 'subtotal' | 'mixDiscount' | 'promoDiscount' | 'shipping' | 'total'>
+  total: number
+  createdAt: string
+  paidAt: string | null
+}
+
+export type PaymentInstructions =
+  | { method: 'stripe'; clientSecret: string }
+  | { method: 'bank'; beneficiary: string; iban: string; bic?: string; reference: string; amount: number }
+  | { method: 'none' }
+
+export interface PlacedOrder {
+  order: CustomerOrder
+  payment: PaymentInstructions
+}
+
+export interface Site {
+  releaseShipDate: string
+  nextBoxCloses: string
+  street: string
+  city: string
+  hours: string
+  email: string
+  shipCountries: string[]
+  nonEuShippingYear: string
+}
+
+export interface QuizProfile {
+  title: string
+  text: string
+}
+
+export interface Quiz {
+  questions: QuizQuestion[]
+  profiles: Partial<Record<WineFilterType, QuizProfile>>
+}
+
+export interface QuizRecommendation {
+  top: WineFilterType
+  profile: QuizProfile
+  wines: Wine[]
+}
+
+export interface WineListParams {
+  type?: WineType
+  growerId?: string
+}
+
+export interface OilListParams {
+  growerId?: string
+}
+
+export interface VisitRequestInput {
+  name: string
+  email: string
+  date: string
+  guests: number
+  notes?: string
+}
+
+export interface VisitConfirmation {
+  id: string
+  host: string
+  date: string
+}
+
+export type NewsletterSource = 'footer' | 'article' | 'checkout'
+
+export interface NewsletterSignup {
+  email: string
+  source?: NewsletterSource
+}
+
+export interface ApiIssue {
+  path: string
+  message: string
+}
+
+export interface NewsletterSubscription {
+  subscribed: true
+}

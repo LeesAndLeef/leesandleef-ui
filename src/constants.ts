@@ -25,3 +25,18 @@ export const MIX_DISCOUNT_RATE = 0.1
 export const PROMO_CODES: Record<string, number> = { HARVEST10: 0.1 }
 
 export const EMPTY_CART: CartState = { lines: [], saved: [], promo: null, giftNote: null }
+
+export const QUERY_KEYS = {
+  SITE: ['site'],
+  WINES: ['wines'],
+  OILS: ['oils'],
+  CLUB_PLANS: ['club-plans'],
+  GROWERS: ['growers'],
+  ARTICLES: ['articles'],
+  SEARCH: ['search'],
+  QUIZ: ['quiz'],
+  CART: ['cart'],
+  SHIPPING_OPTIONS: ['cart', 'shipping-options'],
+  ACCOUNT: ['account'],
+  ORDERS: ['orders'],
+} as const
