@@ -8,9 +8,7 @@ You review code in the Lees & Leaf storefront in this repository: a natural wine
 
 ## The project
 
-- React 19, TypeScript, Vite, react-router-dom v7, yarn 4 (`nodeLinker: node-modules`), plain CSS Modules, no UI library.
-- The file layout and folder structure are being reworked, so don't assume where anything lives. Explore `src/` yourself and treat what you find as the current state.
-- Cart pricing rules: −10% on 6+ wine bottles, promo `HARVEST10`, free EU shipping from €120 of goods (otherwise €9.90), Club plans ship free and are excluded from discounts. The cart is saved to localStorage.
+Read `CLAUDE.md` at the repo root first: it has the stack, cart pricing rules and every project convention you review against.
 
 ## What to review
 
@@ -27,20 +25,9 @@ Review the diff, but read the surrounding code too. A change is only correct if 
 ## What to look for, in priority order
 
 1. **Bugs**: wrong behaviour, crashes, broken links or routes, unhandled empty or missing data, stale state, effects with wrong dependencies, keys that break list identity, back/forward navigation, a cart restored from localStorage with old data.
-2. **Money and data integrity**: prices, totals, discounts and shipping must agree between product pages, cart and checkout, and follow the pricing rules above.
+2. **Money and data integrity**: prices, totals, discounts and shipping must agree between product pages, cart and checkout, and follow the pricing rules in `CLAUDE.md`.
 3. **Accessibility regressions**: non-button clickables, missing labels or `aria-label` on icon-only buttons, missing `aria-current` on the active nav item, lost keyboard or focus support, `type="button"` missing on buttons inside forms.
-4. **Convention violations** (these are project rules, not taste):
-   - No comments anywhere: TS, TSX (including JSX) or CSS.
-   - One component per file. `src/pages/` holds only route pages. No `*View` wrappers. Page components and their files end in `Page`; nothing else does.
-   - Component folders hold only components, CSS modules, `types.ts` and `constants.ts`. Plain functions in `src/lib/`, hooks in `src/hooks/`. `src/state/` holds only the provider and its hook. Files that export components export only components.
-   - Types in a `types.ts` next to their users (shared ones in `src/types.ts`), imported with `import type`. Constants in `constants.ts` (shared ones in `src/constants.ts`), UPPER_SNAKE_CASE.
-   - `src/data/` holds only raw content a backend could serve and is read only through `src/lib/`.
-   - Product links via `winePath()`, `oilPath()` or `item.path`; internal paths built from the `_ROUTE` constants in `src/routes.ts`, never written as strings.
-   - Prices via `formatCurrency()` from `src/lib/currency.ts`; never a hand-built `€` string.
-   - CSS Modules next to their component, imported as `styles`; only `src/styles/global.css` is global. No styling another component's markup. No hard-coded colours: tokens in `global.css` and `src/styles/colors.ts`.
-   - Pictures in `src/assets/` grouped by kind and named after what they show.
-   - SOLID as applied to React: single responsibility, extension through props and composition, shared prop contracts for same-role components, narrow props (`Pick<…>`), no direct `localStorage` or hard-coded URLs in components.
-   - `react-hooks` purity: no `Date.now()` or random values during render.
+4. **Convention violations**: anything that breaks a rule in the Conventions section of `CLAUDE.md`. These are project rules, not taste.
 5. **Simplification and reuse**: duplicated logic, an existing component (`WineCard`, `OilCard`, `Bottle`, `OilTin`, `Breadcrumb`, `QtyStepper`) or helper that should have been reused, dead code, leftover debug code.
 6. **Performance**: work on every render, needless re-renders, large inline assets, anything that grows the already >500 kB main chunk.
 
