@@ -1,14 +1,15 @@
-import { type FormEvent, useMemo } from 'react'
+import type { FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { OilCard } from '../../components/product/OilCard'
 import { WineCard } from '../../components/product/WineCard'
 import { Breadcrumb } from '../../components/ui/Breadcrumb'
 import { DEFAULT_OIL_SIZE } from '../../constants'
+import { useSearch } from '../../hooks/search/useSearch'
 import { useKeyedState } from '../../hooks/useKeyedState'
-import { search } from '../../lib/search'
+import { searchSummary } from '../../lib/search'
 import { GROWERS_ROUTE, HOME_ROUTE, OLIVE_OILS_ROUTE, SEARCH_ROUTE, WINES_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
-import { SEARCH_SUGGESTIONS } from './constants'
+import { NO_RESULTS, SEARCH_ERROR, SEARCH_SUGGESTIONS, SEARCHING_LABEL } from './constants'
 import styles from './SearchPage.module.css'
 
 export default function SearchPage() {
@@ -18,7 +19,8 @@ export default function SearchPage() {
   const { add } = useCart()
   const [draft, setDraft] = useKeyedState(query, query)
   const [added, setAdded] = useKeyedState<Record<string, boolean>>(query, {})
-  const results = useMemo(() => search(query), [query])
+  const { data: results = NO_RESULTS, isFetching, isError } = useSearch(query)
+  const searching = query.trim() !== '' && isFetching
   const total = results.wines.length + results.oils.length + results.growers.length
 
   function submit(e: FormEvent) {
@@ -59,16 +61,7 @@ export default function SearchPage() {
           </form>
           {query && (
             <p className="mono label-muted" role="status">
-              {total
-                ? [
-                    results.wines.length && `${results.wines.length} wine${results.wines.length === 1 ? '' : 's'}`,
-                    results.oils.length && `${results.oils.length} olive oil${results.oils.length === 1 ? '' : 's'}`,
-                    results.growers.length &&
-                      `${results.growers.length} grower${results.growers.length === 1 ? '' : 's'}`,
-                  ]
-                    .filter(Boolean)
-                    .join(' · ')
-                : 'No matches'}
+              {isError ? SEARCH_ERROR : searching && total === 0 ? SEARCHING_LABEL : searchSummary(results)}
             </p>
           )}
         </div>
@@ -76,7 +69,7 @@ export default function SearchPage() {
 
       <section className="section">
         <div className={`container ${styles.body}`}>
-          {total === 0 && (
+          {total === 0 && !searching && !isError && (
             <div className={`hatch ${styles.empty}`}>
               <h2 className="disp">{query ? 'Nothing matches.' : 'What are you after?'}</h2>
               <p>Try a grape, a grower, a region — or one of these:</p>

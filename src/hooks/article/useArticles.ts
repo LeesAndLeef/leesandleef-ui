@@ -1,6 +1,4 @@
-import { QUERY_KEYS } from '../../constants'
-import { ArticleService } from '../../services/article/ArticleService'
-import { useGetData } from '../useGetData'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { articlesQuery } from '../../lib/catalogQueries'
 
-export const useArticles = () =>
-  useGetData(QUERY_KEYS.ARTICLES, (signal) => ArticleService.create().getArticles(signal))
+export const useArticles = () => useSuspenseQuery(articlesQuery()).data

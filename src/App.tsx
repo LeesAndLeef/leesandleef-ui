@@ -1,5 +1,7 @@
-import { lazy, Suspense } from 'react'
+import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { AsyncBoundary } from './components/layout/AsyncBoundary'
+import { ErrorPage } from './components/layout/ErrorPage'
 import { FallbackPage } from './components/layout/FallbackPage'
 import { ScrollManager } from './components/layout/ScrollManager'
 import { SiteLayout } from './components/layout/SiteLayout'
@@ -57,9 +59,9 @@ export default function App() {
         <Route
           path={CHECKOUT_ROUTE}
           element={
-            <Suspense fallback={<FallbackPage />}>
+            <AsyncBoundary pending={<FallbackPage />} failed={(retry) => <ErrorPage onRetry={retry} />}>
               <CheckoutPage />
-            </Suspense>
+            </AsyncBoundary>
           }
         />
       </Routes>

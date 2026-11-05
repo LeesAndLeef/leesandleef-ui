@@ -1,4 +1,5 @@
 import { apiPath } from '../../lib/apiPath'
+import { withGrowerAssets } from '../../lib/assets'
 import type { Grower, VisitConfirmation, VisitRequestInput } from '../../types'
 import { BaseService } from '../BaseService'
 import { API_ENDPOINTS, API_SEGMENTS } from '../constants'
@@ -18,15 +19,11 @@ export class GrowerService extends BaseService<Grower> {
   }
 
   protected toModel(dto: Grower) {
-    return dto
+    return withGrowerAssets(dto)
   }
 
   async getGrowers(signal?: AbortSignal) {
     return this.toModels(await this.httpClient.get<Grower[]>(API_ENDPOINTS.GROWERS, { signal }))
-  }
-
-  async getGrower(id: string, signal?: AbortSignal) {
-    return this.toModel(await this.httpClient.get<Grower>(apiPath(API_ENDPOINTS.GROWERS, id), { signal }))
   }
 
   requestVisit(growerId: string, visit: Readonly<VisitRequestInput>) {

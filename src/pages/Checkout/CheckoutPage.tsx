@@ -11,17 +11,20 @@ import { CheckoutPaymentForm } from '../../components/checkout/CheckoutPaymentFo
 import { CheckoutReview } from '../../components/checkout/CheckoutReview'
 import { CheckoutStep } from '../../components/checkout/CheckoutStep'
 import { CheckoutSummary } from '../../components/checkout/CheckoutSummary'
-import { COUNTRIES, PAY_NAMES } from '../../components/checkout/constants'
+import { PAY_NAMES } from '../../components/checkout/constants'
 import type { CheckoutAddress, CheckoutDetails, Pay, Ship, ShipOption } from '../../components/checkout/types'
 import { PageLayout } from '../../components/layout/PageLayout'
+import { useSite } from '../../hooks/site/useSite'
 import { formatCurrency } from '../../lib/currency'
 import { newOrderNumber } from '../../lib/orderNumber'
+import { shipCountryNames } from '../../lib/site'
 import { CART_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
 import type { Order } from '../../types'
 
 export default function CheckoutPage() {
   const cart = useCart()
+  const countries = shipCountryNames(useSite())
   const { priced, totals } = cart
   const [order, setOrder] = useState<Order | null>(null)
   const [step, setStep] = useState(1)
@@ -37,7 +40,7 @@ export default function CheckoutPage() {
     street: '',
     postcode: '',
     city: '',
-    country: COUNTRIES[0],
+    country: countries[0],
     door: '',
   })
   const [ship, setShip] = useState<Ship>('std')
@@ -110,6 +113,7 @@ export default function CheckoutPage() {
               >
                 <CheckoutDeliveryForm
                   ships={ships}
+                  countries={countries}
                   ship={ship}
                   onShipChange={setShip}
                   address={address}

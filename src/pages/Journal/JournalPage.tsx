@@ -4,15 +4,15 @@ import { ArticleHero } from '../../components/article/ArticleHero'
 import { ArticleMoreNotes } from '../../components/article/ArticleMoreNotes'
 import { ArticleNewsletter } from '../../components/article/ArticleNewsletter'
 import { ArticleProducts } from '../../components/article/ArticleProducts'
+import { useArticle } from '../../hooks/article/useArticle'
 import { useReadProgress } from '../../hooks/useReadProgress'
-import { getArticle } from '../../lib/articles'
 import NotFoundPage from '../NotFound/NotFoundPage'
 import styles from './JournalPage.module.css'
 
 export default function JournalPage() {
   const { slug } = useParams()
   const progress = useReadProgress()
-  const article = getArticle(slug)
+  const article = useArticle(slug)
 
   if (!article) return <NotFoundPage />
 

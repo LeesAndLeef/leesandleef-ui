@@ -1,35 +1,12 @@
-import { growers } from './growers'
-import { oils } from './oil'
 import type { SearchResults } from './types'
-import { wines } from './wine'
 
-const normalize = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd').toLowerCase()
+const plural = (count: number, noun: string) => `${count} ${noun}${count === 1 ? '' : 's'}`
 
-function matcher(query: string) {
-  const words = normalize(query).split(/\s+/).filter(Boolean)
-  return (fields: (string | undefined)[]) => {
-    const hay = normalize(fields.filter(Boolean).join(' '))
-    return words.length > 0 && words.every((w) => hay.includes(w))
-  }
-}
-
-export function search(query: string): SearchResults {
-  const match = matcher(query)
-  return {
-    wines: wines.filter((w) => match([w.name, w.growerName, w.grape, w.region, w.type, w.note, 'wine'])),
-    oils: oils.filter((o) =>
-      match([
-        o.name,
-        o.growerName,
-        o.cultivar,
-        o.origin,
-        o.region,
-        o.level,
-        o.note,
-        'olive oil',
-        o.set ? 'gift set' : undefined,
-      ]),
-    ),
-    growers: growers.filter((g) => match([g.name, g.people, g.place, g.region, ...g.grapes])),
-  }
+export function searchSummary({ wines, oils, growers }: SearchResults) {
+  const parts = [
+    wines.length > 0 && plural(wines.length, 'wine'),
+    oils.length > 0 && plural(oils.length, 'olive oil'),
+    growers.length > 0 && plural(growers.length, 'grower'),
+  ].filter(Boolean)
+  return parts.length ? parts.join(' · ') : 'No matches'
 }

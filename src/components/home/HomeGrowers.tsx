@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
-import { growers } from '../../lib/growers'
+import { useGrowers } from '../../hooks/grower/useGrowers'
 import { GROWERS_ROUTE } from '../../routes'
 import { Scene } from '../illustrations/Scene'
 import styles from './HomeGrowers.module.css'
 
 export function HomeGrowers() {
+  const growers = useGrowers()
   return (
     <section id="growers" className="section">
       <div className="container section-pad stack" style={{ gap: 40 }}>

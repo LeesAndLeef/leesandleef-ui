@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
+import { useProducts } from '../../hooks/product/useProducts'
 import { formatCurrency } from '../../lib/currency'
-import { getProductById } from '../../lib/products'
 import { OLIVE_OILS_ROUTE, WINES_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
 import { COLORS } from '../../styles/colors'
@@ -11,6 +11,7 @@ import styles from './ArticleProducts.module.css'
 
 export function ArticleProducts({ article: a }: { article: Pick<Article, 'slug' | 'productsTitle' | 'products'> }) {
   const { add } = useCart()
+  const products = useProducts()
 
   return (
     <section className="section" style={{ background: COLORS.bone }}>
@@ -26,7 +27,7 @@ export function ArticleProducts({ article: a }: { article: Pick<Article, 'slug' 
         </div>
         <div className={styles.products}>
           {a.products.map(({ id, note }) => {
-            const p = getProductById(id)
+            const p = products.find((product) => product.id === id)
             if (!p) return null
             return (
               <div key={id} className={styles.product}>

@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
-import { getArticle } from '../../lib/articles'
+import { useArticle } from '../../hooks/article/useArticle'
 import { JOURNALS_ROUTE } from '../../routes'
+import { OIL_ARTICLE_SLUG } from './constants'
 import styles from './OilArticleLink.module.css'
 
 export function OilArticleLink() {
-  const article = getArticle('olive-oil')!
+  const article = useArticle(OIL_ARTICLE_SLUG)
+
+  if (!article) return null
 
   return (
     <Link to={`${JOURNALS_ROUTE}/${article.slug}`} className={`lnk ${styles.article}`}>

@@ -1,10 +1,5 @@
-import { skipToken } from '@tanstack/react-query'
-import { QUERY_KEYS } from '../../constants'
-import { ArticleService } from '../../services/article/ArticleService'
-import { useGetData } from '../useGetData'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { articlesQuery } from '../../lib/catalogQueries'
 
 export const useArticle = (slug: string | undefined) =>
-  useGetData(
-    [...QUERY_KEYS.ARTICLES, slug],
-    slug ? (signal) => ArticleService.create().getArticle(slug, signal) : skipToken,
-  )
+  useSuspenseQuery({ ...articlesQuery(), select: (articles) => articles.find((article) => article.slug === slug) }).data

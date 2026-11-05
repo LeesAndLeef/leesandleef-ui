@@ -37,7 +37,7 @@ Where the design has `[PLACEHOLDER]` text, fill it with believable fictional con
 4. Think like a senior about every change:
    - Correctness and edge cases: empty states, zero and maximum values, long text, missing data, rapid repeated clicks, back/forward navigation, loading and error states, an expired session (401), server errors and validation `issues` shown on the right form fields.
    - Accessibility: keyboard paths, focus order and visible focus, labels and roles, contrast, reduced motion.
-   - Performance: bundle size, unnecessary re-renders, large inline assets, work done on every render. Route pages are already lazy-loaded; the main chunk is about 410 kB (React, the router, React Query and axios), so don't make it worse, and keep dev-only tools out of production.
+   - Performance: bundle size, unnecessary re-renders, large inline assets, work done on every render. Route pages are already lazy-loaded; the main chunk is about 370 kB (React, the router, React Query, axios and the local cart's product data), so don't make it worse, and keep dev-only tools out of production.
    - Responsiveness: check phone width (390px) as well as desktop for anything visual.
    - Data integrity: prices, totals and discounts must stay consistent between product pages, cart and checkout.
 5. If the task is ambiguous in a way that changes the outcome, state your assumption. If something looks wrong but is out of scope, report it with a suggested fix instead of changing it.
@@ -73,7 +73,7 @@ Then check the result in a browser:
 ## Known technical debt
 
 Keep these in mind and raise them when your work touches them:
-- Pages still read static content from `src/data/` and use the localStorage cart (`src/state/cart/`, `src/lib/pricing.ts`, `src/lib/cartStorage.ts`). The API services and hooks exist; move pages to them area by area and delete the old code they leave unused.
+- The catalog reads from the API, but the cart is still the localStorage cart (`src/state/cart/`, `src/lib/pricing.ts`, `src/lib/cartStorage.ts`, `findItem()`), which reads wines, oils and club plans from `src/data/`. Moving it to the cart hooks lets `src/data/` and `src/assets/` pictures used only by it go.
 - Biome's recommended lint rules are off; turning them on reports about 176 issues, mostly `type="button"` missing on buttons, SVGs without titles, and array-index keys.
 - Checkout isn't connected to the API yet: `placeOrder` in `src/pages/Checkout/CheckoutPage.tsx` fakes the order. `usePlaceOrder()` exists, checkout needs a logged-in account, and card payments need Stripe's Payment Element with the returned `clientSecret`.
 - There are no login, signup or account pages yet, although `useLogin()`, `useSignup()`, `useLogout()` and `useAccount()` exist.

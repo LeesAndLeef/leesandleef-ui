@@ -1,7 +1,4 @@
-import { QUERY_KEYS } from '../../constants'
-import { WineService } from '../../services/wine/WineService'
-import type { WineListParams } from '../../types'
-import { useGetData } from '../useGetData'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { winesQuery } from '../../lib/catalogQueries'
 
-export const useWines = (params: WineListParams = {}) =>
-  useGetData([...QUERY_KEYS.WINES, params], (signal) => WineService.create().getWines(params, signal))
+export const useWines = () => useSuspenseQuery(winesQuery()).data

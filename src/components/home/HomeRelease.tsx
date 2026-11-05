@@ -1,14 +1,19 @@
 import { Link } from 'react-router-dom'
+import { useWines } from '../../hooks/wine/useWines'
 import { formatCurrency } from '../../lib/currency'
 import { winePath } from '../../lib/paths'
+import { pickByIds } from '../../lib/pickByIds'
+import { listedWines } from '../../lib/wine'
 import { WINES_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
 import { Bottle } from '../illustrations/Bottle'
-import { LISTED_COUNT, RELEASE } from './constants'
+import { RELEASE_IDS } from './constants'
 import styles from './HomeRelease.module.css'
 
 export function HomeRelease() {
   const { add } = useCart()
+  const wines = useWines()
+  const release = pickByIds(wines, RELEASE_IDS)
 
   return (
     <section className="section">
@@ -23,12 +28,12 @@ export function HomeRelease() {
             </p>
           </div>
           <Link to={WINES_ROUTE} className="btn btn-outline">
-            See all {LISTED_COUNT} wines →
+            See all {listedWines(wines).length} wines →
           </Link>
         </div>
 
         <div className={`ledger ${styles.releaseGrid}`}>
-          {RELEASE.map((w) => (
+          {release.map((w) => (
             <article key={w.id} className={styles.releaseCard}>
               <Link to={winePath(w)} className={`${styles.releaseCardImg} hatch`} aria-label={w.name}>
                 <span className={`mono glass ${styles.releaseCardBadge}`}>{w.badge}</span>

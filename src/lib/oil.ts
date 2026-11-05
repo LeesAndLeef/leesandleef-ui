@@ -16,11 +16,7 @@ import type { OilLabResult } from './types'
 
 export const oils: Oil[] = rawOils.map((oil) => ({ ...oil, path: oilPath(oil) }))
 
-export const listedOils = oils.filter((o) => !o.set)
-
-export function getOil(id: string | undefined): Oil | undefined {
-  return oils.find((o) => o.id === id)
-}
+export const listedOils = (all: readonly Oil[]) => all.filter((o) => !o.set)
 
 export const oilSize = (id?: string) => OIL_SIZES.find((z) => z.id === id) ?? OIL_SIZES[1]
 

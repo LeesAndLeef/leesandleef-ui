@@ -1,4 +1,4 @@
-import { apiPath } from '../../lib/apiPath'
+import { withArticleAssets } from '../../lib/assets'
 import type { Article } from '../../types'
 import { BaseService } from '../BaseService'
 import { API_ENDPOINTS } from '../constants'
@@ -18,14 +18,10 @@ export class ArticleService extends BaseService<Article> {
   }
 
   protected toModel(dto: Article) {
-    return dto
+    return withArticleAssets(dto)
   }
 
   async getArticles(signal?: AbortSignal) {
     return this.toModels(await this.httpClient.get<Article[]>(API_ENDPOINTS.ARTICLES, { signal }))
-  }
-
-  async getArticle(slug: string, signal?: AbortSignal) {
-    return this.toModel(await this.httpClient.get<Article>(apiPath(API_ENDPOINTS.ARTICLES, slug), { signal }))
   }
 }

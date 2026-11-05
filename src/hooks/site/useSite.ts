@@ -1,5 +1,4 @@
-import { QUERY_KEYS } from '../../constants'
-import { SiteService } from '../../services/site/SiteService'
-import { useGetData } from '../useGetData'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { siteQuery } from '../../lib/catalogQueries'
 
-export const useSite = () => useGetData(QUERY_KEYS.SITE, (signal) => SiteService.create().getSite(signal))
+export const useSite = () => useSuspenseQuery(siteQuery()).data

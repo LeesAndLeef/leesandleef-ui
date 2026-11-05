@@ -1,8 +1,9 @@
+import { useSite } from '../../hooks/site/useSite'
 import { useCountdown } from '../../hooks/useCountdown'
-import { site } from '../../lib/site'
 import styles from './ClubHero.module.css'
 
 export function ClubHero() {
+  const site = useSite()
   const countdown = useCountdown(site.nextBoxCloses)
 
   return (

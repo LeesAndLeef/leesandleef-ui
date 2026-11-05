@@ -1,5 +1,4 @@
-import { QUERY_KEYS } from '../../constants'
-import { QuizService } from '../../services/quiz/QuizService'
-import { useGetData } from '../useGetData'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { quizQuery } from '../../lib/catalogQueries'
 
-export const useQuiz = () => useGetData(QUERY_KEYS.QUIZ, (signal) => QuizService.create().getQuiz(signal))
+export const useQuiz = () => useSuspenseQuery(quizQuery()).data

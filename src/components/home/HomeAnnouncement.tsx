@@ -1,7 +1,8 @@
-import { site } from '../../lib/site'
+import { useSite } from '../../hooks/site/useSite'
 import styles from './HomeAnnouncement.module.css'
 
 export function HomeAnnouncement() {
+  const site = useSite()
   return (
     <div className={`${styles.announce} mono`}>
       <span>Autumn release Nº 07 ships from {site.releaseShipDate}</span>

@@ -1,6 +1,6 @@
-import { apiPath } from '../../lib/apiPath'
+import { withOilAssets } from '../../lib/assets'
 import { linkOil } from '../../lib/links'
-import type { Oil, OilListParams, RawOil } from '../../types'
+import type { Oil, RawOil } from '../../types'
 import { BaseService } from '../BaseService'
 import { API_ENDPOINTS } from '../constants'
 import { HttpClient } from '../HttpClient'
@@ -19,18 +19,10 @@ export class OilService extends BaseService<Oil, RawOil> {
   }
 
   protected toModel(dto: RawOil): Oil {
-    return linkOil(dto)
+    return withOilAssets(linkOil(dto))
   }
 
-  async getOils(params: Readonly<OilListParams> = {}, signal?: AbortSignal) {
-    const oils = await this.httpClient.get<RawOil[]>(API_ENDPOINTS.OILS, {
-      params: this.getQueryParams({ ...params }),
-      signal,
-    })
-    return this.toModels(oils)
-  }
-
-  async getOil(id: string, signal?: AbortSignal) {
-    return this.toModel(await this.httpClient.get<RawOil>(apiPath(API_ENDPOINTS.OILS, id), { signal }))
+  async getOils(signal?: AbortSignal) {
+    return this.toModels(await this.httpClient.get<RawOil[]>(API_ENDPOINTS.OILS, { signal }))
   }
 }

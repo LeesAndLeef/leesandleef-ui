@@ -1,5 +1,5 @@
 import { FREQ_LABEL } from '../../constants'
-import { clubPlans } from '../../lib/clubPlans'
+import { useClubPlans } from '../../hooks/clubPlan/useClubPlans'
 import { formatCurrency } from '../../lib/currency'
 import type { Freq } from '../../types'
 import styles from './ClubPlans.module.css'
@@ -13,6 +13,7 @@ export function ClubPlans({
   onFreqChange: (freq: Freq) => void
   onJoin: (planId: string) => void
 }) {
+  const clubPlans = useClubPlans()
   return (
     <section className="section gridbg">
       <div className="container section-pad stack" style={{ gap: 40 }}>
