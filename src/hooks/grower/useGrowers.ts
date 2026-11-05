@@ -1,5 +1,4 @@
-import { QUERY_KEYS } from '../../constants'
-import { GrowerService } from '../../services/grower/GrowerService'
-import { useGetData } from '../useGetData'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { growersQuery } from '../../lib/catalogQueries'
 
-export const useGrowers = () => useGetData(QUERY_KEYS.GROWERS, (signal) => GrowerService.create().getGrowers(signal))
+export const useGrowers = () => useSuspenseQuery(growersQuery()).data

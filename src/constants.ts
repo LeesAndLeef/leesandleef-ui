@@ -26,6 +26,8 @@ export const PROMO_CODES: Record<string, number> = { HARVEST10: 0.1 }
 
 export const EMPTY_CART: CartState = { lines: [], saved: [], promo: null, giftNote: null }
 
+export const ASSETS_BASE_URL = import.meta.env.VITE_ASSETS_URL ?? ''
+
 export const QUERY_KEYS = {
   SITE: ['site'],
   WINES: ['wines'],

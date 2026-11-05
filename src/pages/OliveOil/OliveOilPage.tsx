@@ -11,13 +11,14 @@ import { ProductPerks } from '../../components/product/ProductPerks'
 import { ProductTags } from '../../components/product/ProductTags'
 import { RelatedProducts } from '../../components/product/RelatedProducts'
 import { DEFAULT_OIL_SIZE } from '../../constants'
+import { useGrower } from '../../hooks/grower/useGrower'
+import { useOil } from '../../hooks/oil/useOil'
+import { useProduct } from '../../hooks/product/useProduct'
 import { useKeyedState } from '../../hooks/useKeyedState'
 import { oilOption } from '../../lib/cart'
-import { getGrower } from '../../lib/growers'
-import { getOil, oilKeeping, oilPrice, oilSizeOptions, oilTags } from '../../lib/oil'
+import { oilKeeping, oilPrice, oilSizeOptions, oilTags } from '../../lib/oil'
 import { oilPath } from '../../lib/paths'
 import { productPlace } from '../../lib/productPlace'
-import { getProductById } from '../../lib/products'
 import { HOME_ROUTE, OLIVE_OILS_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
 import type { OilSize } from '../../types'
@@ -36,14 +37,14 @@ export default function OliveOilPage() {
   const { pathname } = useLocation()
   const { add } = useCart()
   const [size, setSize] = useKeyedState<OilSize>(id ?? '', DEFAULT_OIL_SIZE)
-  const oil = getOil(id)
-  const product = getProductById(id)
+  const oil = useOil(id)
+  const product = useProduct(id)
+  const grower = useGrower(oil?.growerId)
 
   if (!product) return <NotFoundPage />
   if (!oil || pathname !== oilPath(oil)) return <Navigate to={product.path} replace />
 
   const { detail } = oil
-  const grower = getGrower(oil.growerId)
 
   return (
     <>

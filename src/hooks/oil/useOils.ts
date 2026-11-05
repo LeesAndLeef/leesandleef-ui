@@ -1,7 +1,4 @@
-import { QUERY_KEYS } from '../../constants'
-import { OilService } from '../../services/oil/OilService'
-import type { OilListParams } from '../../types'
-import { useGetData } from '../useGetData'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { oilsQuery } from '../../lib/catalogQueries'
 
-export const useOils = (params: OilListParams = {}) =>
-  useGetData([...QUERY_KEYS.OILS, params], (signal) => OilService.create().getOils(params, signal))
+export const useOils = () => useSuspenseQuery(oilsQuery()).data

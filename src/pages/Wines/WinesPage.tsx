@@ -8,17 +8,22 @@ import { WinePriceFilter } from '../../components/wine/WinePriceFilter'
 import { WineQuizPromo } from '../../components/wine/WineQuizPromo'
 import { WineResultsTools } from '../../components/wine/WineResultsTools'
 import { WINE_TYPES } from '../../constants'
+import { useWines } from '../../hooks/wine/useWines'
 import { formatCurrency } from '../../lib/currency'
 import { toggle } from '../../lib/toggle'
+import { listedWines, maxWinePrice } from '../../lib/wine'
 import { HOME_ROUTE, OLIVE_OILS_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
 import type { Wine, WineLayout, WineSort } from '../../types'
-import { EXTRAS, GRAPES, LISTED_WINES, PRICE_MAX, REGION_GROUPS } from './constants'
+import { EXTRAS, GRAPES, REGION_GROUPS } from './constants'
 import type { Extra, So2 } from './types'
 import styles from './WinesPage.module.css'
 
 export default function WinesPage() {
   const { add } = useCart()
+  const wines = useWines()
+  const listed = useMemo(() => listedWines(wines), [wines])
+  const priceMax = maxWinePrice(listed)
   const [params, setParams] = useSearchParams()
   const type = params.get('type') ?? 'All'
   const query = params.get('q') ?? ''
@@ -46,7 +51,7 @@ export default function WinesPage() {
   const baseFiltered = useMemo(() => {
     const q = query.trim().toLowerCase()
     const allowedRegions = REGION_GROUPS.filter((g) => regions.includes(g.label)).flatMap((g) => g.regions)
-    return LISTED_WINES.filter((w) => {
+    return listed.filter((w) => {
       if (q && ![w.name, w.growerName, w.grape, w.region].some((s) => s?.toLowerCase().includes(q))) return false
       if (allowedRegions.length && !allowedRegions.includes(w.region)) return false
       if (grape.length && !grape.some((g) => w.grape.startsWith(g))) return false
@@ -59,7 +64,7 @@ export default function WinesPage() {
       if (extra.includes('inStock') && w.left === 0) return false
       return true
     })
-  }, [query, regions, grape, from, to, so2, extra])
+  }, [listed, query, regions, grape, from, to, so2, extra])
 
   const results = useMemo(() => {
     const list = type === 'All' ? baseFiltered : baseFiltered.filter((w) => w.type === type)
@@ -87,7 +92,7 @@ export default function WinesPage() {
     ...(hasPrice
       ? [
           {
-            label: `${formatCurrency(Number(priceFrom) || 0)}-${formatCurrency(Number(priceTo) || PRICE_MAX)}`,
+            label: `${formatCurrency(Number(priceFrom) || 0)}-${formatCurrency(Number(priceTo) || priceMax)}`,
             remove: () => (setPriceFrom(''), setPriceTo('')),
           },
         ]
@@ -155,7 +160,7 @@ export default function WinesPage() {
                   />
                   {g.label}
                   <span className={`mono label-muted ${styles.filterCount}`}>
-                    {LISTED_WINES.filter((w) => g.regions.includes(w.region)).length}
+                    {listed.filter((w) => g.regions.includes(w.region)).length}
                   </span>
                 </label>
               ))}
@@ -166,7 +171,7 @@ export default function WinesPage() {
               <WinePriceFilter
                 priceFrom={priceFrom}
                 priceTo={priceTo}
-                max={PRICE_MAX}
+                max={priceMax}
                 onPriceFromChange={setPriceFrom}
                 onPriceToChange={setPriceTo}
               />

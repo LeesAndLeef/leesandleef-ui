@@ -1,10 +1,11 @@
 import { type FormEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { site } from '../../lib/site'
+import { useSite } from '../../hooks/site/useSite'
 import { CLUB_ROUTE, GROWERS_ROUTE, HOME_ROUTE, OLIVE_OILS_ROUTE, WINES_ROUTE } from '../../routes'
 import styles from './Footer.module.css'
 
 export function Footer() {
+  const site = useSite()
   const [subscribed, setSubscribed] = useState(false)
 
   function subscribe(e: FormEvent) {

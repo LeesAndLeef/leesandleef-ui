@@ -1,7 +1,5 @@
-import { skipToken } from '@tanstack/react-query'
-import { QUERY_KEYS } from '../../constants'
-import { WineService } from '../../services/wine/WineService'
-import { useGetData } from '../useGetData'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { winesQuery } from '../../lib/catalogQueries'
 
 export const useWine = (id: string | undefined) =>
-  useGetData([...QUERY_KEYS.WINES, id], id ? (signal) => WineService.create().getWine(id, signal) : skipToken)
+  useSuspenseQuery({ ...winesQuery(), select: (wines) => wines.find((wine) => wine.id === id) }).data

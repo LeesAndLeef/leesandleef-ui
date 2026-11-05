@@ -483,15 +483,6 @@ export interface QuizRecommendation {
   wines: Wine[]
 }
 
-export interface WineListParams {
-  type?: WineType
-  growerId?: string
-}
-
-export interface OilListParams {
-  growerId?: string
-}
-
 export interface VisitRequestInput {
   name: string
   email: string

@@ -90,3 +90,5 @@ export const STAGE_FIELD_TONE = COLORS.olive500
 export const STAGE_ACCENT_TONE = COLORS.wine
 
 export const STAGE_FALLBACK_TONE = COLORS.olive300
+
+export const SET_TIN_IDS = ['oblica-island-blend', 'buza-grove-14', 'istarska-bjelica']

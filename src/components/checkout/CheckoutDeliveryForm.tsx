@@ -2,12 +2,12 @@ import { formatCurrency } from '../../lib/currency'
 import { submitHandler } from '../../lib/submitHandler'
 import { CheckoutFieldGrid } from './CheckoutFieldGrid'
 import { CheckoutForm } from './CheckoutForm'
-import { COUNTRIES } from './constants'
 import type { CheckoutAddress, Ship, ShipOption } from './types'
 import styles from './CheckoutDeliveryForm.module.css'
 
 export function CheckoutDeliveryForm({
   ships,
+  countries,
   ship,
   onShipChange,
   address,
@@ -15,6 +15,7 @@ export function CheckoutDeliveryForm({
   onContinue,
 }: {
   ships: ShipOption[]
+  countries: string[]
   ship: Ship
   onShipChange: (ship: Ship) => void
   address: CheckoutAddress
@@ -82,7 +83,7 @@ export function CheckoutDeliveryForm({
               value={address.country}
               onChange={(e) => onAddressChange({ ...address, country: e.target.value })}
             >
-              {COUNTRIES.map((c) => (
+              {countries.map((c) => (
                 <option key={c}>{c}</option>
               ))}
             </select>

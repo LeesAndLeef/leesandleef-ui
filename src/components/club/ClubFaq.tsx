@@ -1,10 +1,13 @@
 import { useState } from 'react'
-import { site } from '../../lib/site'
-import { FAQ } from './constants'
+import { useSite } from '../../hooks/site/useSite'
+import { shippingFaqAnswer } from '../../lib/club'
+import { FAQ, SHIPPING_FAQ_QUESTION } from './constants'
 import styles from './ClubFaq.module.css'
 
 export function ClubFaq() {
+  const site = useSite()
   const [open, setOpen] = useState(0)
+  const items = FAQ.map((f) => (f.q === SHIPPING_FAQ_QUESTION ? { ...f, a: shippingFaqAnswer(site) } : f))
 
   return (
     <section id="faq" className="section">
@@ -18,7 +21,7 @@ export function ClubFaq() {
           </p>
         </div>
         <div className={styles.faq}>
-          {FAQ.map((f, i) => {
+          {items.map((f, i) => {
             const isOpen = open === i
             return (
               <div key={f.q}>

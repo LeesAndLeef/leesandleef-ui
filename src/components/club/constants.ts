@@ -1,5 +1,3 @@
-import { site } from '../../lib/site'
-
 export const BOX_CONTENTS = [
   ['The bottles', 'A mix of colours and styles. Tell us what you never want — we’ll never send it.'],
   ['The field journal', 'A 32-page printed booklet: grower interviews, harvest reports and maps of the plots.'],
@@ -25,6 +23,8 @@ export const COMPARE_ROWS: [string, string, string, string][] = [
   ['Shop discount between boxes', '5%', '10%', '15%'],
 ]
 
+export const SHIPPING_FAQ_QUESTION = 'Do you ship outside the EU?'
+
 export const FAQ = [
   {
     q: 'Can I skip a box or pause?',
@@ -35,8 +35,8 @@ export const FAQ = [
     a: 'Rate it and tell us why. We’ll credit half its price to your next box and adjust your profile — no need to return anything.',
   },
   {
-    q: 'Do you ship outside the EU?',
-    a: `Not yet. We ship to ${site.shipCountries.slice(0, -1).join(', ')} and ${site.shipCountries.at(-1)}. UK and Switzerland are on our list for ${site.nonEuShippingYear}.`,
+    q: SHIPPING_FAQ_QUESTION,
+    a: '',
   },
   {
     q: 'Is natural wine always cloudy or funky?',

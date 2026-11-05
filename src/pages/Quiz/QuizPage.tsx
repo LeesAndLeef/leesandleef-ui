@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { WineCard } from '../../components/product/WineCard'
 import { WineGrid } from '../../components/product/WineGrid'
 import { Breadcrumb } from '../../components/ui/Breadcrumb'
+import { useQuiz } from '../../hooks/quiz/useQuiz'
+import { useQuizRecommendation } from '../../hooks/quiz/useQuizRecommendation'
 import { formatCurrency } from '../../lib/currency'
-import { quiz, quizProfiles, recommend } from '../../lib/quiz'
 import { CLUB_ROUTE, HOME_ROUTE, WINES_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
 import { COLORS } from '../../styles/colors'
@@ -12,12 +13,14 @@ import styles from './QuizPage.module.css'
 
 export default function QuizPage() {
   const { add } = useCart()
+  const { questions } = useQuiz()
+  const recommendation = useQuizRecommendation()
   const [answers, setAnswers] = useState<number[]>([])
   const [current, setCurrent] = useState(0)
-  const done = answers.length === quiz.length && current === quiz.length
-  const result = useMemo(() => (done ? recommend(answers) : null), [done, answers])
+  const result = recommendation.data
+  const isLast = current === questions.length - 1
 
-  const question = quiz[current]
+  const question = questions[current]
   const picked = answers[current]
 
   function pick(i: number) {
@@ -26,7 +29,14 @@ export default function QuizPage() {
     setAnswers(next)
   }
 
+  function next() {
+    if (picked === undefined) return
+    if (isLast) recommendation.mutate(answers)
+    else setCurrent(current + 1)
+  }
+
   function restart() {
+    recommendation.reset()
     setAnswers([])
     setCurrent(0)
   }
@@ -53,7 +63,7 @@ export default function QuizPage() {
         <section className={`section ${styles.body}`}>
           <div className={`container ${styles.cardWrap}`}>
             <div className={styles.progress} aria-hidden="true">
-              {quiz.map((_, i) => (
+              {questions.map((_, i) => (
                 <span key={i} className={i < current ? styles.done : i === current ? styles.on : undefined} />
               ))}
             </div>
@@ -61,13 +71,13 @@ export default function QuizPage() {
               className={styles.card}
               onSubmit={(e) => {
                 e.preventDefault()
-                if (picked !== undefined) setCurrent(current + 1)
+                next()
               }}
             >
               <fieldset>
                 <legend className="stack" style={{ gap: 12 }}>
                   <span className="mono label-wine">
-                    Question {current + 1} of {quiz.length}
+                    Question {current + 1} of {questions.length}
                   </span>
                   <span className={`disp ${styles.q}`}>{question.q}</span>
                 </legend>
@@ -90,10 +100,19 @@ export default function QuizPage() {
                 >
                   ← Back
                 </button>
-                <button type="submit" className="btn btn-primary" disabled={picked === undefined}>
-                  {current === quiz.length - 1 ? 'See my six →' : 'Next →'}
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={picked === undefined || recommendation.isPending}
+                >
+                  {isLast ? (recommendation.isPending ? 'Building your six…' : 'See my six →') : 'Next →'}
                 </button>
               </div>
+              {recommendation.isError && (
+                <p role="alert" className="mono label-wine">
+                  We couldn’t build your six. Please try again.
+                </p>
+              )}
             </form>
           </div>
         </section>
@@ -104,20 +123,20 @@ export default function QuizPage() {
             <div className={`container section-pad ${styles.resultInner}`}>
               <div className="stack" style={{ gap: 20 }}>
                 <span className="mono label-rose">Your taste profile</span>
-                <h2 className="disp h-xl">{quizProfiles[result.top].title}</h2>
+                <h2 className="disp h-xl">{result.profile.title}</h2>
                 <p className="lede" style={{ color: COLORS.wine100, maxWidth: 560 }}>
-                  {quizProfiles[result.top].text}
+                  {result.profile.text}
                 </p>
               </div>
               <div className={`glass ${styles.resultCard}`}>
                 <span className="mono label-rose">Your mixed six</span>
                 <span className="disp" style={{ fontSize: 48 }}>
-                  {formatCurrency(result.six.reduce((a, w) => a + w.price, 0))}
+                  {formatCurrency(result.wines.reduce((a, w) => a + w.price, 0))}
                 </span>
                 <span style={{ fontSize: 14, color: COLORS.wine100 }}>
                   Before the −10% mix-six discount, applied in the cart.
                 </span>
-                <button className="btn btn-paper btn-lg" onClick={() => result.six.forEach((w) => add(w.id))}>
+                <button className="btn btn-paper btn-lg" onClick={() => result.wines.forEach((w) => add(w.id))}>
                   Add all six to cart
                 </button>
                 <button className="btn btn-ghost-light" onClick={() => add('club-cellar', 1, 'season')}>
@@ -131,7 +150,7 @@ export default function QuizPage() {
           </section>
           <section className="section">
             <WineGrid className="container section-pad">
-              {result.six.map((w) => (
+              {result.wines.map((w) => (
                 <WineCard key={w.id} wine={w} onAdd={() => add(w.id)} />
               ))}
             </WineGrid>

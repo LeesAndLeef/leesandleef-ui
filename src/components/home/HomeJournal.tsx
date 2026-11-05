@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
-import { articles } from '../../lib/articles'
+import { useArticles } from '../../hooks/article/useArticles'
 import { JOURNALS_ROUTE } from '../../routes'
 import styles from './HomeJournal.module.css'
 
 export function HomeJournal() {
+  const articles = useArticles()
   return (
     <section id="journal" className="section">
       <div className="container section-pad stack" style={{ gap: 40 }}>

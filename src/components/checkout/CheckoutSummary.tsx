@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
+import { useSite } from '../../hooks/site/useSite'
 import { formatCurrency } from '../../lib/currency'
-import { site } from '../../lib/site'
 import { CART_ROUTE } from '../../routes'
 import type { Totals } from '../../state/cart/types'
 import { COLORS } from '../../styles/colors'
@@ -25,6 +25,7 @@ export function CheckoutSummary({
   delivery: Pick<ShipOption, 'name' | 'price'>
   total: number
 }) {
+  const site = useSite()
   return (
     <>
       <div className={styles.summaryHead}>

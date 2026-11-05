@@ -12,11 +12,12 @@ import { RelatedProducts } from '../../components/product/RelatedProducts'
 import { WineDetails } from '../../components/wine/WineDetails'
 import { WineGallery } from '../../components/wine/WineGallery'
 import { DEFAULT_WINE_VOLUME } from '../../constants'
-import { getGrower } from '../../lib/growers'
+import { useGrower } from '../../hooks/grower/useGrower'
+import { useProduct } from '../../hooks/product/useProduct'
+import { useWine } from '../../hooks/wine/useWine'
 import { winePath } from '../../lib/paths'
 import { productPlace, productRegion } from '../../lib/productPlace'
-import { getProductById } from '../../lib/products'
-import { getWine, vintagePrice, wineNameWithoutYear, wineTitle, wineTypePath } from '../../lib/wine'
+import { vintagePrice, wineNameWithoutYear, wineTitle, wineTypePath } from '../../lib/wine'
 import { HOME_ROUTE, WINES_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
 import NotFoundPage from '../NotFound/NotFoundPage'
@@ -26,15 +27,15 @@ export default function WinePage() {
   const { id } = useParams()
   const { pathname } = useLocation()
   const { add } = useCart()
-  const wine = getWine(id)
-  const product = getProductById(id)
+  const wine = useWine(id)
+  const product = useProduct(id)
+  const grower = useGrower(wine?.growerId)
   const [vintage, setVintage] = useState(wine?.detail.defaultVintage)
 
   if (!product) return <NotFoundPage />
   if (!wine || pathname !== winePath(wine)) return <Navigate to={product.path} replace />
 
   const { detail } = wine
-  const grower = getGrower(wine.growerId)
   const where = productPlace(wine.region, grower)
   const title = wineTitle(wine.name, vintage)
 

@@ -3,10 +3,11 @@ import { GrowerProfile } from '../../components/grower/GrowerProfile'
 import { GrowerVisit } from '../../components/grower/GrowerVisit'
 import { Bottle } from '../../components/illustrations/Bottle'
 import { Breadcrumb } from '../../components/ui/Breadcrumb'
+import { useGrowers } from '../../hooks/grower/useGrowers'
+import { useWines } from '../../hooks/wine/useWines'
 import { formatCurrency } from '../../lib/currency'
-import { getGrower, growers } from '../../lib/growers'
+import { nextGrower } from '../../lib/growers'
 import { winePath } from '../../lib/paths'
-import { wines } from '../../lib/wine'
 import { GROWERS_ROUTE, HOME_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
 import { COLORS } from '../../styles/colors'
@@ -16,13 +17,15 @@ import styles from './GrowerPage.module.css'
 export default function GrowerPage() {
   const { id } = useParams()
   const { add } = useCart()
-  const grower = getGrower(id)
+  const growers = useGrowers()
+  const wines = useWines()
+  const grower = growers.find((g) => g.id === id)
 
   if (!grower) return <NotFoundPage />
 
   const profile = grower.profile
   const inStock = wines.filter((w) => w.growerId === grower.id)
-  const next = growers[(growers.findIndex((g) => g.id === grower.id) + 1) % growers.length]
+  const next = nextGrower(growers, grower)
   const bundleTotal = inStock.reduce((a, w) => a + w.price, 0)
   const bundleName = ['', '', 'pair', 'trio'][inStock.length] ?? 'set'
 

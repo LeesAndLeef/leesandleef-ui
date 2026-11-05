@@ -10,9 +10,9 @@ import { contrastingTone } from './tone'
 
 export const wines: Wine[] = rawWines.map((wine) => ({ ...wine, path: winePath(wine) }))
 
-export function getWine(id: string | undefined): Wine | undefined {
-  return wines.find((w) => w.id === id)
-}
+export const listedWines = (all: readonly Wine[]) => all.filter((w) => !w.unlisted)
+
+export const maxWinePrice = (all: readonly Pick<Wine, 'price'>[]) => Math.max(...all.map((w) => w.price))
 
 export const wineTitle = (name: string, vintage?: string) => (vintage ? name.replace(/\d{4}$/, vintage) : name)
 

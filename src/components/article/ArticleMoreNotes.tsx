@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
-import { articles } from '../../lib/articles'
+import { useArticles } from '../../hooks/article/useArticles'
 import { JOURNALS_ROUTE } from '../../routes'
 import type { ArticleSlug } from '../../types'
 import styles from './ArticleMoreNotes.module.css'
 
 export function ArticleMoreNotes({ currentSlug }: { currentSlug: ArticleSlug }) {
-  const more = articles.filter((x) => x.slug !== currentSlug)
+  const more = useArticles().filter((x) => x.slug !== currentSlug)
 
   return (
     <section className="section">

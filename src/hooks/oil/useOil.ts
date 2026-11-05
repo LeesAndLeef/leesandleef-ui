@@ -1,7 +1,5 @@
-import { skipToken } from '@tanstack/react-query'
-import { QUERY_KEYS } from '../../constants'
-import { OilService } from '../../services/oil/OilService'
-import { useGetData } from '../useGetData'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { oilsQuery } from '../../lib/catalogQueries'
 
 export const useOil = (id: string | undefined) =>
-  useGetData([...QUERY_KEYS.OILS, id], id ? (signal) => OilService.create().getOil(id, signal) : skipToken)
+  useSuspenseQuery({ ...oilsQuery(), select: (oils) => oils.find((oil) => oil.id === id) }).data

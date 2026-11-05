@@ -1,6 +1,7 @@
-import { Suspense } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { CartToast } from '../cart/CartToast'
+import { AsyncBoundary } from './AsyncBoundary'
+import { ErrorPage } from './ErrorPage'
 import { FallbackPage } from './FallbackPage'
 import { Header } from './Header'
 import { PageLayout } from './PageLayout'
@@ -10,10 +11,17 @@ export function SiteLayout() {
   const { pathname } = useLocation()
   return (
     <>
-      <PageLayout header={<Header />} footer={<SiteFooter />}>
-        <Suspense fallback={<FallbackPage />}>
-          <Outlet key={pathname} />
-        </Suspense>
+      <PageLayout
+        header={<Header />}
+        footer={
+          <AsyncBoundary pending={null} failed={() => null}>
+            <SiteFooter />
+          </AsyncBoundary>
+        }
+      >
+        <AsyncBoundary key={pathname} pending={<FallbackPage />} failed={(retry) => <ErrorPage onRetry={retry} />}>
+          <Outlet />
+        </AsyncBoundary>
       </PageLayout>
       <CartToast />
     </>

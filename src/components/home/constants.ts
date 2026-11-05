@@ -1,11 +1,9 @@
-import { getOil } from '../../lib/oil'
-import { getWine, wines } from '../../lib/wine'
-
-const RELEASE_IDS = ['teran-crvena-zemlja', 'malvazija-sedam-dana', 'grasevina-pet-nat-pjena', 'plavac-mali-brijeg']
-
-export const RELEASE = RELEASE_IDS.flatMap((id) => getWine(id) ?? [])
-
-export const LISTED_COUNT = wines.filter((w) => !w.unlisted).length
+export const RELEASE_IDS = [
+  'teran-crvena-zemlja',
+  'malvazija-sedam-dana',
+  'grasevina-pet-nat-pjena',
+  'plavac-mali-brijeg',
+]
 
 export const PRINCIPLES = [
   ['Hand-harvested only', 'No machine picking, ever.'],
@@ -14,7 +12,7 @@ export const PRINCIPLES = [
   ['Paid before bottling', 'Growers never carry our risk.'],
 ]
 
-export const HOME_OILS = ['buza-grove-14', 'istarska-bjelica', 'oblica-island-blend'].flatMap((id) => getOil(id) ?? [])
+export const HOME_OIL_IDS = ['buza-grove-14', 'istarska-bjelica', 'oblica-island-blend']
 
 export const REGIONS = ['Istria', 'Kvarner', 'Dalmatia', 'Pelješac', 'Slavonia', 'Moslavina']
 

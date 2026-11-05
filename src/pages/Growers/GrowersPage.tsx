@@ -1,14 +1,19 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Breadcrumb } from '../../components/ui/Breadcrumb'
-import { growers, stockLabel } from '../../lib/growers'
-import { site } from '../../lib/site'
+import { useGrowers } from '../../hooks/grower/useGrowers'
+import { useProducts } from '../../hooks/product/useProducts'
+import { useSite } from '../../hooks/site/useSite'
+import { stockLabel } from '../../lib/growers'
 import { GROWERS_ROUTE, HOME_ROUTE } from '../../routes'
 import { COLORS } from '../../styles/colors'
 import { GROWER_REGIONS, GROWER_RULES } from './constants'
 import styles from './GrowersPage.module.css'
 
 export default function GrowersPage() {
+  const growers = useGrowers()
+  const products = useProducts()
+  const site = useSite()
   const [region, setRegion] = useState('All')
   const shown = growers.filter((g) => region === 'All' || g.region === region)
 
@@ -68,7 +73,7 @@ export default function GrowersPage() {
                   <span className={styles.gcardFoot}>
                     <span className={styles.gcta}>Read the profile →</span>
                     <span className="mono label-muted" style={{ fontSize: 11 }}>
-                      {stockLabel(g)}
+                      {stockLabel(g, products)}
                     </span>
                   </span>
                 </span>

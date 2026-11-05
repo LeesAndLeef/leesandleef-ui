@@ -30,8 +30,8 @@ export const SHIPPING_FEE = 9.9
 
 export const CART_STORAGE_KEY = 'lees-leaf-cart-v1'
 
-export const MAX_PER_STYLE = 2
-
 export const QUERY_STALE_TIME = 60_000
+
+export const CATALOG_STALE_TIME = 5 * 60_000
 
 export const MAX_QUERY_RETRIES = 2

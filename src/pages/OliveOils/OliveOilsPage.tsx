@@ -8,6 +8,7 @@ import { OilsHero } from '../../components/oil/OilsHero'
 import { OilTastingSet } from '../../components/oil/OilTastingSet'
 import { OilCard } from '../../components/product/OilCard'
 import { DEFAULT_OIL_SIZE, OIL_SIZES } from '../../constants'
+import { useOils } from '../../hooks/oil/useOils'
 import { oilOption } from '../../lib/cart'
 import { listedOils } from '../../lib/oil'
 import { useCart } from '../../state/cart/useCart'
@@ -17,10 +18,11 @@ import styles from './OliveOilsPage.module.css'
 
 export default function OliveOilsPage() {
   const { add } = useCart()
+  const oils = listedOils(useOils())
   const [level, setLevel] = useState<OilLevel | 'All'>('All')
   const [size, setSize] = useState<OilSize>(DEFAULT_OIL_SIZE)
   const [added, setAdded] = useState<Record<string, boolean>>({})
-  const shown = listedOils.filter((o) => level === 'All' || o.level === level)
+  const shown = oils.filter((o) => level === 'All' || o.level === level)
 
   function addOil(o: Oil) {
     add(o.id, 1, oilOption(size))
@@ -57,9 +59,7 @@ export default function OliveOilsPage() {
               {(['All', ...OIL_LEVELS] as const).map((l) => (
                 <button key={l} className="chip" aria-pressed={level === l} onClick={() => setLevel(l)}>
                   {l}{' '}
-                  <span className="mono">
-                    {l === 'All' ? listedOils.length : listedOils.filter((o) => o.level === l).length}
-                  </span>
+                  <span className="mono">{l === 'All' ? oils.length : oils.filter((o) => o.level === l).length}</span>
                 </button>
               ))}
             </div>

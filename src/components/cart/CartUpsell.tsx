@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom'
+import { useProducts } from '../../hooks/product/useProducts'
 import { formatCurrency } from '../../lib/currency'
-import { getProductById } from '../../lib/products'
+import { pickByIds } from '../../lib/pickByIds'
 import { Bottle } from '../illustrations/Bottle'
 import { UPSELL_IDS } from './constants'
 import styles from './CartUpsell.module.css'
 
 export function CartUpsell({ inCartIds, onAdd }: { inCartIds: string[]; onAdd: (id: string) => void }) {
-  const upsell = UPSELL_IDS.filter((id) => !inCartIds.includes(id))
-    .slice(0, 3)
-    .map((id) => getProductById(id)!)
+  const products = useProducts()
+  const upsell = pickByIds(
+    products,
+    UPSELL_IDS.filter((id) => !inCartIds.includes(id)),
+  ).slice(0, 3)
 
   if (upsell.length === 0) return null
 

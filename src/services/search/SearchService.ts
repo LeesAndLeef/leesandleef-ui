@@ -1,3 +1,4 @@
+import { withGrowerAssets, withOilAssets } from '../../lib/assets'
 import { linkOil, linkWine } from '../../lib/links'
 import type { SearchResults } from '../../lib/types'
 import { BaseService } from '../BaseService'
@@ -19,7 +20,11 @@ export class SearchService extends BaseService<SearchResults, RawSearchResults> 
   }
 
   protected toModel(dto: RawSearchResults): SearchResults {
-    return { wines: dto.wines.map(linkWine), oils: dto.oils.map(linkOil), growers: dto.growers }
+    return {
+      wines: dto.wines.map(linkWine),
+      oils: dto.oils.map((oil) => withOilAssets(linkOil(oil))),
+      growers: dto.growers.map(withGrowerAssets),
+    }
   }
 
   async search(query: string, signal?: AbortSignal) {

@@ -1,16 +1,18 @@
 import { useState } from 'react'
+import { useOils } from '../../hooks/oil/useOils'
 import { formatCurrency } from '../../lib/currency'
-import { getOil } from '../../lib/oil'
+import { pickByIds } from '../../lib/pickByIds'
 import { useCart } from '../../state/cart/useCart'
 import { COLORS } from '../../styles/colors'
 import { OilTin } from '../illustrations/OilTin'
-import { SET_ID } from './constants'
+import { SET_ID, SET_TIN_IDS } from './constants'
 import styles from './OilTastingSet.module.css'
 
 export function OilTastingSet() {
   const { add } = useCart()
   const [added, setAdded] = useState(false)
-  const set = getOil(SET_ID)
+  const oils = useOils()
+  const set = oils.find((o) => o.id === SET_ID)
 
   if (!set) return null
 
@@ -25,10 +27,9 @@ export function OilTastingSet() {
         <h2 className={`disp ${styles.setTitle}`}>One of each intensity.</h2>
         <p style={{ color: COLORS.wine100, lineHeight: 1.6 }}>{set.note}</p>
         <div className={styles.setTins} aria-hidden="true">
-          {['oblica-island-blend', 'buza-grove-14', 'istarska-bjelica'].map((id) => {
-            const o = getOil(id)
-            return o ? <OilTin key={id} body={o.glass} cap={o.cap} width={56} height={92} /> : null
-          })}
+          {pickByIds(oils, SET_TIN_IDS).map((o) => (
+            <OilTin key={o.id} body={o.glass} cap={o.cap} width={56} height={92} />
+          ))}
         </div>
         <div className={styles.setFoot}>
           <span style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>

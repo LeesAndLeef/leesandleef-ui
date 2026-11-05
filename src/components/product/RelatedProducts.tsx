@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { getProductById } from '../../lib/products'
+import { useProducts } from '../../hooks/product/useProducts'
 import type { RelatedProduct } from '../../types'
 import { RelatedProductLink } from './RelatedProductLink'
 import styles from './RelatedProducts.module.css'
@@ -13,6 +13,7 @@ export function RelatedProducts({
   link: { label: string; to: string }
   items: RelatedProduct[]
 }) {
+  const products = useProducts()
   if (items.length === 0) return null
   return (
     <section className="section">
@@ -27,7 +28,7 @@ export function RelatedProducts({
         </div>
         <div className={`ledger ${styles.grid}`}>
           {items.map((r) => {
-            const product = getProductById(r.id)
+            const product = products.find((p) => p.id === r.id)
             return product && <RelatedProductLink key={r.id} product={product} why={r.why} />
           })}
         </div>

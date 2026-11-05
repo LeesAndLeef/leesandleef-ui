@@ -1,15 +1,18 @@
 import { Link } from 'react-router-dom'
 import oilPressCellar from '../../assets/cellar/oil-press.svg'
+import { useOils } from '../../hooks/oil/useOils'
 import { formatCurrency } from '../../lib/currency'
 import { oilPrice } from '../../lib/oil'
 import { oilPath } from '../../lib/paths'
+import { pickByIds } from '../../lib/pickByIds'
 import { useCart } from '../../state/cart/useCart'
 import { COLORS } from '../../styles/colors'
-import { HOME_OILS } from './constants'
+import { HOME_OIL_IDS } from './constants'
 import styles from './HomeOils.module.css'
 
 export function HomeOils() {
   const { add } = useCart()
+  const homeOils = pickByIds(useOils(), HOME_OIL_IDS)
   return (
     <section className="section gridbg-d">
       <div className={`container section-pad ${styles.oil}`}>
@@ -32,7 +35,7 @@ export function HomeOils() {
         </div>
 
         <div className={styles.oilList}>
-          {HOME_OILS.map((o) => (
+          {homeOils.map((o) => (
             <div key={o.id} className={`glass ${styles.oilItem}`}>
               <div className={styles.oilItemHead}>
                 <h3 className="disp">

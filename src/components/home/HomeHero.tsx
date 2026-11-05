@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom'
+import { useWine } from '../../hooks/wine/useWine'
 import { formatCurrency } from '../../lib/currency'
 import { winePath } from '../../lib/paths'
 import { GROWERS_ROUTE, WINES_ROUTE } from '../../routes'
 import { COLORS } from '../../styles/colors'
 import { Bottle } from '../illustrations/Bottle'
-import { PRINCIPLES, RELEASE } from './constants'
+import { PRINCIPLES, RELEASE_IDS } from './constants'
 import styles from './HomeHero.module.css'
 
 export function HomeHero() {
-  const hero = RELEASE[0]
+  const hero = useWine(RELEASE_IDS[0])
   return (
     <section className="section gridbg">
       <div className={styles.hero}>
@@ -46,32 +47,34 @@ export function HomeHero() {
           </ol>
         </div>
 
-        <div className={`${styles.heroArt} hatch`}>
-          <div className={`block ${styles.heroB1}`} />
-          <div className={`block ${styles.heroB2}`} />
-          <div className={styles.heroBottle}>
-            <Bottle glass={hero.glass} cap={hero.cap} width={150} height={440} mark />
-          </div>
-          <div className={`glass ${styles.pouring}`}>
-            <div className="stack" style={{ gap: 8 }}>
-              <span className="mono" style={{ color: COLORS.sage }}>
-                Now pouring
-              </span>
-              <span className="disp" style={{ fontSize: 30 }}>
-                {hero.name}
-              </span>
-              <span style={{ fontSize: 14, color: COLORS.bone }}>Vina Brajko · Istria · 12.5% · 9 days on skins</span>
+        {hero && (
+          <div className={`${styles.heroArt} hatch`}>
+            <div className={`block ${styles.heroB1}`} />
+            <div className={`block ${styles.heroB2}`} />
+            <div className={styles.heroBottle}>
+              <Bottle glass={hero.glass} cap={hero.cap} width={150} height={440} mark />
             </div>
-            <div className={styles.pouringBuy}>
-              <span className="disp" style={{ fontSize: 32 }}>
-                {formatCurrency(hero.price)}
-              </span>
-              <Link to={winePath(hero)} className="btn btn-paper btn-sm">
-                View bottle →
-              </Link>
+            <div className={`glass ${styles.pouring}`}>
+              <div className="stack" style={{ gap: 8 }}>
+                <span className="mono" style={{ color: COLORS.sage }}>
+                  Now pouring
+                </span>
+                <span className="disp" style={{ fontSize: 30 }}>
+                  {hero.name}
+                </span>
+                <span style={{ fontSize: 14, color: COLORS.bone }}>Vina Brajko · Istria · 12.5% · 9 days on skins</span>
+              </div>
+              <div className={styles.pouringBuy}>
+                <span className="disp" style={{ fontSize: 32 }}>
+                  {formatCurrency(hero.price)}
+                </span>
+                <Link to={winePath(hero)} className="btn btn-paper btn-sm">
+                  View bottle →
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   )
