@@ -7,6 +7,7 @@ import { OilService } from '../services/oil/OilService'
 import { QuizService } from '../services/quiz/QuizService'
 import { SiteService } from '../services/site/SiteService'
 import { WineService } from '../services/wine/WineService'
+import type { OilFilters, WineFilters } from '../types'
 import { CATALOG_STALE_TIME } from './constants'
 
 export const siteQuery = () =>
@@ -16,17 +17,17 @@ export const siteQuery = () =>
     staleTime: CATALOG_STALE_TIME,
   })
 
-export const winesQuery = () =>
+export const winesQuery = (filters: WineFilters = {}) =>
   queryOptions({
-    queryKey: QUERY_KEYS.WINES,
-    queryFn: ({ signal }) => WineService.create().getWines(signal),
+    queryKey: [...QUERY_KEYS.WINES, filters],
+    queryFn: ({ signal }) => WineService.create().getWines(filters, signal),
     staleTime: CATALOG_STALE_TIME,
   })
 
-export const oilsQuery = () =>
+export const oilsQuery = (filters: OilFilters = {}) =>
   queryOptions({
-    queryKey: QUERY_KEYS.OILS,
-    queryFn: ({ signal }) => OilService.create().getOils(signal),
+    queryKey: [...QUERY_KEYS.OILS, filters],
+    queryFn: ({ signal }) => OilService.create().getOils(filters, signal),
     staleTime: CATALOG_STALE_TIME,
   })
 

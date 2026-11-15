@@ -1,14 +1,62 @@
-import type { OIL_SIZES } from './constants'
-
 export type WineFilterType = 'Red' | 'White' | 'Orange' | 'Rosé' | 'Sparkling'
 export type WineType = WineFilterType | 'Dessert'
 export type WineSort = 'newest' | 'price-asc' | 'price-desc' | 'left'
 export type WineLayout = 'grid' | 'list'
+export type So2 = 'any' | '10' | 'zero'
+export type WineExtra = 'vegan' | 'amphora' | 'magnum' | 'inStock'
 
-export interface Vintage {
-  year: string
+export interface RegionGroup {
+  label: string
+  regions: string[]
+}
+
+export type WineFilters = {
+  type?: WineType
+  q?: string
+  region?: string[]
+  grape?: string[]
+  priceMin?: number
+  priceMax?: number
+  maxSo2?: number
+  so2Added?: boolean
+  vegan?: boolean
+  amphora?: boolean
+  magnum?: boolean
+  inStock?: boolean
+  listed?: boolean
+  sort?: WineSort
+}
+
+export type OilFilters = {
+  level?: OilLevel
+  set?: boolean
+}
+
+export interface PriceRange {
+  min: number
+  max: number
+}
+
+export interface WineListMeta {
+  total: number
+  types: Record<WineType, number>
+  regions: Record<string, number>
+  price: PriceRange | null
+}
+
+export interface OilListMeta {
+  total: number
+  levels: Record<OilLevel, number>
+}
+
+export interface WineVintage {
+  id: string
+  vintage: string | null
+  name: string
   price: number
-  info: string
+  left?: number
+  preOrder?: string
+  isDefault: boolean
 }
 
 export interface StructureBar {
@@ -32,8 +80,6 @@ export interface RelatedProduct {
 export interface WineDetail {
   story: string
   tags: string[]
-  vintages?: Vintage[]
-  defaultVintage?: string
   drinkWindow: { label: string; cells: number[] }
   tasting: { nose: string; palate: string; finish: string }
   structure: StructureBar[]
@@ -52,15 +98,19 @@ interface BaseProduct {
   growerId?: string
   growerName?: string
   region: string
-  price: number
-  left?: number
   glass: string
   cap: string
   note: string
+  releaseDate: string
 }
 
 interface Linked {
   path: string
+}
+
+interface Sellable {
+  price: number
+  left?: number
 }
 
 export interface RawWine extends BaseProduct {
@@ -70,8 +120,6 @@ export interface RawWine extends BaseProduct {
   abv: string
   volume?: string
   homeNote?: string
-  badge?: string
-  releaseRank: number
   unlisted?: boolean
   so2: number
   so2Added: boolean
@@ -79,6 +127,7 @@ export interface RawWine extends BaseProduct {
   amphora: boolean
   magnum: boolean
   detail: WineDetail
+  vintages: WineVintage[]
 }
 
 export type OilLevel = 'Delicate' | 'Medium' | 'Robust'
@@ -107,9 +156,18 @@ export interface OilDetail {
   related: RelatedProduct[]
 }
 
-export type Wine = RawWine & Linked
+export type Wine = RawWine & Linked & Sellable
 
-export type OilSize = (typeof OIL_SIZES)[number]['id']
+export type OilSize = '250' | '500' | '3000'
+
+export interface OilSizeOption {
+  id: string
+  size: OilSize | null
+  label: string
+  name: string
+  price: number
+  left?: number
+}
 
 export interface RawOil extends BaseProduct {
   kind: 'oil'
@@ -123,11 +181,12 @@ export interface RawOil extends BaseProduct {
   acid: string
   harvest: string
   limited?: boolean
-  set?: { was: number; contents: string }
+  set?: { contents: string }
+  sizes: OilSizeOption[]
   detail: OilDetail
 }
 
-export type Oil = RawOil & Linked
+export type Oil = RawOil & Linked & Sellable
 
 export type Product = Wine | Oil
 
@@ -180,7 +239,7 @@ export interface CartLine {
 }
 
 export interface PricedLine extends CartLine {
-  item: Product | ClubPlan
+  item: CartItem
   name: string
   meta: string
   unit: number
@@ -323,7 +382,10 @@ export type SceneKind =
   | 'pour'
   | 'plate'
 
-export type RawCartItem = Omit<RawWine, 'detail'> | Omit<RawOil, 'detail'> | RawClubPlan
+export type RawCartItem =
+  | (Omit<RawWine, 'detail'> & { price: number; vintage: WineVintage })
+  | (Omit<RawOil, 'detail'> & { price: number; size: OilSizeOption })
+  | RawClubPlan
 
 export type CartItem = Omit<Wine, 'detail'> | Omit<Oil, 'detail'> | ClubPlan
 
@@ -511,4 +573,14 @@ export interface ApiIssue {
 
 export interface NewsletterSubscription {
   subscribed: true
+}
+
+export interface WineList {
+  wines: Wine[]
+  meta: WineListMeta
+}
+
+export interface OilList {
+  oils: Oil[]
+  meta: OilListMeta
 }

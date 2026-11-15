@@ -2,27 +2,57 @@ import { DEFAULT_WINE_VOLUME, WINE_TYPES } from '../constants'
 import { wines as rawWines } from '../data/wines'
 import { WINES_ROUTE } from '../routes'
 import { COLORS } from '../styles/colors'
-import type { GalleryShot, LabelCopy, Wine, WineFilterType, WineType } from '../types'
-import { VINTAGE_YEAR, WINE_BACK_LABEL_LINES, WINE_BACK_LABEL_NOTE, WINE_POUR_TONES } from './constants'
+import type { GalleryShot, LabelCopy, RawWine, Wine, WineFilterType, WineType, WineVintage } from '../types'
+import {
+  VINTAGE_LEFT_LABEL,
+  VINTAGE_PRE_ORDER_LABEL,
+  VINTAGE_YEAR,
+  WINE_BACK_LABEL_LINES,
+  WINE_BACK_LABEL_NOTE,
+  WINE_POUR_TONES,
+} from './constants'
+import { formatCurrency } from './currency'
 import { winePath } from './paths'
 import { productRegion } from './productPlace'
 import { contrastingTone } from './tone'
 
-export const wines: Wine[] = rawWines.map((wine) => ({ ...wine, path: winePath(wine) }))
+export const defaultVintage = (wine: Pick<RawWine, 'vintages'>) =>
+  wine.vintages.find((vintage) => vintage.isDefault) ?? wine.vintages[0]
+
+export const chosenVintage = (wine: Pick<RawWine, 'vintages'>, id?: string) =>
+  wine.vintages.find((vintage) => vintage.id === id) ?? defaultVintage(wine)
+
+export const lineVintage = (wine: Pick<RawWine, 'vintages'>, year?: string) =>
+  wine.vintages.find((vintage) => vintage.vintage === year) ?? defaultVintage(wine)
+
+export function withDefaultVintage<T extends Pick<RawWine, 'vintages'>>(wine: T) {
+  const { price, left } = defaultVintage(wine)
+  return { ...wine, price, left }
+}
+
+export const wines: Omit<Wine, 'detail'>[] = rawWines.map((wine) => ({
+  ...withDefaultVintage(wine),
+  path: winePath(wine),
+}))
 
 export const listedWines = (all: readonly Wine[]) => all.filter((w) => !w.unlisted)
-
-export const maxWinePrice = (all: readonly Pick<Wine, 'price'>[]) => Math.max(...all.map((w) => w.price))
-
-export const wineTitle = (name: string, vintage?: string) => (vintage ? name.replace(/\d{4}$/, vintage) : name)
 
 export const wineNameWithoutYear = (name: string) => name.replace(/\s\d{4}$/, '')
 
 export const wineTypePath = (type: WineType) =>
   WINE_TYPES.includes(type as WineFilterType) ? `${WINES_ROUTE}?type=${encodeURIComponent(type)}` : WINES_ROUTE
 
-export const vintagePrice = (wine: Pick<Wine, 'price' | 'detail'>, vintage?: string) =>
-  wine.detail.vintages?.find((v) => v.year === vintage)?.price ?? wine.price
+function vintageAvailability({ preOrder, left }: Pick<WineVintage, 'preOrder' | 'left'>) {
+  if (preOrder) return `${VINTAGE_PRE_ORDER_LABEL} · ${preOrder}`
+  return left === undefined ? undefined : `${left} ${VINTAGE_LEFT_LABEL}`
+}
+
+export const wineVintageOptions = (wine: Pick<RawWine, 'vintages'>) =>
+  wine.vintages.map((vintage) => ({
+    id: vintage.id,
+    name: vintage.vintage ?? vintage.name,
+    info: [formatCurrency(vintage.price), vintageAvailability(vintage)].filter(Boolean).join(' · '),
+  }))
 
 export const winePourTone = (wine: Pick<Wine, 'type' | 'glass'>) => WINE_POUR_TONES[wine.type] ?? wine.glass
 

@@ -49,7 +49,6 @@ export default function OliveOilPage() {
   return (
     <>
       <ProductHero
-        key={oil.id}
         crumbs={[
           { label: 'Home', to: HOME_ROUTE },
           { label: OIL_TYPE_LABEL, to: OLIVE_OILS_ROUTE },
@@ -78,7 +77,7 @@ export default function OliveOilPage() {
         <ProductPerks perks={oilKeeping(oil)} />
       </ProductHero>
 
-      <OilDetails key={oil.id} oil={oil} />
+      <OilDetails oil={oil} />
       {detail.quote && grower && (
         <ProductGrowerQuote quote={detail.quote} grower={grower} where={productPlace(oil.region, grower)} />
       )}

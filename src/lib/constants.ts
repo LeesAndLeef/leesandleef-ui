@@ -1,5 +1,5 @@
 import { COLORS } from '../styles/colors'
-import type { LabelCopy, OilLevel, WineType } from '../types'
+import type { LabelCopy, OilLevel, So2, WineFilters, WineType } from '../types'
 
 export const OIL_BACK_LABEL_TITLE = 'Extra virgin olive oil · Croatia'
 
@@ -24,6 +24,10 @@ export const WINE_POUR_TONES: Partial<Record<WineType, string>> = {
   Dessert: COLORS.tintDeepAmber,
 }
 
+export const VINTAGE_PRE_ORDER_LABEL = 'Pre-order'
+
+export const VINTAGE_LEFT_LABEL = 'left'
+
 export const VINTAGE_YEAR = /\s?\b(?:19|20)\d{2}\b/
 
 export const SHIPPING_FEE = 9.9
@@ -35,3 +39,11 @@ export const QUERY_STALE_TIME = 60_000
 export const CATALOG_STALE_TIME = 5 * 60_000
 
 export const MAX_QUERY_RETRIES = 2
+
+export const MAX_CATALOG_QUERY_LENGTH = 100
+
+export const SO2_FILTERS: Record<So2, Pick<WineFilters, 'maxSo2' | 'so2Added'>> = {
+  any: {},
+  '10': { maxSo2: 10 },
+  zero: { so2Added: false },
+}

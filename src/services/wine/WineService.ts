@@ -1,9 +1,11 @@
 import { linkWine } from '../../lib/links'
-import type { RawWine, Wine } from '../../types'
+import { withDefaultVintage } from '../../lib/wine'
+import type { RawWine, Wine, WineFilters, WineList } from '../../types'
 import { BaseService } from '../BaseService'
 import { API_ENDPOINTS } from '../constants'
 import { HttpClient } from '../HttpClient'
 import type { IHttpClient } from '../types'
+import type { RawWineList } from './types'
 
 export class WineService extends BaseService<Wine, RawWine> {
   private static instance: WineService
@@ -18,10 +20,12 @@ export class WineService extends BaseService<Wine, RawWine> {
   }
 
   protected toModel(dto: RawWine): Wine {
-    return linkWine(dto)
+    return linkWine(withDefaultVintage(dto))
   }
 
-  async getWines(signal?: AbortSignal) {
-    return this.toModels(await this.httpClient.get<RawWine[]>(API_ENDPOINTS.WINES, { signal }))
+  async getWines(filters: Readonly<WineFilters> = {}, signal?: AbortSignal): Promise<WineList> {
+    const params = this.getQueryParams(filters)
+    const { data, meta } = await this.httpClient.get<RawWineList>(API_ENDPOINTS.WINES, { params, signal })
+    return { wines: this.toModels(data), meta }
   }
 }

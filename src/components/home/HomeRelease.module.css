@@ -17,13 +17,6 @@
 .releaseCard:hover .releaseCardImg {
   background-color: var(--wine-800);
 }
-.releaseCardBadge {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  padding: 6px 10px;
-  color: var(--paper);
-}
 .releaseCardBody {
   padding: 22px;
   display: flex;

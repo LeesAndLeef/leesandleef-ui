@@ -1,13 +1,14 @@
 import { wineShots } from '../../lib/wine'
-import type { Wine } from '../../types'
+import type { Wine, WineVintage } from '../../types'
 import { Bottle } from '../illustrations/Bottle'
 import { ProductGallery } from '../product/ProductGallery'
 import { ProductStageBlock } from '../product/ProductStageBlock'
 import { ProductStageTag } from '../product/ProductStageTag'
 import { WineDrinkWindow } from './WineDrinkWindow'
 
-export function WineGallery({ wine, title }: { wine: Wine; title: string }) {
+export function WineGallery({ wine, vintage }: { wine: Wine; vintage: Pick<WineVintage, 'name' | 'left'> }) {
   const { drinkWindow } = wine.detail
+  const title = vintage.name
   return (
     <ProductGallery
       pattern="hatch"
@@ -21,7 +22,7 @@ export function WineGallery({ wine, title }: { wine: Wine; title: string }) {
           <ProductStageBlock tone="wine" />
           <ProductStageBlock tone="olive" />
           <Bottle glass={wine.glass} cap={wine.cap} width={170} height={560} mark label={`Bottle of ${title}`} />
-          <ProductStageTag badge={wine.badge} left={wine.left} />
+          <ProductStageTag left={vintage.left} />
           <WineDrinkWindow {...drinkWindow} />
         </>
       }

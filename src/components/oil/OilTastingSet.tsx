@@ -32,13 +32,8 @@ export function OilTastingSet() {
           ))}
         </div>
         <div className={styles.setFoot}>
-          <span style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-            <span className="disp" style={{ fontSize: 40 }}>
-              {formatCurrency(set.price)}
-            </span>
-            <span className="mono" style={{ fontSize: 11, color: COLORS.wine200, textDecoration: 'line-through' }}>
-              {formatCurrency(set.set!.was)}
-            </span>
+          <span className="disp" style={{ fontSize: 40 }}>
+            {formatCurrency(set.price)}
           </span>
           <button
             className="btn btn-paper btn-lg"
