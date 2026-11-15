@@ -1,12 +1,11 @@
-import type { Wine } from '../../types'
+import type { WineVintage } from '../../types'
 import styles from './ProductStageTag.module.css'
 
-export function ProductStageTag({ badge, left }: Pick<Wine, 'badge' | 'left'>) {
-  if (!badge && left === undefined) return null
+export function ProductStageTag({ left }: Pick<WineVintage, 'left'>) {
+  if (left === undefined) return null
   return (
     <div className={`glass ${styles.root}`}>
-      {badge && <span className="mono">{badge}</span>}
-      {left !== undefined && <span className="mono label-rose">{left} bottles left</span>}
+      <span className="mono label-rose">{left} bottles left</span>
     </div>
   )
 }

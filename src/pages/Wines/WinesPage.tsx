@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 import { Navigate, useSearchParams } from 'react-router-dom'
 import { WineCard } from '../../components/product/WineCard'
 import { WineGrid } from '../../components/product/WineGrid'
@@ -8,24 +8,20 @@ import { WinePriceFilter } from '../../components/wine/WinePriceFilter'
 import { WineQuizPromo } from '../../components/wine/WineQuizPromo'
 import { WineResultsTools } from '../../components/wine/WineResultsTools'
 import { WINE_TYPES } from '../../constants'
-import { useWines } from '../../hooks/wine/useWines'
-import { formatCurrency } from '../../lib/currency'
+import { useWineResults } from '../../hooks/wine/useWineResults'
+import { sumCounts } from '../../lib/counts'
 import { toggle } from '../../lib/toggle'
-import { listedWines, maxWinePrice } from '../../lib/wine'
+import { groupRegions, priceFilterLabel, wineFilters } from '../../lib/wineFilters'
 import { HOME_ROUTE, OLIVE_OILS_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
-import type { Wine, WineLayout, WineSort } from '../../types'
+import type { So2, Wine, WineExtra, WineLayout, WineSort } from '../../types'
 import { EXTRAS, GRAPES, REGION_GROUPS } from './constants'
-import type { Extra, So2 } from './types'
 import styles from './WinesPage.module.css'
 
 export default function WinesPage() {
   const { add } = useCart()
-  const wines = useWines()
-  const listed = useMemo(() => listedWines(wines), [wines])
-  const priceMax = maxWinePrice(listed)
   const [params, setParams] = useSearchParams()
-  const type = params.get('type') ?? 'All'
+  const type = WINE_TYPES.find((t) => t === params.get('type'))
   const query = params.get('q') ?? ''
 
   const [regions, setRegions] = useState<string[]>([])
@@ -33,9 +29,28 @@ export default function WinesPage() {
   const [priceFrom, setPriceFrom] = useState('')
   const [priceTo, setPriceTo] = useState('')
   const [so2, setSo2] = useState<So2>('any')
-  const [extra, setExtra] = useState<Extra[]>([])
+  const [extra, setExtra] = useState<WineExtra[]>([])
   const [sort, setSort] = useState<WineSort>('newest')
   const [view, setView] = useState<WineLayout>('grid')
+
+  const request = useMemo(
+    () => ({
+      ...wineFilters({
+        query,
+        regions: groupRegions(REGION_GROUPS, regions),
+        grapes: grape,
+        priceFrom,
+        priceTo,
+        so2,
+        extras: extra,
+      }),
+      type,
+      sort,
+    }),
+    [query, regions, grape, priceFrom, priceTo, so2, extra, type, sort],
+  )
+  const shownRequest = useDeferredValue(request)
+  const { wines: results, meta } = useWineResults(shownRequest)
 
   const setParam = (key: string, value: string | null) => {
     const next = new URLSearchParams(params)
@@ -44,37 +59,7 @@ export default function WinesPage() {
     setParams(next, { replace: true })
   }
 
-  const from = priceFrom === '' ? 0 : Number(priceFrom)
-  const to = priceTo === '' ? Infinity : Number(priceTo)
   const hasPrice = priceFrom !== '' || priceTo !== ''
-
-  const baseFiltered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    const allowedRegions = REGION_GROUPS.filter((g) => regions.includes(g.label)).flatMap((g) => g.regions)
-    return listed.filter((w) => {
-      if (q && ![w.name, w.growerName, w.grape, w.region].some((s) => s?.toLowerCase().includes(q))) return false
-      if (allowedRegions.length && !allowedRegions.includes(w.region)) return false
-      if (grape.length && !grape.some((g) => w.grape.startsWith(g))) return false
-      if (w.price < from || w.price > to) return false
-      if (so2 === '10' && w.so2 > 10) return false
-      if (so2 === 'zero' && w.so2Added) return false
-      if (extra.includes('vegan') && !w.vegan) return false
-      if (extra.includes('amphora') && !w.amphora) return false
-      if (extra.includes('magnum') && !w.magnum) return false
-      if (extra.includes('inStock') && w.left === 0) return false
-      return true
-    })
-  }, [listed, query, regions, grape, from, to, so2, extra])
-
-  const results = useMemo(() => {
-    const list = type === 'All' ? baseFiltered : baseFiltered.filter((w) => w.type === type)
-    const sorted = [...list]
-    if (sort === 'newest') sorted.sort((a, b) => a.releaseRank - b.releaseRank)
-    if (sort === 'price-asc') sorted.sort((a, b) => a.price - b.price)
-    if (sort === 'price-desc') sorted.sort((a, b) => b.price - a.price)
-    if (sort === 'left') sorted.sort((a, b) => (a.left ?? Infinity) - (b.left ?? Infinity))
-    return sorted
-  }, [baseFiltered, type, sort])
 
   const clearAll = () => {
     setRegions([])
@@ -92,7 +77,7 @@ export default function WinesPage() {
     ...(hasPrice
       ? [
           {
-            label: `${formatCurrency(Number(priceFrom) || 0)}-${formatCurrency(Number(priceTo) || priceMax)}`,
+            label: priceFilterLabel(priceFrom, priceTo, meta.price?.max),
             remove: () => (setPriceFrom(''), setPriceTo('')),
           },
         ]
@@ -102,7 +87,7 @@ export default function WinesPage() {
     ...extra.map((e) => ({ label: EXTRAS.find((x) => x.id === e)!.label, remove: () => setExtra(toggle(extra, e)) })),
   ]
 
-  if (type === 'oil') return <Navigate to={OLIVE_OILS_ROUTE} replace />
+  if (params.get('type') === 'oil') return <Navigate to={OLIVE_OILS_ROUTE} replace />
 
   return (
     <>
@@ -120,17 +105,14 @@ export default function WinesPage() {
             </p>
           </div>
           <div role="group" aria-label="Wine style" className="chip-row">
-            {['All', ...WINE_TYPES].map((t) => (
+            {(['All', ...WINE_TYPES] as const).map((t) => (
               <button
                 key={t}
                 className="chip"
-                aria-pressed={type === t}
+                aria-pressed={(type ?? 'All') === t}
                 onClick={() => setParam('type', t === 'All' ? null : t)}
               >
-                {t}{' '}
-                <span className="mono">
-                  {t === 'All' ? baseFiltered.length : baseFiltered.filter((w) => w.type === t).length}
-                </span>
+                {t} <span className="mono">{t === 'All' ? sumCounts(meta.types) : meta.types[t]}</span>
               </button>
             ))}
           </div>
@@ -159,23 +141,23 @@ export default function WinesPage() {
                     onChange={() => setRegions(toggle(regions, g.label))}
                   />
                   {g.label}
-                  <span className={`mono label-muted ${styles.filterCount}`}>
-                    {listed.filter((w) => g.regions.includes(w.region)).length}
-                  </span>
+                  <span className={`mono label-muted ${styles.filterCount}`}>{sumCounts(meta.regions, g.regions)}</span>
                 </label>
               ))}
             </fieldset>
 
-            <fieldset className={styles.filterGroup}>
-              <legend className="mono label-muted">Price, €</legend>
-              <WinePriceFilter
-                priceFrom={priceFrom}
-                priceTo={priceTo}
-                max={priceMax}
-                onPriceFromChange={setPriceFrom}
-                onPriceToChange={setPriceTo}
-              />
-            </fieldset>
+            {meta.price && (
+              <fieldset className={styles.filterGroup}>
+                <legend className="mono label-muted">Price, €</legend>
+                <WinePriceFilter
+                  priceFrom={priceFrom}
+                  priceTo={priceTo}
+                  max={meta.price.max}
+                  onPriceFromChange={setPriceFrom}
+                  onPriceToChange={setPriceTo}
+                />
+              </fieldset>
+            )}
 
             <fieldset className={styles.filterGroup}>
               <legend className="mono label-muted">Grape</legend>
@@ -226,7 +208,7 @@ export default function WinesPage() {
             <WineQuizPromo />
           </aside>
 
-          <div className={styles.results}>
+          <div className={styles.results} aria-busy={shownRequest !== request}>
             <div className={styles.resultsBar}>
               <div className={styles.resultsChips}>
                 <span className="mono label-muted" aria-live="polite">

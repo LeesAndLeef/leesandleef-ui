@@ -36,7 +36,6 @@ export function HomeRelease() {
           {release.map((w) => (
             <article key={w.id} className={styles.releaseCard}>
               <Link to={winePath(w)} className={`${styles.releaseCardImg} hatch`} aria-label={w.name}>
-                <span className={`mono glass ${styles.releaseCardBadge}`}>{w.badge}</span>
                 <Bottle glass={w.glass} cap={w.cap} width={92} height={300} />
               </Link>
               <div className={styles.releaseCardBody}>

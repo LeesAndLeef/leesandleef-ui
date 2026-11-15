@@ -1,7 +1,7 @@
-import { OIL_SIZES } from '../constants'
+import { DEFAULT_OIL_SIZE, OIL_SIZES } from '../constants'
 import { oils as rawOils } from '../data/oils'
 import { COLORS } from '../styles/colors'
-import type { GalleryShot, LabelCopy, Oil, OilSize, ProductPerk } from '../types'
+import type { GalleryShot, LabelCopy, Oil, OilSize, OilSizeOption, ProductPerk, RawOil } from '../types'
 import {
   OIL_BACK_LABEL_TITLE,
   OIL_POUR_TONES,
@@ -14,20 +14,34 @@ import { oilPath } from './paths'
 import { contrastingTone } from './tone'
 import type { OilLabResult } from './types'
 
-export const oils: Oil[] = rawOils.map((oil) => ({ ...oil, path: oilPath(oil) }))
+export const defaultOilSize = (oil: Pick<RawOil, 'sizes'>) =>
+  oil.sizes.find((option) => option.size === DEFAULT_OIL_SIZE) ?? oil.sizes[0]
 
-export const listedOils = (all: readonly Oil[]) => all.filter((o) => !o.set)
+export function withDefaultSize<T extends Pick<RawOil, 'sizes'>>(oil: T) {
+  const { price, left } = defaultOilSize(oil)
+  return { ...oil, price, left }
+}
+
+export const oils: Omit<Oil, 'detail'>[] = rawOils.map((oil) => ({ ...withDefaultSize(oil), path: oilPath(oil) }))
 
 export const oilSize = (id?: string) => OIL_SIZES.find((z) => z.id === id) ?? OIL_SIZES[1]
 
-export function oilPrice(o: Oil, size?: string) {
-  return o.set ? o.price : Math.round(o.price * oilSize(size).mult)
-}
+export const oilSizeOption = (oil: Pick<Oil, 'sizes'>, size?: string) =>
+  oil.sizes.find((option) => option.size === size)
+
+export const oilPrice = (oil: Pick<Oil, 'price' | 'sizes'>, size?: string) =>
+  oilSizeOption(oil, size)?.price ?? oil.price
 
 export const oilTags = (oil: Pick<Oil, 'poly' | 'detail'>) => [...oil.detail.tags, `${oil.poly} polyphenols`]
 
-export const oilSizeOptions = (oil: Oil) =>
-  OIL_SIZES.map((z) => ({ id: z.id, name: z.name, info: `${formatCurrency(oilPrice(oil, z.id))} · ${z.hint}` }))
+const isSize = (option: OilSizeOption): option is OilSizeOption & { size: OilSize } => option.size !== null
+
+export const oilSizeOptions = (oil: Pick<Oil, 'sizes'>) =>
+  oil.sizes.filter(isSize).map((option) => ({
+    id: option.size,
+    name: option.name,
+    info: `${formatCurrency(option.price)} · ${oilSize(option.size).hint}`,
+  }))
 
 export const oilKeeping = (oil: Pick<Oil, 'detail'>): ProductPerk[] => [
   { label: 'Best within', text: '12 months of harvest' },

@@ -1,6 +1,8 @@
 import { withGrowerAssets, withOilAssets } from '../../lib/assets'
 import { linkOil, linkWine } from '../../lib/links'
+import { withDefaultSize } from '../../lib/oil'
 import type { SearchResults } from '../../lib/types'
+import { withDefaultVintage } from '../../lib/wine'
 import { BaseService } from '../BaseService'
 import { API_ENDPOINTS } from '../constants'
 import { HttpClient } from '../HttpClient'
@@ -21,8 +23,8 @@ export class SearchService extends BaseService<SearchResults, RawSearchResults> 
 
   protected toModel(dto: RawSearchResults): SearchResults {
     return {
-      wines: dto.wines.map(linkWine),
-      oils: dto.oils.map((oil) => withOilAssets(linkOil(oil))),
+      wines: dto.wines.map((wine) => linkWine(withDefaultVintage(wine))),
+      oils: dto.oils.map((oil) => withOilAssets(linkOil(withDefaultSize(oil)))),
       growers: dto.growers.map(withGrowerAssets),
     }
   }

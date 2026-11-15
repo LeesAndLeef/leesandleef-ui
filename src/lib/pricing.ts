@@ -11,6 +11,7 @@ import type { CartLine, Freq, PricedLine } from '../types'
 import { findItem } from './cart'
 import { SHIPPING_FEE } from './constants'
 import { oilPrice, oilSize } from './oil'
+import { lineVintage } from './wine'
 
 export function priceLine(line: CartLine): PricedLine | null {
   const item = findItem(line.id)
@@ -33,9 +34,9 @@ export function priceLine(line: CartLine): PricedLine | null {
     }
   }
 
-  const vintage = item.kind === 'wine' ? item.detail.vintages?.find((v) => v.year === line.option) : undefined
+  const vintage = item.kind === 'wine' ? lineVintage(item, line.option) : undefined
   const unit = item.kind === 'oil' ? oilPrice(item, line.option) : (vintage?.price ?? item.price)
-  const name = vintage ? item.name.replace(/\d{4}$/, vintage.year) : item.name
+  const name = vintage?.name ?? item.name
   const meta =
     item.kind === 'wine'
       ? `${item.type} · ${item.region} · ${item.volume ?? DEFAULT_WINE_VOLUME}`

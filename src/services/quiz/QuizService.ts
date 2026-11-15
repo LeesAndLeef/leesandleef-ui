@@ -1,4 +1,5 @@
 import { linkWine } from '../../lib/links'
+import { withDefaultVintage } from '../../lib/wine'
 import type { Quiz, QuizRecommendation } from '../../types'
 import { BaseService } from '../BaseService'
 import { API_ENDPOINTS } from '../constants'
@@ -19,7 +20,7 @@ export class QuizService extends BaseService<QuizRecommendation, RawQuizRecommen
   }
 
   protected toModel(dto: RawQuizRecommendation): QuizRecommendation {
-    return { ...dto, wines: dto.wines.map(linkWine) }
+    return { ...dto, wines: dto.wines.map((wine) => linkWine(withDefaultVintage(wine))) }
   }
 
   getQuiz(signal?: AbortSignal) {

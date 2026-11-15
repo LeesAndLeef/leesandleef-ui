@@ -17,7 +17,7 @@ import { useProduct } from '../../hooks/product/useProduct'
 import { useWine } from '../../hooks/wine/useWine'
 import { winePath } from '../../lib/paths'
 import { productPlace, productRegion } from '../../lib/productPlace'
-import { vintagePrice, wineNameWithoutYear, wineTitle, wineTypePath } from '../../lib/wine'
+import { chosenVintage, wineTypePath, wineVintageOptions } from '../../lib/wine'
 import { HOME_ROUTE, WINES_ROUTE } from '../../routes'
 import { useCart } from '../../state/cart/useCart'
 import NotFoundPage from '../NotFound/NotFoundPage'
@@ -30,14 +30,14 @@ export default function WinePage() {
   const wine = useWine(id)
   const product = useProduct(id)
   const grower = useGrower(wine?.growerId)
-  const [vintage, setVintage] = useState(wine?.detail.defaultVintage)
+  const [vintageId, setVintageId] = useState<string>()
 
   if (!product) return <NotFoundPage />
   if (!wine || pathname !== winePath(wine)) return <Navigate to={product.path} replace />
 
   const { detail } = wine
   const where = productPlace(wine.region, grower)
-  const title = wineTitle(wine.name, vintage)
+  const vintage = chosenVintage(wine, vintageId)
 
   return (
     <>
@@ -46,30 +46,30 @@ export default function WinePage() {
           { label: 'Home', to: HOME_ROUTE },
           { label: 'Wine', to: WINES_ROUTE },
           { label: wine.type, to: wineTypePath(wine.type) },
-          { label: wineNameWithoutYear(wine.name) },
+          { label: wine.name },
         ]}
-        gallery={<WineGallery wine={wine} title={title} />}
+        gallery={<WineGallery wine={wine} vintage={vintage} />}
       >
         <ProductHeading
           meta={[wine.type, productRegion(wine.region), wine.volume ?? DEFAULT_WINE_VOLUME, `${wine.abv} abv`]}
-          title={title}
+          title={vintage.name}
           grower={grower}
           producer={wine.growerName}
         />
         <p className="lede">{detail.story}</p>
         <ProductTags tags={detail.tags} />
-        {detail.vintages && (
+        {wine.vintages.length > 1 && (
           <ProductOptionPicker
             legend="Vintage"
-            options={detail.vintages.map((v) => ({ id: v.year, name: v.year, info: v.info }))}
-            value={vintage}
-            onChange={setVintage}
+            options={wineVintageOptions(wine)}
+            value={vintage.id}
+            onChange={setVintageId}
           />
         )}
         <ProductBuyRow
-          unitPrice={vintagePrice(wine, vintage)}
+          unitPrice={vintage.price}
           addedNote={WINE_ADDED_NOTE}
-          onAdd={(qty) => add(wine.id, qty, vintage)}
+          onAdd={(qty) => add(wine.id, qty, vintage.vintage ?? undefined)}
         />
         <ProductPerks perks={WINE_PERKS} />
         <ProductClubNudge />

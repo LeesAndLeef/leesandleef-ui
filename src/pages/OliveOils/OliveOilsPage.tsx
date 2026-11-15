@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useDeferredValue, useState } from 'react'
 import { OilArticleLink } from '../../components/oil/OilArticleLink'
 import { OilCultivars } from '../../components/oil/OilCultivars'
 import { OilHarvestDay } from '../../components/oil/OilHarvestDay'
@@ -8,9 +8,9 @@ import { OilsHero } from '../../components/oil/OilsHero'
 import { OilTastingSet } from '../../components/oil/OilTastingSet'
 import { OilCard } from '../../components/product/OilCard'
 import { DEFAULT_OIL_SIZE, OIL_SIZES } from '../../constants'
-import { useOils } from '../../hooks/oil/useOils'
+import { useOilResults } from '../../hooks/oil/useOilResults'
 import { oilOption } from '../../lib/cart'
-import { listedOils } from '../../lib/oil'
+import { sumCounts } from '../../lib/counts'
 import { useCart } from '../../state/cart/useCart'
 import type { Oil, OilLevel, OilSize } from '../../types'
 import { OIL_LEVELS } from './constants'
@@ -18,11 +18,11 @@ import styles from './OliveOilsPage.module.css'
 
 export default function OliveOilsPage() {
   const { add } = useCart()
-  const oils = listedOils(useOils())
   const [level, setLevel] = useState<OilLevel | 'All'>('All')
   const [size, setSize] = useState<OilSize>(DEFAULT_OIL_SIZE)
   const [added, setAdded] = useState<Record<string, boolean>>({})
-  const shown = oils.filter((o) => level === 'All' || o.level === level)
+  const shownLevel = useDeferredValue(level)
+  const { oils: shown, meta } = useOilResults({ set: false, level: shownLevel === 'All' ? undefined : shownLevel })
 
   function addOil(o: Oil) {
     add(o.id, 1, oilOption(size))
@@ -58,8 +58,7 @@ export default function OliveOilsPage() {
             <div role="group" aria-label="Intensity" className="chip-row">
               {(['All', ...OIL_LEVELS] as const).map((l) => (
                 <button key={l} className="chip" aria-pressed={level === l} onClick={() => setLevel(l)}>
-                  {l}{' '}
-                  <span className="mono">{l === 'All' ? oils.length : oils.filter((o) => o.level === l).length}</span>
+                  {l} <span className="mono">{l === 'All' ? sumCounts(meta.levels) : meta.levels[l]}</span>
                 </button>
               ))}
             </div>
@@ -67,7 +66,7 @@ export default function OliveOilsPage() {
               {shown.length} oils
             </span>
           </div>
-          <div className={styles.grid}>
+          <div className={styles.grid} aria-busy={shownLevel !== level}>
             {shown.map((o) => (
               <OilCard key={o.id} oil={o} size={size} added={!!added[`${o.id}@${size}`]} onAdd={() => addOil(o)} />
             ))}

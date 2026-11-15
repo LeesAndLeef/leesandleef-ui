@@ -1,4 +1,4 @@
-import type { Grower, Oil, Wine } from '../types'
+import type { Grower, Oil, So2, Wine, WineExtra } from '../types'
 
 export interface SearchResults {
   wines: Wine[]
@@ -20,4 +20,14 @@ export interface NavMatch {
 export interface TextSegment {
   text: string
   italic: boolean
+}
+
+export interface WineFilterInput {
+  query: string
+  regions: string[]
+  grapes: string[]
+  priceFrom: string
+  priceTo: string
+  so2: So2
+  extras: WineExtra[]
 }

@@ -3,7 +3,9 @@ import type { ApiIssue } from '../types'
 
 export type RequestConfig = Pick<AxiosRequestConfig, 'params' | 'signal'>
 
-export type QueryParams = Record<string, string | number | boolean | null | undefined>
+export type QueryValue = string | number | boolean | readonly string[] | null | undefined
+
+export type QueryParams = Record<string, QueryValue>
 
 export interface IHttpClient {
   get<T>(url: string, config?: RequestConfig): Promise<T>

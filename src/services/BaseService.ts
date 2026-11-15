@@ -15,7 +15,9 @@ export abstract class BaseService<Model, DTO = Model> {
 
   protected getQueryParams(params: Readonly<QueryParams> = {}): QueryParams {
     return Object.fromEntries(
-      Object.entries(params).filter(([, value]) => value !== undefined && value !== null && value !== ''),
+      Object.entries(params)
+        .map(([key, value]) => [key, Array.isArray(value) ? value.join(',') : value] as const)
+        .filter(([, value]) => value !== undefined && value !== null && value !== ''),
     )
   }
 }
