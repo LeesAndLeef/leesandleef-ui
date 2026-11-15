@@ -25,11 +25,13 @@
 
 .plans {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
   align-items: stretch;
 }
 .plan {
+  container-type: inline-size;
+  min-width: 0;
   padding: 32px;
   display: flex;
   flex-direction: column;
@@ -41,7 +43,6 @@
   background: var(--wine);
   color: var(--paper);
   border-color: var(--wine);
-  transform: translateY(-12px);
 }
 .planHead {
   display: flex;
@@ -49,10 +50,15 @@
   align-items: start;
   gap: 12px;
 }
+.planName {
+  min-width: 0;
+}
 .planHead h3 {
-  font-size: 40px;
+  font-size: min(40px, calc((100cqi - 61px) / 8.2));
+  overflow-wrap: break-word;
 }
 .planDots {
+  flex-shrink: 0;
   display: grid;
   grid-template-columns: repeat(4, 10px);
   gap: 3px;
@@ -85,14 +91,20 @@
   border-bottom: 1px solid currentColor;
 }
 .planPrice :global(.disp) {
-  font-size: 56px;
+  font-size: min(56px, 18cqi);
+}
+.planPrice :global(.mono) {
+  white-space: nowrap;
 }
 .planPerks {
   flex-grow: 1;
 }
 
-@media (max-width: 720px) {
+@media (min-width: 1080px) {
+  .plans {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
   .plan.isFeatured {
-    transform: none;
+    transform: translateY(-12px);
   }
 }

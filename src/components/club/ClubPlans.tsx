@@ -35,7 +35,7 @@ export function ClubPlans({
           {clubPlans.map((p) => (
             <article key={p.id} className={`${styles.plan} ${p.featured ? styles.isFeatured : ''}`}>
               <div className={styles.planHead}>
-                <div className="stack" style={{ gap: 8 }}>
+                <div className={`stack ${styles.planName}`} style={{ gap: 8 }}>
                   <span className={'mono ' + (p.featured ? 'label-rose' : 'label-wine')}>{p.tag}</span>
                   <h3 className="disp">{p.name}</h3>
                 </div>
