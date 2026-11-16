@@ -12,20 +12,23 @@ import { CheckoutReview } from '../../components/checkout/CheckoutReview'
 import { CheckoutStep } from '../../components/checkout/CheckoutStep'
 import { CheckoutSummary } from '../../components/checkout/CheckoutSummary'
 import { PAY_NAMES } from '../../components/checkout/constants'
-import type { CheckoutAddress, CheckoutDetails, Pay, Ship, ShipOption } from '../../components/checkout/types'
+import type { CheckoutAddress, CheckoutDetails, Pay } from '../../components/checkout/types'
+import { ErrorPage } from '../../components/layout/ErrorPage'
+import { FallbackPage } from '../../components/layout/FallbackPage'
 import { PageLayout } from '../../components/layout/PageLayout'
+import { useCart } from '../../hooks/cart/useCart'
+import { useShippingOptions } from '../../hooks/cart/useShippingOptions'
 import { useSite } from '../../hooks/site/useSite'
 import { formatCurrency } from '../../lib/currency'
 import { newOrderNumber } from '../../lib/orderNumber'
 import { shipCountryNames } from '../../lib/site'
 import { CART_ROUTE } from '../../routes'
-import { useCart } from '../../state/cart/useCart'
-import type { Order } from '../../types'
+import type { Order, ShipMethod } from '../../types'
 
 export default function CheckoutPage() {
-  const cart = useCart()
+  const cartQuery = useCart()
+  const shipsQuery = useShippingOptions()
   const countries = shipCountryNames(useSite())
-  const { priced, totals } = cart
   const [order, setOrder] = useState<Order | null>(null)
   const [step, setStep] = useState(1)
   const [details, setDetails] = useState<CheckoutDetails>({
@@ -43,28 +46,20 @@ export default function CheckoutPage() {
     country: countries[0],
     door: '',
   })
-  const [ship, setShip] = useState<Ship>('std')
+  const [ship, setShip] = useState<ShipMethod>('std')
   const [pay, setPay] = useState<Pay>('card')
 
-  if (!order && priced.length === 0) return <Navigate to={CART_ROUTE} replace />
+  if (cartQuery.isError || shipsQuery.isError)
+    return <ErrorPage onRetry={() => (cartQuery.refetch(), shipsQuery.refetch())} />
+  if (cartQuery.isPending || shipsQuery.isPending) return <FallbackPage />
 
-  const ships: ShipOption[] = [
-    {
-      id: 'std',
-      name: 'Standard courier',
-      desc: 'Packed Friday · 2–5 working days · adult signature',
-      price: totals.shipping,
-    },
-    {
-      id: 'sat',
-      name: 'Saturday delivery',
-      desc: 'Major cities only · 08:00–14:00 window',
-      price: totals.shipping + 9,
-    },
-    { id: 'pick', name: 'Collect at the cellar', desc: 'Thu–Sat, 12:00–20:00 · we’ll pour you a glass', price: 0 },
-  ]
-  const curShip = ships.find((s) => s.id === ship)!
-  const total = totals.total - totals.shipping + curShip.price
+  const cart = cartQuery.data
+  const ships = shipsQuery.data
+  const { lines, totals } = cart
+  if (!order && lines.length === 0) return <Navigate to={CART_ROUTE} replace />
+
+  const curShip = ships.find((s) => s.id === ship) ?? ships[0]
+  const total = curShip.total
   const fullName = `${details.first} ${details.last}`.trim()
   const addressLine =
     ship === 'pick'
@@ -79,9 +74,8 @@ export default function CheckoutPage() {
       shipName: curShip.name,
       payName: PAY_NAMES[pay],
       total,
-      lines: priced,
+      lines,
     })
-    cart.clear()
     window.scrollTo(0, 0)
   }
 
@@ -139,7 +133,7 @@ export default function CheckoutPage() {
         }
         summary={
           <CheckoutSummary
-            lines={order ? order.lines : priced}
+            lines={order ? order.lines : lines}
             placed={!!order}
             totals={totals}
             promo={cart.promo}

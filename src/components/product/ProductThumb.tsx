@@ -1,10 +1,10 @@
 import { COLORS } from '../../styles/colors'
-import type { PricedLine } from '../../types'
+import type { CartPricedLine } from '../../types'
 import { Bottle } from '../illustrations/Bottle'
 import { OilTin } from '../illustrations/OilTin'
 import styles from './ProductThumb.module.css'
 
-export function ProductThumb({ line, size = 'md' }: { line: PricedLine; size?: 'sm' | 'md' }) {
+export function ProductThumb({ line, size = 'md' }: { line: CartPricedLine; size?: 'sm' | 'md' }) {
   if (line.isClub) {
     return (
       <span className={`${styles.clubThumb} ${styles[size]}`} aria-hidden="true">

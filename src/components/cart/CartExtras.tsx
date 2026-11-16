@@ -1,15 +1,22 @@
 import { useState } from 'react'
-import { useCart } from '../../state/cart/useCart'
+import { useSetGiftNote } from '../../hooks/cart/useSetGiftNote'
 import { COLORS } from '../../styles/colors'
+import type { Cart } from '../../types'
 import styles from './CartExtras.module.css'
 
-export function CartExtras() {
-  const { giftNote, setGiftNote } = useCart()
+export function CartExtras({ giftNote }: Pick<Cart, 'giftNote'>) {
+  const { mutate: saveGiftNote } = useSetGiftNote()
   const [gift, setGift] = useState(giftNote !== null)
+  const [draft, setDraft] = useState(giftNote ?? '')
 
   function toggleGift() {
     setGift(!gift)
-    setGiftNote(gift ? null : (giftNote ?? ''))
+    if (gift) saveGiftNote(null)
+    else if (draft) saveGiftNote(draft)
+  }
+
+  function saveDraft() {
+    if (draft !== (giftNote ?? '')) saveGiftNote(draft)
   }
 
   return (
@@ -26,8 +33,9 @@ export function CartExtras() {
               rows={3}
               maxLength={280}
               placeholder="Happy birthday — drink the orange one first."
-              value={giftNote ?? ''}
-              onChange={(e) => setGiftNote(e.target.value)}
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              onBlur={saveDraft}
             />
           </label>
         )}

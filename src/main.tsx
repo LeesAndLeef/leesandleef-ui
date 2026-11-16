@@ -4,7 +4,6 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { prefetchCatalog } from './lib/catalogQueries'
 import { queryClient } from './lib/queryClient'
-import { CartProvider } from './state/cart/CartProvider'
 import './styles/global.css'
 import App from './App.tsx'
 
@@ -18,9 +17,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <CartProvider>
-          <App />
-        </CartProvider>
+        <App />
       </BrowserRouter>
       {ReactQueryDevtools && (
         <Suspense fallback={null}>

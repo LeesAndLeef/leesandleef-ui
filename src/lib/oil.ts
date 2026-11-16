@@ -1,5 +1,4 @@
 import { DEFAULT_OIL_SIZE, OIL_SIZES } from '../constants'
-import { oils as rawOils } from '../data/oils'
 import { COLORS } from '../styles/colors'
 import type { GalleryShot, LabelCopy, Oil, OilSize, OilSizeOption, ProductPerk, RawOil } from '../types'
 import {
@@ -10,7 +9,6 @@ import {
   VINTAGE_YEAR,
 } from './constants'
 import { formatCurrency } from './currency'
-import { oilPath } from './paths'
 import { contrastingTone } from './tone'
 import type { OilLabResult } from './types'
 
@@ -18,16 +16,17 @@ export const defaultOilSize = (oil: Pick<RawOil, 'sizes'>) =>
   oil.sizes.find((option) => option.size === DEFAULT_OIL_SIZE) ?? oil.sizes[0]
 
 export function withDefaultSize<T extends Pick<RawOil, 'sizes'>>(oil: T) {
-  const { price, left } = defaultOilSize(oil)
-  return { ...oil, price, left }
+  const { id, price, left } = defaultOilSize(oil)
+  return { ...oil, sellableId: id, price, left }
 }
-
-export const oils: Omit<Oil, 'detail'>[] = rawOils.map((oil) => ({ ...withDefaultSize(oil), path: oilPath(oil) }))
 
 export const oilSize = (id?: string) => OIL_SIZES.find((z) => z.id === id) ?? OIL_SIZES[1]
 
 export const oilSizeOption = (oil: Pick<Oil, 'sizes'>, size?: string) =>
   oil.sizes.find((option) => option.size === size)
+
+export const oilSizeId = (oil: Pick<Oil, 'sizes' | 'sellableId'>, size?: string) =>
+  oilSizeOption(oil, size)?.id ?? oil.sellableId
 
 export const oilPrice = (oil: Pick<Oil, 'price' | 'sizes'>, size?: string) =>
   oilSizeOption(oil, size)?.price ?? oil.price

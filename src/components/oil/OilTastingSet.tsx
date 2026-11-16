@@ -1,15 +1,15 @@
 import { useState } from 'react'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
 import { useOils } from '../../hooks/oil/useOils'
 import { formatCurrency } from '../../lib/currency'
 import { pickByIds } from '../../lib/pickByIds'
-import { useCart } from '../../state/cart/useCart'
 import { COLORS } from '../../styles/colors'
 import { OilTin } from '../illustrations/OilTin'
 import { SET_ID, SET_TIN_IDS } from './constants'
 import styles from './OilTastingSet.module.css'
 
 export function OilTastingSet() {
-  const { add } = useCart()
+  const addToCart = useAddToCart()
   const [added, setAdded] = useState(false)
   const oils = useOils()
   const set = oils.find((o) => o.id === SET_ID)
@@ -38,7 +38,7 @@ export function OilTastingSet() {
           <button
             className="btn btn-paper btn-lg"
             onClick={() => {
-              add(SET_ID)
+              addToCart([{ id: set.sellableId }])
               setAdded(true)
             }}
           >

@@ -1,8 +1,9 @@
 import { formatCurrency } from '../../lib/currency'
 import { submitHandler } from '../../lib/submitHandler'
+import type { ShipMethod, ShipOption } from '../../types'
 import { CheckoutFieldGrid } from './CheckoutFieldGrid'
 import { CheckoutForm } from './CheckoutForm'
-import type { CheckoutAddress, Ship, ShipOption } from './types'
+import type { CheckoutAddress } from './types'
 import styles from './CheckoutDeliveryForm.module.css'
 
 export function CheckoutDeliveryForm({
@@ -16,8 +17,8 @@ export function CheckoutDeliveryForm({
 }: {
   ships: ShipOption[]
   countries: string[]
-  ship: Ship
-  onShipChange: (ship: Ship) => void
+  ship: ShipMethod
+  onShipChange: (ship: ShipMethod) => void
   address: CheckoutAddress
   onAddressChange: (address: CheckoutAddress) => void
   onContinue: () => void

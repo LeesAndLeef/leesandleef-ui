@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
 import { useWines } from '../../hooks/wine/useWines'
 import { formatCurrency } from '../../lib/currency'
 import { winePath } from '../../lib/paths'
 import { pickByIds } from '../../lib/pickByIds'
 import { listedWines } from '../../lib/wine'
 import { WINES_ROUTE } from '../../routes'
-import { useCart } from '../../state/cart/useCart'
 import { Bottle } from '../illustrations/Bottle'
 import { RELEASE_IDS } from './constants'
 import styles from './HomeRelease.module.css'
 
 export function HomeRelease() {
-  const { add } = useCart()
+  const addToCart = useAddToCart()
   const wines = useWines()
   const release = pickByIds(wines, RELEASE_IDS)
 
@@ -54,7 +54,7 @@ export function HomeRelease() {
                 <p className={styles.releaseCardNote}>{w.homeNote ?? w.note}</p>
                 <div className={styles.releaseCardFoot}>
                   <span className="disp">{formatCurrency(w.price)}</span>
-                  <button className="btn btn-ink btn-sm" onClick={() => add(w.id)}>
+                  <button className="btn btn-ink btn-sm" onClick={() => addToCart([{ id: w.sellableId }])}>
                     Add to cart
                   </button>
                 </div>

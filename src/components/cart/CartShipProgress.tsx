@@ -1,9 +1,9 @@
 import { FREE_SHIPPING_FROM, MIX_SIX } from '../../constants'
 import { formatCurrency } from '../../lib/currency'
-import type { Totals } from '../../state/cart/types'
+import type { CartTotals } from '../../types'
 import styles from './CartShipProgress.module.css'
 
-export function CartShipProgress({ totals }: { totals: Pick<Totals, 'goodsAfter' | 'wineBottles'> }) {
+export function CartShipProgress({ totals }: { totals: Pick<CartTotals, 'goodsAfter' | 'wineBottles'> }) {
   const filled = Math.min(12, Math.round((totals.goodsAfter / FREE_SHIPPING_FROM) * 12))
   const freeUnlocked = totals.goodsAfter >= FREE_SHIPPING_FROM
   const bottlesToGo = MIX_SIX - totals.wineBottles

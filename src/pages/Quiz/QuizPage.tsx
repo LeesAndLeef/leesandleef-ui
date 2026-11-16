@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom'
 import { WineCard } from '../../components/product/WineCard'
 import { WineGrid } from '../../components/product/WineGrid'
 import { Breadcrumb } from '../../components/ui/Breadcrumb'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
 import { useQuiz } from '../../hooks/quiz/useQuiz'
 import { useQuizRecommendation } from '../../hooks/quiz/useQuizRecommendation'
 import { formatCurrency } from '../../lib/currency'
 import { CLUB_ROUTE, HOME_ROUTE, WINES_ROUTE } from '../../routes'
-import { useCart } from '../../state/cart/useCart'
 import { COLORS } from '../../styles/colors'
 import styles from './QuizPage.module.css'
 
 export default function QuizPage() {
-  const { add } = useCart()
+  const addToCart = useAddToCart()
   const { questions } = useQuiz()
   const recommendation = useQuizRecommendation()
   const [answers, setAnswers] = useState<number[]>([])
@@ -136,10 +136,16 @@ export default function QuizPage() {
                 <span style={{ fontSize: 14, color: COLORS.wine100 }}>
                   Before the −10% mix-six discount, applied in the cart.
                 </span>
-                <button className="btn btn-paper btn-lg" onClick={() => result.wines.forEach((w) => add(w.id))}>
+                <button
+                  className="btn btn-paper btn-lg"
+                  onClick={() => addToCart(result.wines.map((w) => ({ id: w.sellableId })))}
+                >
                   Add all six to cart
                 </button>
-                <button className="btn btn-ghost-light" onClick={() => add('club-cellar', 1, 'season')}>
+                <button
+                  className="btn btn-ghost-light"
+                  onClick={() => addToCart([{ id: 'club-cellar', option: 'season' }])}
+                >
                   Or get a box like this every season →
                 </button>
                 <button className="text-btn" style={{ color: COLORS.paper, alignSelf: 'flex-start' }} onClick={restart}>
@@ -151,7 +157,7 @@ export default function QuizPage() {
           <section className="section">
             <WineGrid className="container section-pad">
               {result.wines.map((w) => (
-                <WineCard key={w.id} wine={w} onAdd={() => add(w.id)} />
+                <WineCard key={w.id} wine={w} onAdd={() => addToCart([{ id: w.sellableId }])} />
               ))}
             </WineGrid>
           </section>

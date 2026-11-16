@@ -1,10 +1,12 @@
-import type { CartState, Freq, OilSize, WineFilterType } from './types'
+import type { Freq, OilSize, WineFilterType } from './types'
 
 export const DEFAULT_CURRENCY = 'EUR'
 export const DEFAULT_LOCALE = 'en-IE'
 
 export const FREE_SHIPPING_FROM = 120
 export const MIX_SIX = 6
+
+export const MIX_DISCOUNT_RATE = 0.1
 
 export const DEFAULT_WINE_VOLUME = '750 ml'
 
@@ -19,12 +21,6 @@ export const OIL_SIZES = [
 export const DEFAULT_OIL_SIZE: OilSize = '500'
 
 export const FREQ_LABEL: Record<Freq, string> = { season: 'per season', month: 'per month' }
-
-export const MIX_DISCOUNT_RATE = 0.1
-
-export const PROMO_CODES: Record<string, number> = { HARVEST10: 0.1 }
-
-export const EMPTY_CART: CartState = { lines: [], saved: [], promo: null, giftNote: null }
 
 export const ASSETS_BASE_URL = import.meta.env.VITE_ASSETS_URL ?? ''
 

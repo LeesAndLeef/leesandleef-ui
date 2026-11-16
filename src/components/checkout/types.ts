@@ -1,4 +1,3 @@
-export type Ship = 'std' | 'sat' | 'pick'
 export type Pay = 'card' | 'wallet' | 'bank'
 
 export interface CheckoutDetails {
@@ -16,11 +15,4 @@ export interface CheckoutAddress {
   city: string
   country: string
   door: string
-}
-
-export interface ShipOption {
-  id: Ship
-  name: string
-  desc: string
-  price: number
 }

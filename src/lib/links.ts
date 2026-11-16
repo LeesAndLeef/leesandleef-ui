@@ -9,7 +9,7 @@ export const linkOil = <T extends Pick<RawOil, 'id'>>(oil: T) => ({ ...oil, path
 export const linkClubPlan = <T extends Pick<RawClubPlan, 'id'>>(plan: T) => ({ ...plan, path: CLUB_ROUTE })
 
 export function linkCartItem(item: RawCartItem): CartItem {
-  if (item.kind === 'wine') return linkWine(item)
-  if (item.kind === 'oil') return linkOil(item)
+  if (item.kind === 'wine') return linkWine({ ...item, sellableId: item.vintage.id, left: item.vintage.left })
+  if (item.kind === 'oil') return linkOil({ ...item, sellableId: item.size.id, left: item.size.left })
   return linkClubPlan(item)
 }

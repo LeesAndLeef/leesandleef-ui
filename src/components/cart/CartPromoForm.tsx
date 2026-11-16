@@ -1,22 +1,26 @@
 import { useState } from 'react'
-import { useCart } from '../../state/cart/useCart'
+import { useApplyPromo } from '../../hooks/cart/useApplyPromo'
+import { formatCurrency } from '../../lib/currency'
 import { COLORS } from '../../styles/colors'
+import type { Cart } from '../../types'
 import styles from './CartPromoForm.module.css'
 
-export function CartPromoForm() {
-  const { promo, applyPromo } = useCart()
+export function CartPromoForm({ promo }: Pick<Cart, 'promo'>) {
   const [promoInput, setPromoInput] = useState(promo ?? '')
   const [promoMsg, setPromoMsg] = useState<{ ok: boolean; text: string } | null>(null)
+  const { mutate: applyPromo, isPending } = useApplyPromo({
+    onSuccess: (cart) =>
+      setPromoMsg({
+        ok: true,
+        text: `${cart.promo} applied — ${formatCurrency(cart.totals.promoDiscount, { cents: true })} off.`,
+      }),
+    onError: (error) => setPromoMsg({ ok: false, text: error.message }),
+  })
 
   function apply() {
     const code = promoInput.trim()
     if (!code) return setPromoMsg({ ok: false, text: 'Enter a code first.' })
-    const ok = applyPromo(code)
-    setPromoMsg(
-      ok
-        ? { ok, text: `${code.toUpperCase()} applied — 10% off.` }
-        : { ok, text: 'That code isn’t valid. Check spelling or expiry date.' },
-    )
+    applyPromo(code)
   }
 
   return (
@@ -34,7 +38,7 @@ export function CartPromoForm() {
           onChange={(e) => setPromoInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && apply()}
         />
-        <button className={`btn btn-ink ${styles.promoBtn}`} onClick={apply}>
+        <button className={`btn btn-ink ${styles.promoBtn}`} onClick={apply} disabled={isPending}>
           Apply
         </button>
       </div>

@@ -7,17 +7,17 @@ import { ClubFaq } from '../../components/club/ClubFaq'
 import { ClubHero } from '../../components/club/ClubHero'
 import { ClubHowItWorks } from '../../components/club/ClubHowItWorks'
 import { ClubPlans } from '../../components/club/ClubPlans'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
 import { CART_ROUTE } from '../../routes'
-import { useCart } from '../../state/cart/useCart'
 import type { Freq } from '../../types'
 
 export default function ClubPage() {
-  const { add } = useCart()
+  const addToCart = useAddToCart()
   const navigate = useNavigate()
   const [freq, setFreq] = useState<Freq>('season')
 
   function join(planId: string) {
-    add(planId, 1, freq)
+    addToCart([{ id: planId, option: freq }])
     navigate(CART_ROUTE)
   }
 
