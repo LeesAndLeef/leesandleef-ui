@@ -30,15 +30,13 @@ export const VINTAGE_LEFT_LABEL = 'left'
 
 export const VINTAGE_YEAR = /\s?\b(?:19|20)\d{2}\b/
 
-export const SHIPPING_FEE = 9.9
-
-export const CART_STORAGE_KEY = 'lees-leaf-cart-v1'
-
 export const QUERY_STALE_TIME = 60_000
 
 export const CATALOG_STALE_TIME = 5 * 60_000
 
 export const MAX_QUERY_RETRIES = 2
+
+export const ADDED_ITEMS_LABEL = 'items'
 
 export const MAX_CATALOG_QUERY_LENGTH = 100
 

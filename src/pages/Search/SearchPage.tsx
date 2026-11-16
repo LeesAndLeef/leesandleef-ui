@@ -4,11 +4,11 @@ import { OilCard } from '../../components/product/OilCard'
 import { WineCard } from '../../components/product/WineCard'
 import { Breadcrumb } from '../../components/ui/Breadcrumb'
 import { DEFAULT_OIL_SIZE } from '../../constants'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
 import { useSearch } from '../../hooks/search/useSearch'
 import { useKeyedState } from '../../hooks/useKeyedState'
 import { searchSummary } from '../../lib/search'
 import { GROWERS_ROUTE, HOME_ROUTE, OLIVE_OILS_ROUTE, SEARCH_ROUTE, WINES_ROUTE } from '../../routes'
-import { useCart } from '../../state/cart/useCart'
 import { NO_RESULTS, SEARCH_ERROR, SEARCH_SUGGESTIONS, SEARCHING_LABEL } from './constants'
 import styles from './SearchPage.module.css'
 
@@ -16,7 +16,7 @@ export default function SearchPage() {
   const [params] = useSearchParams()
   const query = params.get('q') ?? ''
   const navigate = useNavigate()
-  const { add } = useCart()
+  const addToCart = useAddToCart()
   const [draft, setDraft] = useKeyedState(query, query)
   const [added, setAdded] = useKeyedState<Record<string, boolean>>(query, {})
   const { data: results = NO_RESULTS, isFetching, isError } = useSearch(query)
@@ -91,7 +91,7 @@ export default function SearchPage() {
               </div>
               <div className={styles.grid}>
                 {results.wines.map((w) => (
-                  <WineCard key={w.id} wine={w} onAdd={() => add(w.id)} />
+                  <WineCard key={w.id} wine={w} onAdd={() => addToCart([{ id: w.sellableId }])} />
                 ))}
               </div>
             </div>
@@ -111,7 +111,7 @@ export default function SearchPage() {
                     size={DEFAULT_OIL_SIZE}
                     added={!!added[o.id]}
                     onAdd={() => {
-                      add(o.id)
+                      addToCart([{ id: o.sellableId }])
                       setAdded({ ...added, [o.id]: true })
                     }}
                   />

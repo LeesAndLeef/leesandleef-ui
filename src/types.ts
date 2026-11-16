@@ -109,6 +109,7 @@ interface Linked {
 }
 
 interface Sellable {
+  sellableId: string
   price: number
   left?: number
 }
@@ -238,25 +239,6 @@ export interface CartLine {
   qty: number
 }
 
-export interface PricedLine extends CartLine {
-  item: CartItem
-  name: string
-  meta: string
-  unit: number
-  total: number
-  isWine: boolean
-  isClub: boolean
-  maxQty: number
-  glass: string
-}
-
-export interface CartState {
-  lines: CartLine[]
-  saved: CartLine[]
-  promo: string | null
-  giftNote: string | null
-}
-
 export interface Order {
   number: string
   firstName: string
@@ -264,7 +246,7 @@ export interface Order {
   shipName: string
   payName: string
   total: number
-  lines: PricedLine[]
+  lines: CartPricedLine[]
 }
 
 export interface GrowerMonth {
@@ -435,6 +417,8 @@ export interface AddCartLineInput {
   qty?: number
   option?: string
 }
+
+export type CartLinesInput = readonly AddCartLineInput[]
 
 export interface SetCartQtyInput {
   key: string

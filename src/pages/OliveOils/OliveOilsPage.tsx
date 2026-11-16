@@ -8,16 +8,16 @@ import { OilsHero } from '../../components/oil/OilsHero'
 import { OilTastingSet } from '../../components/oil/OilTastingSet'
 import { OilCard } from '../../components/product/OilCard'
 import { DEFAULT_OIL_SIZE, OIL_SIZES } from '../../constants'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
 import { useOilResults } from '../../hooks/oil/useOilResults'
-import { oilOption } from '../../lib/cart'
 import { sumCounts } from '../../lib/counts'
-import { useCart } from '../../state/cart/useCart'
+import { oilSizeId } from '../../lib/oil'
 import type { Oil, OilLevel, OilSize } from '../../types'
 import { OIL_LEVELS } from './constants'
 import styles from './OliveOilsPage.module.css'
 
 export default function OliveOilsPage() {
-  const { add } = useCart()
+  const addToCart = useAddToCart()
   const [level, setLevel] = useState<OilLevel | 'All'>('All')
   const [size, setSize] = useState<OilSize>(DEFAULT_OIL_SIZE)
   const [added, setAdded] = useState<Record<string, boolean>>({})
@@ -25,7 +25,7 @@ export default function OliveOilsPage() {
   const { oils: shown, meta } = useOilResults({ set: false, level: shownLevel === 'All' ? undefined : shownLevel })
 
   function addOil(o: Oil) {
-    add(o.id, 1, oilOption(size))
+    addToCart([{ id: oilSizeId(o, size) }])
     setAdded((a) => ({ ...a, [`${o.id}@${size}`]: true }))
   }
 

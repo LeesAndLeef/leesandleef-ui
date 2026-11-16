@@ -8,18 +8,18 @@ import { WinePriceFilter } from '../../components/wine/WinePriceFilter'
 import { WineQuizPromo } from '../../components/wine/WineQuizPromo'
 import { WineResultsTools } from '../../components/wine/WineResultsTools'
 import { WINE_TYPES } from '../../constants'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
 import { useWineResults } from '../../hooks/wine/useWineResults'
 import { sumCounts } from '../../lib/counts'
 import { toggle } from '../../lib/toggle'
 import { groupRegions, priceFilterLabel, wineFilters } from '../../lib/wineFilters'
 import { HOME_ROUTE, OLIVE_OILS_ROUTE } from '../../routes'
-import { useCart } from '../../state/cart/useCart'
 import type { So2, Wine, WineExtra, WineLayout, WineSort } from '../../types'
 import { EXTRAS, GRAPES, REGION_GROUPS } from './constants'
 import styles from './WinesPage.module.css'
 
 export default function WinesPage() {
-  const { add } = useCart()
+  const addToCart = useAddToCart()
   const [params, setParams] = useSearchParams()
   const type = WINE_TYPES.find((t) => t === params.get('type'))
   const query = params.get('q') ?? ''
@@ -229,7 +229,7 @@ export default function WinesPage() {
             {results.length ? (
               <WineGrid layout={view}>
                 {results.map((w: Wine) => (
-                  <WineCard key={w.id} wine={w} layout={view} onAdd={() => add(w.id)} />
+                  <WineCard key={w.id} wine={w} layout={view} onAdd={() => addToCart([{ id: w.sellableId }])} />
                 ))}
               </WineGrid>
             ) : (

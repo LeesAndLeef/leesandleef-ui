@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom'
 import oilPressCellar from '../../assets/cellar/oil-press.svg'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
 import { useOils } from '../../hooks/oil/useOils'
 import { formatCurrency } from '../../lib/currency'
-import { oilPrice } from '../../lib/oil'
+import { oilPrice, oilSizeId } from '../../lib/oil'
 import { oilPath } from '../../lib/paths'
 import { pickByIds } from '../../lib/pickByIds'
-import { useCart } from '../../state/cart/useCart'
 import { COLORS } from '../../styles/colors'
 import { HOME_OIL_IDS } from './constants'
 import styles from './HomeOils.module.css'
 
 export function HomeOils() {
-  const { add } = useCart()
+  const addToCart = useAddToCart()
   const homeOils = pickByIds(useOils(), HOME_OIL_IDS)
   return (
     <section className="section gridbg-d">
@@ -60,10 +60,13 @@ export function HomeOils() {
                 ))}
               </dl>
               <div className="btn-row" style={{ gap: 10 }}>
-                <button className="btn btn-paper btn-sm" onClick={() => add(o.id)}>
+                <button className="btn btn-paper btn-sm" onClick={() => addToCart([{ id: o.sellableId }])}>
                   Add 500 ml
                 </button>
-                <button className="btn btn-ghost-light btn-sm" onClick={() => add(o.id, 1, '3000')}>
+                <button
+                  className="btn btn-ghost-light btn-sm"
+                  onClick={() => addToCart([{ id: oilSizeId(o, '3000') }])}
+                >
                   3 L tin · {formatCurrency(oilPrice(o, '3000'))}
                 </button>
               </div>

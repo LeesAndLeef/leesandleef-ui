@@ -1,5 +1,5 @@
 import { formatCurrency } from '../../lib/currency'
-import type { Totals } from '../../state/cart/types'
+import type { CartTotals } from '../../types'
 import { SummaryRow } from '../ui/SummaryRow'
 import styles from './CartSummary.module.css'
 
@@ -7,7 +7,7 @@ export function CartSummary({
   totals,
   promo,
 }: {
-  totals: Pick<Totals, 'count' | 'subtotal' | 'mixDiscount' | 'promoDiscount' | 'shipping' | 'total'>
+  totals: Pick<CartTotals, 'count' | 'subtotal' | 'mixDiscount' | 'promoDiscount' | 'shipping' | 'total'>
   promo: string | null
 }) {
   return (

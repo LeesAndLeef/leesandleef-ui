@@ -2,12 +2,10 @@ import { Link } from 'react-router-dom'
 import { useSite } from '../../hooks/site/useSite'
 import { formatCurrency } from '../../lib/currency'
 import { CART_ROUTE } from '../../routes'
-import type { Totals } from '../../state/cart/types'
 import { COLORS } from '../../styles/colors'
-import type { PricedLine } from '../../types'
+import type { CartPricedLine, CartTotals, ShipOption } from '../../types'
 import { ProductThumb } from '../product/ProductThumb'
 import { SummaryRow } from '../ui/SummaryRow'
-import type { ShipOption } from './types'
 import styles from './CheckoutSummary.module.css'
 
 export function CheckoutSummary({
@@ -18,9 +16,9 @@ export function CheckoutSummary({
   delivery,
   total,
 }: {
-  lines: PricedLine[]
+  lines: CartPricedLine[]
   placed: boolean
-  totals: Pick<Totals, 'subtotal' | 'mixDiscount' | 'promoDiscount'>
+  totals: Pick<CartTotals, 'subtotal' | 'mixDiscount' | 'promoDiscount'>
   promo: string | null
   delivery: Pick<ShipOption, 'name' | 'price'>
   total: number

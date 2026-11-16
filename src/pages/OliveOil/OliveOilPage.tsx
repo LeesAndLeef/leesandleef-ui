@@ -11,16 +11,15 @@ import { ProductPerks } from '../../components/product/ProductPerks'
 import { ProductTags } from '../../components/product/ProductTags'
 import { RelatedProducts } from '../../components/product/RelatedProducts'
 import { DEFAULT_OIL_SIZE } from '../../constants'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
 import { useGrower } from '../../hooks/grower/useGrower'
 import { useOil } from '../../hooks/oil/useOil'
 import { useProduct } from '../../hooks/product/useProduct'
 import { useKeyedState } from '../../hooks/useKeyedState'
-import { oilOption } from '../../lib/cart'
-import { oilKeeping, oilPrice, oilSizeOptions, oilTags } from '../../lib/oil'
+import { oilKeeping, oilPrice, oilSizeId, oilSizeOptions, oilTags } from '../../lib/oil'
 import { oilPath } from '../../lib/paths'
 import { productPlace } from '../../lib/productPlace'
 import { HOME_ROUTE, OLIVE_OILS_ROUTE } from '../../routes'
-import { useCart } from '../../state/cart/useCart'
 import type { OilSize } from '../../types'
 import NotFoundPage from '../NotFound/NotFoundPage'
 import {
@@ -35,7 +34,7 @@ import {
 export default function OliveOilPage() {
   const { id } = useParams()
   const { pathname } = useLocation()
-  const { add } = useCart()
+  const addToCart = useAddToCart()
   const [size, setSize] = useKeyedState<OilSize>(id ?? '', DEFAULT_OIL_SIZE)
   const oil = useOil(id)
   const product = useProduct(id)
@@ -72,7 +71,7 @@ export default function OliveOilPage() {
         <ProductBuyRow
           unitPrice={oilPrice(oil, size)}
           addedNote={OIL_ADDED_NOTE}
-          onAdd={(qty) => add(oil.id, qty, oilOption(size))}
+          onAdd={(qty) => addToCart([{ id: oilSizeId(oil, size), qty }])}
         />
         <ProductPerks perks={oilKeeping(oil)} />
       </ProductHero>

@@ -12,6 +12,7 @@ import { RelatedProducts } from '../../components/product/RelatedProducts'
 import { WineDetails } from '../../components/wine/WineDetails'
 import { WineGallery } from '../../components/wine/WineGallery'
 import { DEFAULT_WINE_VOLUME } from '../../constants'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
 import { useGrower } from '../../hooks/grower/useGrower'
 import { useProduct } from '../../hooks/product/useProduct'
 import { useWine } from '../../hooks/wine/useWine'
@@ -19,14 +20,13 @@ import { winePath } from '../../lib/paths'
 import { productPlace, productRegion } from '../../lib/productPlace'
 import { chosenVintage, wineTypePath, wineVintageOptions } from '../../lib/wine'
 import { HOME_ROUTE, WINES_ROUTE } from '../../routes'
-import { useCart } from '../../state/cart/useCart'
 import NotFoundPage from '../NotFound/NotFoundPage'
 import { WINE_ADDED_NOTE, WINE_PERKS, WINE_RELATED_LINK } from './constants'
 
 export default function WinePage() {
   const { id } = useParams()
   const { pathname } = useLocation()
-  const { add } = useCart()
+  const addToCart = useAddToCart()
   const wine = useWine(id)
   const product = useProduct(id)
   const grower = useGrower(wine?.growerId)
@@ -69,7 +69,7 @@ export default function WinePage() {
         <ProductBuyRow
           unitPrice={vintage.price}
           addedNote={WINE_ADDED_NOTE}
-          onAdd={(qty) => add(wine.id, qty, vintage.vintage ?? undefined)}
+          onAdd={(qty) => addToCart([{ id: vintage.id, qty }])}
         />
         <ProductPerks perks={WINE_PERKS} />
         <ProductClubNudge />

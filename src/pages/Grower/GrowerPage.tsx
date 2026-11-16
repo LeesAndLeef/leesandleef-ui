@@ -3,20 +3,20 @@ import { GrowerProfile } from '../../components/grower/GrowerProfile'
 import { GrowerVisit } from '../../components/grower/GrowerVisit'
 import { Bottle } from '../../components/illustrations/Bottle'
 import { Breadcrumb } from '../../components/ui/Breadcrumb'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
 import { useGrowers } from '../../hooks/grower/useGrowers'
 import { useWines } from '../../hooks/wine/useWines'
 import { formatCurrency } from '../../lib/currency'
 import { nextGrower } from '../../lib/growers'
 import { winePath } from '../../lib/paths'
 import { GROWERS_ROUTE, HOME_ROUTE } from '../../routes'
-import { useCart } from '../../state/cart/useCart'
 import { COLORS } from '../../styles/colors'
 import NotFoundPage from '../NotFound/NotFoundPage'
 import styles from './GrowerPage.module.css'
 
 export default function GrowerPage() {
   const { id } = useParams()
-  const { add } = useCart()
+  const addToCart = useAddToCart()
   const growers = useGrowers()
   const wines = useWines()
   const grower = growers.find((g) => g.id === id)
@@ -110,7 +110,10 @@ export default function GrowerPage() {
                 <h2 className="disp h-m">{profile?.winesTitle ?? 'In stock'}</h2>
               </div>
               {inStock.length > 1 && (
-                <button className="btn btn-primary" onClick={() => inStock.forEach((w) => add(w.id))}>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => addToCart(inStock.map((w) => ({ id: w.sellableId })))}
+                >
                   Add the {grower.shortName} {bundleName} — {formatCurrency(bundleTotal)}
                 </button>
               )}

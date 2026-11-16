@@ -1,9 +1,15 @@
 import { formatCurrency } from '../../lib/currency'
-import type { PricedLine } from '../../types'
+import type { CartPricedLine } from '../../types'
 import { ProductThumb } from '../product/ProductThumb'
 import styles from './CartSavedList.module.css'
 
-export function CartSavedList({ lines, onMoveToCart }: { lines: PricedLine[]; onMoveToCart: (key: string) => void }) {
+export function CartSavedList({
+  lines,
+  onMoveToCart,
+}: {
+  lines: CartPricedLine[]
+  onMoveToCart: (key: string) => void
+}) {
   return (
     <div className="stack" style={{ gap: 12 }}>
       <h2 className="disp" style={{ fontSize: 24 }}>

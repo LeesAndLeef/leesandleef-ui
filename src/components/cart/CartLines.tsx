@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { formatCurrency } from '../../lib/currency'
-import type { PricedLine } from '../../types'
+import type { CartPricedLine } from '../../types'
 import { ProductThumb } from '../product/ProductThumb'
 import { QtyStepper } from '../ui/QtyStepper'
 import styles from './CartLines.module.css'
@@ -11,7 +11,7 @@ export function CartLines({
   onSaveForLater,
   onQtyChange,
 }: {
-  lines: PricedLine[]
+  lines: CartPricedLine[]
   onRemove: (key: string) => void
   onSaveForLater: (key: string) => void
   onQtyChange: (key: string, qty: number) => void

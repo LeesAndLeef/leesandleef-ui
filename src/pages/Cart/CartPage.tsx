@@ -9,16 +9,32 @@ import { CartShipProgress } from '../../components/cart/CartShipProgress'
 import { CartSummary } from '../../components/cart/CartSummary'
 import { CartUpsell } from '../../components/cart/CartUpsell'
 import { CheckoutProgress } from '../../components/cart/CheckoutProgress'
+import { ErrorPage } from '../../components/layout/ErrorPage'
+import { FallbackPage } from '../../components/layout/FallbackPage'
 import { Breadcrumb } from '../../components/ui/Breadcrumb'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
+import { useCart } from '../../hooks/cart/useCart'
+import { useMoveToCart } from '../../hooks/cart/useMoveToCart'
+import { useRemoveCartLine } from '../../hooks/cart/useRemoveCartLine'
+import { useSaveForLater } from '../../hooks/cart/useSaveForLater'
+import { useSetCartQty } from '../../hooks/cart/useSetCartQty'
 import { CHECKOUT_ROUTE, HOME_ROUTE, WINES_ROUTE } from '../../routes'
-import { useCart } from '../../state/cart/useCart'
 import { CART_PAY_METHODS, CART_PROMISES } from './constants'
 import styles from './CartPage.module.css'
 
 export default function CartPage() {
-  const cart = useCart()
-  const { priced, savedPriced, totals } = cart
-  const hasGoods = priced.some((l) => !l.isClub)
+  const { data: cart, isPending, isError, refetch } = useCart()
+  const addToCart = useAddToCart()
+  const { mutate: setQty } = useSetCartQty()
+  const { mutate: remove } = useRemoveCartLine()
+  const { mutate: saveForLater } = useSaveForLater()
+  const { mutate: moveToCart } = useMoveToCart()
+
+  if (isPending) return <FallbackPage />
+  if (isError) return <ErrorPage onRetry={() => refetch()} />
+
+  const { lines, saved, totals, promo, giftNote } = cart
+  const hasGoods = lines.some((l) => !l.isClub)
 
   return (
     <>
@@ -38,28 +54,28 @@ export default function CartPage() {
         main={
           <>
             {hasGoods && <CartShipProgress totals={totals} />}
-            {priced.length === 0 ? (
+            {lines.length === 0 ? (
               <CartEmpty />
             ) : (
               <>
                 <CartLines
-                  lines={priced}
-                  onRemove={cart.remove}
-                  onSaveForLater={cart.saveForLater}
-                  onQtyChange={cart.setQty}
+                  lines={lines}
+                  onRemove={remove}
+                  onSaveForLater={saveForLater}
+                  onQtyChange={(key, qty) => setQty({ key, qty })}
                 />
-                <CartExtras />
+                <CartExtras giftNote={giftNote} />
               </>
             )}
-            {savedPriced.length > 0 && <CartSavedList lines={savedPriced} onMoveToCart={cart.moveToCart} />}
-            <CartUpsell inCartIds={priced.map((l) => l.id)} onAdd={(id) => cart.add(id)} />
+            {saved.length > 0 && <CartSavedList lines={saved} onMoveToCart={moveToCart} />}
+            <CartUpsell inCartIds={lines.map((l) => l.item.id)} onAdd={(id) => addToCart([{ id }])} />
           </>
         }
         summary={
           <>
-            <CartSummary totals={totals} promo={cart.promo} />
-            <CartPromoForm />
-            {priced.length > 0 ? (
+            <CartSummary totals={totals} promo={promo} />
+            <CartPromoForm promo={promo} />
+            {lines.length > 0 ? (
               <Link to={CHECKOUT_ROUTE} className={`btn btn-primary ${styles.checkoutBtn}`}>
                 <span>Checkout</span>
                 <span aria-hidden="true">→</span>

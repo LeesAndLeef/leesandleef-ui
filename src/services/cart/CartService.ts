@@ -1,6 +1,6 @@
 import { apiPath } from '../../lib/apiPath'
 import { linkCartItem } from '../../lib/links'
-import type { AddCartLineInput, Cart, CartPricedLine, SetCartQtyInput, ShipOption } from '../../types'
+import type { AddCartLineInput, Cart, CartLinesInput, CartPricedLine, SetCartQtyInput, ShipOption } from '../../types'
 import { BaseService } from '../BaseService'
 import { API_ENDPOINTS, API_SEGMENTS } from '../constants'
 import { HttpClient } from '../HttpClient'
@@ -37,6 +37,12 @@ export class CartService extends BaseService<Cart, RawCart> {
 
   async addLine(line: Readonly<AddCartLineInput>) {
     return this.toModel(await this.httpClient.post<RawCart>(API_ENDPOINTS.CART_LINES, line))
+  }
+
+  async addLines(lines: CartLinesInput) {
+    let cart: Cart | null = null
+    for (const line of lines) cart = await this.addLine(line)
+    return cart ?? this.getCart()
   }
 
   async setQty({ key, qty }: Readonly<SetCartQtyInput>) {

@@ -1,5 +1,4 @@
 import { DEFAULT_WINE_VOLUME, WINE_TYPES } from '../constants'
-import { wines as rawWines } from '../data/wines'
 import { WINES_ROUTE } from '../routes'
 import { COLORS } from '../styles/colors'
 import type { GalleryShot, LabelCopy, RawWine, Wine, WineFilterType, WineType, WineVintage } from '../types'
@@ -12,7 +11,6 @@ import {
   WINE_POUR_TONES,
 } from './constants'
 import { formatCurrency } from './currency'
-import { winePath } from './paths'
 import { productRegion } from './productPlace'
 import { contrastingTone } from './tone'
 
@@ -22,18 +20,10 @@ export const defaultVintage = (wine: Pick<RawWine, 'vintages'>) =>
 export const chosenVintage = (wine: Pick<RawWine, 'vintages'>, id?: string) =>
   wine.vintages.find((vintage) => vintage.id === id) ?? defaultVintage(wine)
 
-export const lineVintage = (wine: Pick<RawWine, 'vintages'>, year?: string) =>
-  wine.vintages.find((vintage) => vintage.vintage === year) ?? defaultVintage(wine)
-
 export function withDefaultVintage<T extends Pick<RawWine, 'vintages'>>(wine: T) {
-  const { price, left } = defaultVintage(wine)
-  return { ...wine, price, left }
+  const { id, price, left } = defaultVintage(wine)
+  return { ...wine, sellableId: id, price, left }
 }
-
-export const wines: Omit<Wine, 'detail'>[] = rawWines.map((wine) => ({
-  ...withDefaultVintage(wine),
-  path: winePath(wine),
-}))
 
 export const listedWines = (all: readonly Wine[]) => all.filter((w) => !w.unlisted)
 

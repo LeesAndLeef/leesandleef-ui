@@ -1,8 +1,8 @@
 import { type FormEvent, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useCart } from '../../hooks/cart/useCart'
 import { isNavActive } from '../../lib/nav'
 import { CART_ROUTE, SEARCH_ROUTE } from '../../routes'
-import { useCart } from '../../state/cart/useCart'
 import { NAV_LINKS } from './constants'
 import { HeaderBar } from './HeaderBar'
 import { Logo } from './Logo'
@@ -11,7 +11,7 @@ import styles from './Header.module.css'
 export function Header() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const { totals } = useCart()
+  const count = useCart().data?.totals.count ?? 0
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
 
@@ -82,9 +82,9 @@ export function Header() {
           to={CART_ROUTE}
           className={`${styles.cartBtn} ${pathname === CART_ROUTE ? styles.isCurrent : ''}`}
           aria-current={pathname === CART_ROUTE ? 'page' : undefined}
-          aria-label={`Cart, ${totals.count} item${totals.count === 1 ? '' : 's'}`}
+          aria-label={`Cart, ${count} item${count === 1 ? '' : 's'}`}
         >
-          Cart <span className="mono">{totals.count}</span>
+          Cart <span className="mono">{count}</span>
         </Link>
       </div>
     </HeaderBar>

@@ -6,7 +6,7 @@ import { Bottle } from '../illustrations/Bottle'
 import { UPSELL_IDS } from './constants'
 import styles from './CartUpsell.module.css'
 
-export function CartUpsell({ inCartIds, onAdd }: { inCartIds: string[]; onAdd: (id: string) => void }) {
+export function CartUpsell({ inCartIds, onAdd }: { inCartIds: string[]; onAdd: (sellableId: string) => void }) {
   const products = useProducts()
   const upsell = pickByIds(
     products,
@@ -35,7 +35,7 @@ export function CartUpsell({ inCartIds, onAdd }: { inCartIds: string[]; onAdd: (
                 {formatCurrency(u.price)}
               </span>
             </div>
-            <button className="icon-btn" aria-label={`Add ${u.name}`} onClick={() => onAdd(u.id)}>
+            <button className="icon-btn" aria-label={`Add ${u.name}`} onClick={() => onAdd(u.sellableId)}>
               +
             </button>
           </div>

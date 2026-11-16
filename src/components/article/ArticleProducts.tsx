@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
+import { useAddToCart } from '../../hooks/cart/useAddToCart'
 import { useProducts } from '../../hooks/product/useProducts'
 import { formatCurrency } from '../../lib/currency'
 import { OLIVE_OILS_ROUTE, WINES_ROUTE } from '../../routes'
-import { useCart } from '../../state/cart/useCart'
 import { COLORS } from '../../styles/colors'
 import type { Article } from '../../types'
 import { Bottle } from '../illustrations/Bottle'
@@ -10,7 +10,7 @@ import { OilTin } from '../illustrations/OilTin'
 import styles from './ArticleProducts.module.css'
 
 export function ArticleProducts({ article: a }: { article: Pick<Article, 'slug' | 'productsTitle' | 'products'> }) {
-  const { add } = useCart()
+  const addToCart = useAddToCart()
   const products = useProducts()
 
   return (
@@ -47,7 +47,11 @@ export function ArticleProducts({ article: a }: { article: Pick<Article, 'slug' 
                     {formatCurrency(p.price)}
                   </span>
                 </span>
-                <button className="icon-btn" aria-label={`Add ${p.name} to cart`} onClick={() => add(p.id)}>
+                <button
+                  className="icon-btn"
+                  aria-label={`Add ${p.name} to cart`}
+                  onClick={() => addToCart([{ id: p.sellableId }])}
+                >
                   +
                 </button>
               </div>
