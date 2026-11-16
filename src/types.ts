@@ -410,6 +410,7 @@ export interface ShipOption {
   name: string
   desc: string
   price: number
+  total: number
 }
 
 export interface AddCartLineInput {

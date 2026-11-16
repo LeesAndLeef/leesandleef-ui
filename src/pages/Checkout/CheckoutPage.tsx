@@ -17,10 +17,8 @@ import { ErrorPage } from '../../components/layout/ErrorPage'
 import { FallbackPage } from '../../components/layout/FallbackPage'
 import { PageLayout } from '../../components/layout/PageLayout'
 import { useCart } from '../../hooks/cart/useCart'
-import { useClearCart } from '../../hooks/cart/useClearCart'
 import { useShippingOptions } from '../../hooks/cart/useShippingOptions'
 import { useSite } from '../../hooks/site/useSite'
-import { totalWithDelivery } from '../../lib/cart'
 import { formatCurrency } from '../../lib/currency'
 import { newOrderNumber } from '../../lib/orderNumber'
 import { shipCountryNames } from '../../lib/site'
@@ -30,7 +28,6 @@ import type { Order, ShipMethod } from '../../types'
 export default function CheckoutPage() {
   const cartQuery = useCart()
   const shipsQuery = useShippingOptions()
-  const { mutate: clearCart } = useClearCart()
   const countries = shipCountryNames(useSite())
   const [order, setOrder] = useState<Order | null>(null)
   const [step, setStep] = useState(1)
@@ -62,7 +59,7 @@ export default function CheckoutPage() {
   if (!order && lines.length === 0) return <Navigate to={CART_ROUTE} replace />
 
   const curShip = ships.find((s) => s.id === ship) ?? ships[0]
-  const total = totalWithDelivery(totals, curShip)
+  const total = curShip.total
   const fullName = `${details.first} ${details.last}`.trim()
   const addressLine =
     ship === 'pick'
@@ -79,7 +76,6 @@ export default function CheckoutPage() {
       total,
       lines,
     })
-    clearCart()
     window.scrollTo(0, 0)
   }
 

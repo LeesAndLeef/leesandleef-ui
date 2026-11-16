@@ -1,4 +1,4 @@
-import type { Cart, CartLinesInput, CartTotals, ShipOption } from '../types'
+import type { Cart, CartLinesInput } from '../types'
 import { ADDED_ITEMS_LABEL } from './constants'
 
 export const lineKey = (id: string, option?: string) => (option ? `${id}@${option}` : id)
@@ -9,8 +9,3 @@ export function addedNotice({ lines }: Pick<Cart, 'lines'>, added: CartLinesInpu
   const name = lines.find((line) => line.key === lineKey(id, option))?.name ?? id
   return qty > 1 ? `${qty} × ${name}` : name
 }
-
-export const totalWithDelivery = (
-  { total, shipping }: Pick<CartTotals, 'total' | 'shipping'>,
-  delivery: Pick<ShipOption, 'price'>,
-) => total - shipping + delivery.price
